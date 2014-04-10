@@ -15,7 +15,7 @@
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	TestReport[] reps = mgr.getTestReports(new TestReportCond());
 	for (TestReport rp : reps) {
-		out.println(rp.getLotNo() + " , " + rp.getDateSeq() + " , " + rp.getFairQualityCount() + " , " + rp.getFaultCount() + "</br>");
+		out.println(rp.getLotNo() + " , " + rp.getDateTime() + " , " + rp.getFairQualityCount() + " , " + rp.getFaultCount() + "</br>");
 	}
 	%>
 </body>

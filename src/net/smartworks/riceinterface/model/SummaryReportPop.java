@@ -14,7 +14,7 @@ public class SummaryReportPop {
 
 	public int totalFairQualityCount;
 	public int totalFaultCount;
-	//key : 불량 코드 , value : 코드 갯수
+	//key : code , value : count
 	public Map<String, Integer> faultCodeCountMap;
 	
 	public int getTotalFairQualityCount() {

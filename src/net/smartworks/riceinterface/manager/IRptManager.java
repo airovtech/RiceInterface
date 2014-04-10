@@ -14,7 +14,7 @@ public interface IRptManager {
 
 	//public TestReport getTestReport(String id) throws Exception;
 	
-	//Schedule ¹× Ftp ¸ğµâÀ» ÅëÇØ ÆÄ½ÌµÈ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â ¸Ş¼Òµå
+	//Scheduler ë° Ftp ê°€ ë°ì´í„°ë¥¼ ì·¨í•©í•˜ì—¬ ë°ì´í„°ë² ì´ìŠ¤ì— ì…ë ¥í•˜ëŠ” ë©”ì†Œë“œ
 	public TestReport setTestReport(TestReport report) throws Exception;
 
 	//public void removeTestReport(String id) throws Exception;

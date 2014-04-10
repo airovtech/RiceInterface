@@ -18,22 +18,22 @@ import net.smartworks.riceinterface.model.TestReportCond;
 
 public interface IUiManager {
 	
-	//°Ë»çº° È­¸é ¸®½ºÆ®
+	//ê²€ì‚¬ë³„ ë¦¬ìŠ¤íŠ¸
 	public TestReport[] getTestReports(TestReportCond cond) throws Exception;
 	
-	//°Ë»çº° Ç×¸ñ »ó¼¼ È­¸é
+	//ê²€ì‚¬ë³„ ìƒì„¸
 	public TestReport getTestReportWithSensorReports(String testReportId) throws Exception;
 	
-	//±â°£º° °Ë»ç ¸®½ºÆ®
+	//ê¸°ê°„ë³„ ë¦¬ìŠ¤íŠ¸
 	//selector : byDay, byWeek, byMonth, byYear
 	public SummaryReport[] getSummaryReports(Date fromDate, Date toDate, String selector) throws Exception;
 	
-	//±â°£º° °Ë»ç ÆË¾÷(¼±ÅÃ Ç×¸ñÀÇ ¾çÇ°´ëºÒ·®¼ö·®ºñÀ², ºÒ·®¼ö·® ÄÚµå ºñÀ²)
-	//fromDate, toDate, grouping Àº "±â°£º° °Ë»ç ¸®½ºÆ®"ÀÇ Á¶°Ç°ú µ¿ÀÏÇÑ Á¶°ÇÀ» ³Ñ°ÜÁÖ¸ç
-	//¸®½ºÆ®¿¡ Ç¥½ÃµÈ °Ë»çÀÏÀ» ¸¶Áö¸· ÆÄ¶ó¹ÌÅÍ·Î³Ñ±ä´Ù(¿¹:2013³â1ÁÖ)
+	//fromDate, toDate, grouping 
+	//ë§ˆì§€ë§‰ íŒŒë¼ë¯¸í„°ì— ìœ„ getSummaryReports ê²°ê³¼ê°’ì¸ ê²€ì‚¬ì¼ ë°ì´í„°ë¥¼ ì…ë ¥í•œë‹¤(ì˜ˆ: 2014ë…„1ì›”1ì›”)
+	//íŒì—…ë°ì´í„°ë¥¼ ë‹¤ì‹œ ì·¨í•©í•˜ê¸° ìœ„í•˜ì—¬ í•´ë‹¹ ì •ë³´ë“¤ì´ í•„ìš”
 	public SummaryReportPop getSummaryReportPop(Date fromDate, Date toDate, String selector, String testDate) throws Exception;
 	
-	//Â÷Æ®µ¥ÀÌÅÍ
+	//ì°¨íŠ¸ ë°ì´í„°
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception;
 	public Data getBarChartReportData(Date fromDate, Date toDate, String selector) throws Exception;
 	
