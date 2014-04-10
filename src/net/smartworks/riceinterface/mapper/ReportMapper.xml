@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.smartworks.riceinterface.mapper.ReportMapper">
+  <select id="getTestReports" parameterType="net.smartworks.riceinterface.model.TestReportCond" resultType="net.smartworks.riceinterface.model.TestReport">
+    select * 
+    from TestReport 
+    where 1=1
+    <if test="id != null">
+       AND id = #{id}
+    </if>
+    <if test="project != null">
+       AND project = #{project}
+    </if>
+    <if test="lotNo != null">
+       AND lotNo = #{lotNo}
+    </if>
+    <if test="dateTime != null">
+       AND dateTime = #{dateTime}
+    </if>
+    <if test="sensorSerialNo != null">
+       AND sensorSerialNo = #{sensorSerialNo}
+    </if>
+  </select>
+  <select id="getSensorReports" parameterType="net.smartworks.riceinterface.model.SensorReportCond" resultType="net.smartworks.riceinterface.model.SensorReport">
+    select * 
+    from SensorReport 
+    where 1=1
+    <if test="id != null">
+       AND id = #{id}
+    </if>
+    <if test="project != null">
+       AND project = #{project}
+    </if>
+    <if test="testReportId != null">
+       AND testReportId = #{testReportId}
+    </if>
+    <if test="sensorNo != null">
+       AND sensorNo = #{sensorNo}
+    </if>
+    <if test="lotNo != null">
+       AND lotNo = #{lotNo}
+    </if>
+    <if test="dateTime != null">
+       AND dateTime = #{dateTime}
+    </if>
+    <if test="serialNo != null">
+       AND serialNo = #{serialNo}
+    </if>
+  </select>
+  <insert id="setTestReport" parameterType="net.smartworks.riceinterface.model.TestReport">
+  	insert into TestReport(id, project, lotNo, dateTime, fairQualityCount, faultCount, sensorSerialNo, reportFileName)
+  	values (#{id},#{project},#{lotNo},#{dateTime},#{fairQualityCount},#{faultCount},#{sensorSerialNo},#{reportFileName})
+  </insert>
+  <insert id="setSensorReport" parameterType="net.smartworks.riceinterface.model.SensorReport">
+	insert into SensorReport(id, project, testReportId, sensorNo, lotNo, dateTime, indoorTemperature, glassTemperature, indoorHumidity, decisionCode, serialNo)
+	values (#{id},#{project},#{testReportId},#{sensorNo},#{lotNo},#{dateTime},#{indoorTemperature},#{glassTemperature},#{indoorHumidity},#{decisionCode},#{serialNo})
+  </insert>
+</mapper>
