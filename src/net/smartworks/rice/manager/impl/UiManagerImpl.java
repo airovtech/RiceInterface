@@ -8,6 +8,7 @@
 
 package net.smartworks.rice.manager.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import net.smartworks.factory.SessionFactory;
 import net.smartworks.rice.manager.IUiManager;
 import net.smartworks.rice.model.SensorReport;
 import net.smartworks.rice.model.SensorReportCond;
+import net.smartworks.rice.model.SummaryLineChartData;
 import net.smartworks.rice.model.SummaryReport;
 import net.smartworks.rice.model.SummaryReportCond;
 import net.smartworks.rice.model.SummaryReportPop;
@@ -186,8 +188,48 @@ public class UiManagerImpl implements IUiManager {
 
 	@Override
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		//기간별 생산(양품)수량
+		String xFieldName = "검사일";
+		String yValueName = "갯수";
+		
+		SqlSession session = null;
+		try {
+			SqlSessionFactory factory = SessionFactory.getInstance().getSqlSessionFactory();
+			session = factory.openSession();
+			SummaryReportPopCond reportCond = new SummaryReportPopCond();
+			reportCond.setSelector(selector);
+			reportCond.setFromDate(fromDate);
+			reportCond.setToDate(toDate);
+			
+			List<SummaryLineChartData> summaryCharts = session.selectList("getLineChartReportData", reportCond);
+			
+			Data chartData = new Data();
+			chartData.setGroupNames(new String[]{yValueName});
+			chartData.setxFieldName(xFieldName);
+			chartData.setyValueName(yValueName);
+			
+			if (summaryCharts != null) {
+				List<Map<String, Object>> values = new ArrayList<Map<String, Object>>();
+				for (SummaryLineChartData data : summaryCharts) {
+					Map valueMap = new HashMap();
+				
+					String testDate = data.getTestDate();
+					int totalFairQualityCount = data.getTotalFairQualityCount();
+					valueMap.put(xFieldName, testDate);
+					valueMap.put(yValueName, totalFairQualityCount);
+					
+					values.add(valueMap);
+				}
+				chartData.setValues(values);
+			}
+			return chartData;
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (session != null)
+				session.close();
+		}
 	}
 
 	@Override
