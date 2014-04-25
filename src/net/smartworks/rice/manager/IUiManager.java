@@ -6,15 +6,15 @@
  * Copyright (c) 2014 ManinSoft, Inc. All rights reserved.
  */
 
-package net.smartworks.riceinterface.manager;
+package net.smartworks.rice.manager;
 
 import java.util.Date;
 
 import net.smartworks.common.Data;
-import net.smartworks.riceinterface.model.SummaryReport;
-import net.smartworks.riceinterface.model.SummaryReportPop;
-import net.smartworks.riceinterface.model.TestReport;
-import net.smartworks.riceinterface.model.TestReportCond;
+import net.smartworks.rice.model.SummaryReport;
+import net.smartworks.rice.model.SummaryReportPop;
+import net.smartworks.rice.model.TestReport;
+import net.smartworks.rice.model.TestReportCond;
 
 public interface IUiManager {
 

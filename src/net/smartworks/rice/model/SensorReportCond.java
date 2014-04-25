@@ -6,16 +6,16 @@
  * Copyright (c) 2014 ManinSoft, Inc. All rights reserved.
  */
 
-package net.smartworks.riceinterface.model;
+package net.smartworks.rice.model;
 
 import java.util.Date;
 
-public class SensorReport {
+import net.smartworks.common.Cond;
 
-	public static final String fairQualityCode = "000";
-	
+public class SensorReportCond extends Cond {
+
 	private String id;
-	private String project = "ADS";
+	private String project;
 	private String testReportId;
 	private String sensorNo;
 	private String lotNo;

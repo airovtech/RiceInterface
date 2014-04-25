@@ -6,9 +6,9 @@
  * Copyright (c) 2014 ManinSoft, Inc. All rights reserved.
  */
 
-package net.smartworks.riceinterface.manager;
+package net.smartworks.rice.manager;
 
-import net.smartworks.riceinterface.model.TestReport;
+import net.smartworks.rice.model.TestReport;
 
 public interface IRptManager {
 

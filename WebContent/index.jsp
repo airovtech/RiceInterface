@@ -1,10 +1,10 @@
-<%@page import="net.smartworks.riceinterface.model.SummaryReportPop"%>
+<%@page import="net.smartworks.rice.model.SummaryReportPop"%>
 <%@page import="java.util.Date"%>
-<%@page import="net.smartworks.riceinterface.model.SummaryReport"%>
-<%@page import="net.smartworks.riceinterface.model.TestReport"%>
-<%@page import="net.smartworks.riceinterface.model.TestReportCond"%>
+<%@page import="net.smartworks.rice.model.SummaryReport"%>
+<%@page import="net.smartworks.rice.model.TestReport"%>
+<%@page import="net.smartworks.rice.model.TestReportCond"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
-<%@page import="net.smartworks.riceinterface.manager.IUiManager"%>
+<%@page import="net.smartworks.rice.manager.IUiManager"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

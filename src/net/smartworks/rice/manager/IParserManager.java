@@ -6,8 +6,8 @@
  * Copyright (c) 2014 ManinSoft, Inc. All rights reserved.
  */
 
-package net.smartworks.riceinterface.manager;
+package net.smartworks.rice.manager;
 
-public interface IFtpManager {
+public interface IParserManager {
 
 }

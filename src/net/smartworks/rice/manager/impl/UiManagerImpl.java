@@ -6,7 +6,7 @@
  * Copyright (c) 2014 ManinSoft, Inc. All rights reserved.
  */
 
-package net.smartworks.riceinterface.manager.impl;
+package net.smartworks.rice.manager.impl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -15,16 +15,16 @@ import java.util.Map;
 
 import net.smartworks.common.Data;
 import net.smartworks.factory.SessionFactory;
-import net.smartworks.riceinterface.manager.IUiManager;
-import net.smartworks.riceinterface.model.SensorReport;
-import net.smartworks.riceinterface.model.SensorReportCond;
-import net.smartworks.riceinterface.model.SummaryReport;
-import net.smartworks.riceinterface.model.SummaryReportCond;
-import net.smartworks.riceinterface.model.SummaryReportPop;
-import net.smartworks.riceinterface.model.SummaryReportPopCond;
-import net.smartworks.riceinterface.model.SummaryReportPopRSet;
-import net.smartworks.riceinterface.model.TestReport;
-import net.smartworks.riceinterface.model.TestReportCond;
+import net.smartworks.rice.manager.IUiManager;
+import net.smartworks.rice.model.SensorReport;
+import net.smartworks.rice.model.SensorReportCond;
+import net.smartworks.rice.model.SummaryReport;
+import net.smartworks.rice.model.SummaryReportCond;
+import net.smartworks.rice.model.SummaryReportPop;
+import net.smartworks.rice.model.SummaryReportPopCond;
+import net.smartworks.rice.model.SummaryReportPopRSet;
+import net.smartworks.rice.model.TestReport;
+import net.smartworks.rice.model.TestReportCond;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;

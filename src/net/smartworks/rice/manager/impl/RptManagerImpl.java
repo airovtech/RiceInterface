@@ -6,12 +6,12 @@
  * Copyright (c) 2014 ManinSoft, Inc. All rights reserved.
  */
 
-package net.smartworks.riceinterface.manager.impl;
+package net.smartworks.rice.manager.impl;
 
 import net.smartworks.factory.SessionFactory;
-import net.smartworks.riceinterface.manager.IRptManager;
-import net.smartworks.riceinterface.model.SensorReport;
-import net.smartworks.riceinterface.model.TestReport;
+import net.smartworks.rice.manager.IRptManager;
+import net.smartworks.rice.model.SensorReport;
+import net.smartworks.rice.model.TestReport;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;

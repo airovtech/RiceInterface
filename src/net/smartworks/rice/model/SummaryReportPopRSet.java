@@ -6,7 +6,7 @@
  * Copyright (c) 2014 ManinSoft, Inc. All rights reserved.
  */
 
-package net.smartworks.riceinterface.model;
+package net.smartworks.rice.model;
 
 public class SummaryReportPopRSet {
 	
