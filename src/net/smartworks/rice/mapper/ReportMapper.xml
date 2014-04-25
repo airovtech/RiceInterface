@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.smartworks.riceinterface.mapper.ReportMapper">
-  <select id="getTestReportSize" parameterType="net.smartworks.riceinterface.model.TestReportCond" resultType="java.lang.Integer">
+<mapper namespace="net.smartworks.rice.mapper.ReportMapper">
+  <select id="getTestReportSize" parameterType="net.smartworks.rice.model.TestReportCond" resultType="java.lang.Integer">
     select count(*) 
     from OG_TestReport 
     where 1=1
@@ -23,7 +23,7 @@
        AND sensorSerialNo = #{sensorSerialNo}
     </if>
   </select>
-  <select id="getTestReports" parameterType="net.smartworks.riceinterface.model.TestReportCond" resultType="net.smartworks.riceinterface.model.TestReport">
+  <select id="getTestReports" parameterType="net.smartworks.rice.model.TestReportCond" resultType="net.smartworks.rice.model.TestReport">
     select * 
     from OG_TestReport 
     where 1=1
@@ -43,7 +43,7 @@
        AND sensorSerialNo = #{sensorSerialNo}
     </if>
   </select>
-  <select id="getSensorReports" parameterType="net.smartworks.riceinterface.model.SensorReportCond" resultType="net.smartworks.riceinterface.model.SensorReport">
+  <select id="getSensorReports" parameterType="net.smartworks.rice.model.SensorReportCond" resultType="net.smartworks.rice.model.SensorReport">
     select * 
     from OG_SensorReport 
     where 1=1
@@ -69,15 +69,15 @@
        AND serialNo = #{serialNo}
     </if>
   </select>
-  <insert id="setTestReport" parameterType="net.smartworks.riceinterface.model.TestReport">
+  <insert id="setTestReport" parameterType="net.smartworks.rice.model.TestReport">
   	insert into OG_TestReport(id, project, lotNo, dateTime, fairQualityCount, faultCount, sensorSerialNo, reportFileName)
   	values (#{id},#{project},#{lotNo},#{dateTime},#{fairQualityCount},#{faultCount},#{sensorSerialNo},#{reportFileName})
   </insert>
-  <insert id="setSensorReport" parameterType="net.smartworks.riceinterface.model.SensorReport">
+  <insert id="setSensorReport" parameterType="net.smartworks.rice.model.SensorReport">
 	insert into OG_SensorReport(id, project, testReportId, sensorNo, lotNo, dateTime, indoorTemperature, glassTemperature, indoorHumidity, decisionCode, serialNo)
 	values (#{id},#{project},#{testReportId},#{sensorNo},#{lotNo},#{dateTime},#{indoorTemperature},#{glassTemperature},#{indoorHumidity},#{decisionCode},#{serialNo})
   </insert>
-  <select id="getSummaryReport" parameterType="net.smartworks.riceinterface.model.SummaryReportCond" resultType="net.smartworks.riceinterface.model.SummaryReport">
+  <select id="getSummaryReport" parameterType="net.smartworks.rice.model.SummaryReportCond" resultType="net.smartworks.rice.model.SummaryReport">
 	select
     <if test="selector.equalsIgnoreCase('byDay')">
 		baseTbl.selectDay as testDate
@@ -126,7 +126,7 @@
 		group by selectYear
     </if>
   </select>
-  <select id="getSummaryReportPop" parameterType="net.smartworks.riceinterface.model.SummaryReportPopCond" resultType="net.smartworks.riceinterface.model.SummaryReportPopRSet">
+  <select id="getSummaryReportPop" parameterType="net.smartworks.rice.model.SummaryReportPopCond" resultType="net.smartworks.rice.model.SummaryReportPopRSet">
 	select
 	decisionCode
 	,count(decisionCode) as codeCount

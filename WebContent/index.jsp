@@ -1,8 +1,5 @@
-<%@page import="net.smartworks.rice.model.SummaryReportPop"%>
 <%@page import="java.util.Date"%>
-<%@page import="net.smartworks.rice.model.SummaryReport"%>
-<%@page import="net.smartworks.rice.model.TestReport"%>
-<%@page import="net.smartworks.rice.model.TestReportCond"%>
+<%@page import="net.smartworks.rice.model.SummaryReportPop"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
 <%@page import="net.smartworks.rice.manager.IUiManager"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
@@ -17,7 +14,7 @@
 <%
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	SummaryReportPop rep = mgr.getSummaryReportPop(new Date(114,01,01), new Date(), "byYear", "");
-	out.println(rep.getTestDate() + ", " + rp.getTotalFaultCount() + "/" + rp.getTotalTestCount() + " : faultPercent - " + rp.getFaultPercent() + " % " + "</br>");
+	out.println( rep.getTotalFaultCount() + "/" + rep.getTotalCount() + " : faultPercent - " + " % " + "</br>");
 	%>
 </body>
 </html>
