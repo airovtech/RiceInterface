@@ -24,6 +24,7 @@ public class SensorReport {
 	private String glassTemperature;
 	private String indoorHumidity;
 	private String decisionCode;
+	private String decisionCodeDesc;
 	private String serialNo;
 	
 	public String getId() {
@@ -91,5 +92,11 @@ public class SensorReport {
 	}
 	public void setSerialNo(String serialNo) {
 		this.serialNo = serialNo;
+	}
+	public String getDecisionCodeDesc() {
+		return decisionCodeDesc;
+	}
+	public void setDecisionCodeDesc(String decisionCodeDesc) {
+		this.decisionCodeDesc = decisionCodeDesc;
 	}
 }

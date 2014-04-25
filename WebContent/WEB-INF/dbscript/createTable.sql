@@ -5,7 +5,7 @@ create table OG_TestReport (
 	dateTime datetime,
 	fairQualityCount int,
 	faultCount int,
-	sensorSerialNo varchar(20),
+	firstSensorId varchar(20),
 	reportFileName varchar(50)
 )
 

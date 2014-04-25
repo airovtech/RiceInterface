@@ -27,7 +27,7 @@ public class TestReport {
 	private Date dateTime;
 	private int fairQualityCount;
 	private int faultCount;
-	private String sensorSerialNo;
+	private String firstSensorId;
 	private String reportFileName;
 	
 	private SensorReport[] sensorReports;
@@ -82,10 +82,10 @@ public class TestReport {
 		this.faultCount = faultCount;
 	}
 	public String getSensorSerialNo() {
-		return sensorSerialNo;
+		return firstSensorId;
 	}
 	public void setSensorSerialNo(String sensorSerialNo) {
-		this.sensorSerialNo = sensorSerialNo;
+		this.firstSensorId = sensorSerialNo;
 	}
 	public String getReportFileName() {
 		return reportFileName;
