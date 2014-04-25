@@ -17,7 +17,9 @@ import net.smartworks.riceinterface.model.TestReport;
 import net.smartworks.riceinterface.model.TestReportCond;
 
 public interface IUiManager {
-	
+
+	//검사별 리스트 사이즈
+	public int getTestReportSize(TestReportCond cond) throws Exception;
 	//검사별 리스트
 	public TestReport[] getTestReports(TestReportCond cond) throws Exception;
 	
@@ -31,7 +33,7 @@ public interface IUiManager {
 	//fromDate, toDate, grouping 
 	//마지막 파라미터에 위 getSummaryReports 결과값인 검사일 데이터를 입력한다(예: 2014년1월1월)
 	//팝업데이터를 다시 취합하기 위하여 해당 정보들이 필요
-	public SummaryReportPop getSummaryReportPop(Date fromDate, Date toDate, String selector, String testDate) throws Exception;
+	public SummaryReportPop getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception;
 	
 	//차트 데이터
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception;

@@ -17,6 +17,10 @@ public class SummaryReportPop {
 	//key : code , value : count
 	public Map<String, Integer> faultCodeCountMap;
 	
+	public int getTotalCount() {
+		return (this.totalFairQualityCount + this.totalFaultCount);
+	}
+	
 	public int getTotalFairQualityCount() {
 		return totalFairQualityCount;
 	}

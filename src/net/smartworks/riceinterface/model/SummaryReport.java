@@ -11,10 +11,10 @@ package net.smartworks.riceinterface.model;
 public class SummaryReport {
 	
 	public String testDate;
-	public int totalTestCount;
-	public int totalFairQualityCount;
-	public int totalFaultCount;
-	public int faultPercent;
+	public int totalTestCount = -1;
+	public int totalFairQualityCount = -1;
+	public int totalFaultCount = -1;
+	public double faultPercent = -1;
 	
 	public String getTestDate() {
 		return testDate;
@@ -40,10 +40,15 @@ public class SummaryReport {
 	public void setTotalFaultCount(int totalFaultCount) {
 		this.totalFaultCount = totalFaultCount;
 	}
-	public int getFaultPercent() {
-		return faultPercent;
+	public double getFaultPercent() {
+		if (this.totalTestCount != -1 && this.totalFaultCount != -1) {
+			return (((double)totalFaultCount / totalTestCount) * 100);
+		} else {
+			return 0;
+		}
+		//return faultPercent;
 	}
-	public void setFaultPercent(int faultPercent) {
-		this.faultPercent = faultPercent;
-	}
+	//public void setFaultPercent(int faultPercent) {
+	//	this.faultPercent = faultPercent;
+	//}
 }

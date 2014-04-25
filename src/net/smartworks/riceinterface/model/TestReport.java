@@ -18,8 +18,8 @@ public class TestReport {
 	private Date dateTime;
 	private int fairQualityCount;
 	private int faultCount;
-	private String sensorSerialNo;//SensorReport의 첫번째 센서의 시리얼넘버
-	private String reportFileName;//UI상으로 필요치 않으나 이후 데이터 검증에 필요할것 같아 추가
+	private String sensorSerialNo;
+	private String reportFileName;
 	
 	private SensorReport[] sensorReports;
 

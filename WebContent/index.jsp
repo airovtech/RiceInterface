@@ -1,3 +1,6 @@
+<%@page import="net.smartworks.riceinterface.model.SummaryReportPop"%>
+<%@page import="java.util.Date"%>
+<%@page import="net.smartworks.riceinterface.model.SummaryReport"%>
 <%@page import="net.smartworks.riceinterface.model.TestReport"%>
 <%@page import="net.smartworks.riceinterface.model.TestReportCond"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
@@ -13,10 +16,8 @@
 <body>
 <%
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
-	TestReport[] reps = mgr.getTestReports(new TestReportCond());
-	for (TestReport rp : reps) {
-		out.println(rp.getLotNo() + " , " + rp.getDateTime() + " , " + rp.getFairQualityCount() + " , " + rp.getFaultCount() + "</br>");
-	}
+	SummaryReportPop rep = mgr.getSummaryReportPop(new Date(114,01,01), new Date(), "byYear", "");
+	out.println(rep.getTestDate() + ", " + rp.getTotalFaultCount() + "/" + rp.getTotalTestCount() + " : faultPercent - " + rp.getFaultPercent() + " % " + "</br>");
 	%>
 </body>
 </html>

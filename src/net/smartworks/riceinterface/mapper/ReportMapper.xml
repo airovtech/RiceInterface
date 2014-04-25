@@ -3,9 +3,29 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.smartworks.riceinterface.mapper.ReportMapper">
+  <select id="getTestReportSize" parameterType="net.smartworks.riceinterface.model.TestReportCond" resultType="java.lang.Integer">
+    select count(*) 
+    from OG_TestReport 
+    where 1=1
+    <if test="id != null">
+       AND id = #{id}
+    </if>
+    <if test="project != null">
+       AND project = #{project}
+    </if>
+    <if test="lotNo != null">
+       AND lotNo = #{lotNo}
+    </if>
+    <if test="dateTime != null">
+       AND dateTime = #{dateTime}
+    </if>
+    <if test="sensorSerialNo != null">
+       AND sensorSerialNo = #{sensorSerialNo}
+    </if>
+  </select>
   <select id="getTestReports" parameterType="net.smartworks.riceinterface.model.TestReportCond" resultType="net.smartworks.riceinterface.model.TestReport">
     select * 
-    from TestReport 
+    from OG_TestReport 
     where 1=1
     <if test="id != null">
        AND id = #{id}
@@ -25,7 +45,7 @@
   </select>
   <select id="getSensorReports" parameterType="net.smartworks.riceinterface.model.SensorReportCond" resultType="net.smartworks.riceinterface.model.SensorReport">
     select * 
-    from SensorReport 
+    from OG_SensorReport 
     where 1=1
     <if test="id != null">
        AND id = #{id}
@@ -50,11 +70,96 @@
     </if>
   </select>
   <insert id="setTestReport" parameterType="net.smartworks.riceinterface.model.TestReport">
-  	insert into TestReport(id, project, lotNo, dateTime, fairQualityCount, faultCount, sensorSerialNo, reportFileName)
+  	insert into OG_TestReport(id, project, lotNo, dateTime, fairQualityCount, faultCount, sensorSerialNo, reportFileName)
   	values (#{id},#{project},#{lotNo},#{dateTime},#{fairQualityCount},#{faultCount},#{sensorSerialNo},#{reportFileName})
   </insert>
   <insert id="setSensorReport" parameterType="net.smartworks.riceinterface.model.SensorReport">
-	insert into SensorReport(id, project, testReportId, sensorNo, lotNo, dateTime, indoorTemperature, glassTemperature, indoorHumidity, decisionCode, serialNo)
+	insert into OG_SensorReport(id, project, testReportId, sensorNo, lotNo, dateTime, indoorTemperature, glassTemperature, indoorHumidity, decisionCode, serialNo)
 	values (#{id},#{project},#{testReportId},#{sensorNo},#{lotNo},#{dateTime},#{indoorTemperature},#{glassTemperature},#{indoorHumidity},#{decisionCode},#{serialNo})
   </insert>
+  <select id="getSummaryReport" parameterType="net.smartworks.riceinterface.model.SummaryReportCond" resultType="net.smartworks.riceinterface.model.SummaryReport">
+	select
+    <if test="selector.equalsIgnoreCase('byDay')">
+		baseTbl.selectDay as testDate
+    </if>
+    <if test="selector.equalsIgnoreCase('byWeek')">
+		baseTbl.selectWeek as testDate
+    </if>
+    <if test="selector.equalsIgnoreCase('byMonth')">
+		baseTbl.selectMonth as testDate
+    </if>
+    <if test="selector.equalsIgnoreCase('byYear')">
+		baseTbl.selectYear as testDate
+    </if>
+	,sum(totalCount) as totalTestCount
+	,sum(fair) as totalFairQualityCount
+	,sum(fault) as totalFaultCount
+	from 
+	(
+		select
+			DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS selectDay
+			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS selectWeek
+			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' AS selectMonth 
+			,DATENAME(yyyy, dateTime)+ '년 ' AS selectYear
+			,fairQualityCount as fair
+			,faultCount as fault
+			,fairQualityCount + faultCount as totalCount
+		from OG_TestReport
+		where 1=1
+		<if test="fromDate != null">
+			and dateTime &gt;= #{fromDate}
+		</if>
+		<if test="toDate != null">
+			and dateTime &lt;= #{toDate}
+		</if>
+	) baseTbl
+	<if test="selector.equalsIgnoreCase('byDay')">
+		group by selectDay
+    </if>
+    <if test="selector.equalsIgnoreCase('byWeek')">
+		group by selectWeek
+    </if>
+    <if test="selector.equalsIgnoreCase('byMonth')">
+		group by selectMonth
+    </if>
+    <if test="selector.equalsIgnoreCase('byYear')">
+		group by selectYear
+    </if>
+  </select>
+  <select id="getSummaryReportPop" parameterType="net.smartworks.riceinterface.model.SummaryReportPopCond" resultType="net.smartworks.riceinterface.model.SummaryReportPopRSet">
+	select
+	decisionCode
+	,count(decisionCode) as codeCount
+	from
+	(
+		select
+			testReportId
+	<if test="selector.equalsIgnoreCase('byDay')">
+			,DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS testDate
+	</if>
+    <if test="selector.equalsIgnoreCase('byWeek')">
+			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS testDate
+	</if>
+    <if test="selector.equalsIgnoreCase('byMonth')">
+			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' AS testDate 
+	</if>
+    <if test="selector.equalsIgnoreCase('byYear')">
+			,DATENAME(yyyy, dateTime)+ '년 ' AS testDate 
+	</if>
+			,decisionCode
+		from OG_sensorReport
+		where 1=1
+	<if test="fromDate != null">
+		and dateTime &gt;= #{fromDate}
+	</if>
+	<if test="toDate != null">
+		and dateTime &lt;= #{toDate}
+	</if>
+	)baseTbl
+	where 1=1
+    <if test="selectTestDate != null">
+	and testDate = #{selectTestDate}
+    </if>
+	group by decisionCode
+  </select>
 </mapper>

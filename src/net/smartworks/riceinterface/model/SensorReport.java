@@ -12,6 +12,8 @@ import java.util.Date;
 
 public class SensorReport {
 
+	public static final String fairQualityCode = "000";
+	
 	private String id;
 	private String project = "ADS";
 	private String testReportId;
