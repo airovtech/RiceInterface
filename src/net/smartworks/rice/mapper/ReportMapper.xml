@@ -44,8 +44,11 @@
     </if>
   </select>
   <select id="getSensorReports" parameterType="net.smartworks.rice.model.SensorReportCond" resultType="net.smartworks.rice.model.SensorReport">
-    select * 
-    from OG_SensorReport 
+    select sensor.*, code.description as decisionCodeDesc 
+	from OG_SensorReport sensor
+	left outer join 
+	OG_CodeTable code
+	on sensor.decisionCode = code.code
     where 1=1
     <if test="id != null">
        AND id = #{id}
