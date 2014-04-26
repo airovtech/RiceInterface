@@ -17,6 +17,7 @@ public class TestReportCond extends Cond {
 	private String id;
 	private String project;
 	private String lotNo;
+	private String lotNoLike;
 	private Date dateTime;
 	private Date dateTimeFrom;
 	private Date dateTimeTo;
@@ -45,6 +46,12 @@ public class TestReportCond extends Cond {
 	}
 	public void setLotNo(String lotNo) {
 		this.lotNo = lotNo;
+	}
+	public String getLotNoLike() {
+		return lotNoLike;
+	}
+	public void setLotNoLike(String lotNoLike) {
+		this.lotNoLike = lotNoLike;
 	}
 	public Date getDateTime() {
 		return dateTime;

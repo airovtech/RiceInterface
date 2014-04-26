@@ -27,7 +27,7 @@
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	TestReportCond reportCond = new TestReportCond();
 	if(RequestParams.SEARCH_TYPE_LOTNO.equals(requestParams.getSearchType()) && !SmartUtil.isBlankObject(requestParams.getSearchLotNo())){
-		reportCond.setLotNo(requestParams.getSearchLotNo());
+		reportCond.setLotNoLike(requestParams.getSearchLotNo());
 	}else if(RequestParams.SEARCH_TYPE_DATETIME.equals(requestParams.getSearchType())){
  		if(!SmartUtil.isBlankObject(requestParams.getSearchDateFrom())){
 		 	reportCond.setDateTimeFrom(SmartUtil.convertDateStringToDate(requestParams.getSearchDateFrom()));
