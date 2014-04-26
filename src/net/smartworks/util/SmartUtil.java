@@ -9,46 +9,17 @@
 package net.smartworks.util;
 
 import java.lang.reflect.Array;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-
-import net.smartworks.service.ISmartWorks;
-
 import org.apache.axis.utils.StringUtils;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.servlet.ModelAndView;
 
 public class SmartUtil {
 
 	public SmartUtil() {
 		super();
-	}
-
-	public static Object getBean(String beanName, HttpServletRequest request) {
-
-		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-
-		return (Object) wac.getBean(beanName);
-	}
-
-	public static ModelAndView returnMnv(HttpServletRequest request, String ajaxPage, String defaultPage) {
-		String getHeader = request.getHeader("X-Requested-With");
- 		ISmartWorks smartworks = (ISmartWorks)SmartUtil.getBean("smartWorks", request);
-		if (getHeader != null){
-			SecurityContext context = (SecurityContext) request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
-			if (SmartUtil.isBlankObject(context))
-				return new ModelAndView("/RiceInterface/jsp/home.jsp", "smartWorks", smartworks);
-			else
-				return new ModelAndView(ajaxPage, "smartWorks", smartworks);
-		}else{
-			return new ModelAndView(defaultPage, "smartWorks", smartworks);
-		}
 	}
 
 	public static String combineStrings(String first, String second){
@@ -236,4 +207,20 @@ public class SmartUtil {
 		if(dateTime==null) return "";
 		return (new SimpleDateFormat("yyyy.MM.dd HH:mm")).format(dateTime.getTime());			
 	}
+	
+	public static String toNotNull(String source){
+		if(isBlankObject(source)) return "";
+		return source;
+	}
+	
+	public static Date convertDateStringToDate(String yyyyMMdd) throws Exception{
+		if(SmartUtil.isBlankObject(yyyyMMdd) || yyyyMMdd.length()!=10) return null;
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		try{
+			return new Date((df.parse(yyyyMMdd)).getTime());
+		}catch(Exception e){
+			return null;
+		}
+	}
+	
 }
