@@ -8,10 +8,19 @@
 
 package net.smartworks.rice.manager;
 
+import java.util.List;
+
+import net.smartworks.rice.model.FtpHistory;
+import net.smartworks.rice.model.FtpHistoryCond;
 import net.smartworks.rice.model.TestReport;
 
 public interface IRptManager {
-
+	
+	//file 전송 이력을 저장한다
+	public FtpHistory setFtpHistory(FtpHistory history) throws Exception;
+	//file 전송 이력을 가져온다
+	public List getFtpHistory(FtpHistoryCond cond) throws Exception;
+	
 	//public TestReport getTestReport(String id) throws Exception;
 	
 	//Scheduler 및 Ftp 가 데이터를 취합하여 데이터베이스에 입력하는 메소드

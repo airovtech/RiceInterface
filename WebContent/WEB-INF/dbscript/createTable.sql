@@ -23,6 +23,14 @@ create table OG_SensorReport (
 	serialNo varchar(20)
 )
 
+create table OG_FtpHistory(
+	id varchar(50)
+	,folderName varchar(50)
+	,fileName varchar(50)
+	,fileSerial varchar(20)
+	,createDate datetime
+)
+
 create table OG_CodeTable (
 	code varchar(50) not null,
 	description varchar(255)

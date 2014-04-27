@@ -72,10 +72,10 @@ public class TestReport {
 	public void setFaultCount(int faultCount) {
 		this.faultCount = faultCount;
 	}
-	public String getSensorSerialNo() {
+	public String getFirstSensorId() {
 		return firstSensorId;
 	}
-	public void setSensorSerialNo(String sensorSerialNo) {
+	public void setFirstSensorId(String sensorSerialNo) {
 		this.firstSensorId = sensorSerialNo;
 	}
 	public String getReportFileName() {

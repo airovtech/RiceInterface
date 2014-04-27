@@ -73,8 +73,8 @@
     </if>
   </select>
   <insert id="setTestReport" parameterType="net.smartworks.rice.model.TestReport">
-  	insert into OG_TestReport(id, project, lotNo, dateTime, fairQualityCount, faultCount, sensorSerialNo, reportFileName)
-  	values (#{id},#{project},#{lotNo},#{dateTime},#{fairQualityCount},#{faultCount},#{sensorSerialNo},#{reportFileName})
+  	insert into OG_TestReport(id, project, lotNo, dateTime, fairQualityCount, faultCount, firstSensorId, reportFileName)
+  	values (#{id},#{project},#{lotNo},#{dateTime},#{fairQualityCount},#{faultCount},#{firstSensorId},#{reportFileName})
   </insert>
   <insert id="setSensorReport" parameterType="net.smartworks.rice.model.SensorReport">
 	insert into OG_SensorReport(id, project, testReportId, sensorNo, lotNo, dateTime, indoorTemperature, glassTemperature, indoorHumidity, decisionCode, serialNo)
@@ -264,4 +264,22 @@
     </if>
 	order by testDate
   </select>
+  <select id="getFtpHistory" parameterType="net.smartworks.rice.model.FtpHistoryCond" resultType="net.smartworks.rice.model.FtpHistory">
+    select * 
+    from OG_FtpHistory 
+    where 1=1
+    <if test="id != null">
+       AND id = #{id}
+    </if>
+    <if test="folderName != null">
+       AND folderName = #{folderName}
+    </if>
+    <if test="fileSerial != null">
+       AND fileSerial = #{fileSerial}
+    </if>
+  </select>
+  <insert id="setFtpHistory" parameterType="net.smartworks.rice.model.FtpHistory">
+	insert into OG_FtpHistory(id, folderName, fileName, fileSerial, createDate)
+	values (#{id},#{folderName},#{fileName},#{fileSerial},#{createDate})
+  </insert>
 </mapper>
