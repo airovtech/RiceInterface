@@ -20,7 +20,8 @@ create table OG_SensorReport (
 	glassTemperature varchar(10),
 	indoorHumidity varchar(10),
 	decisionCode varchar(10),
-	serialNo varchar(20)
+	serialNo varchar(20),
+	lotNoSerialNo varchar(30)
 )
 
 create table OG_FtpHistory(

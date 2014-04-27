@@ -22,13 +22,13 @@ public class GetDataStarterJob implements Job{
 	
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-		System.out.println("**** Job Start Date : " + new Date() + "+++++");
+		log.info("**** Job Start Date : " + new Date() + "+++++");
 		try {
 			FtpFileTransfer.parsing();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		log.info("**** Job Start Date : " + new Date() + "+++++");
+		log.info("**** Job End Date : " + new Date() + "+++++");
 	}
 
 }

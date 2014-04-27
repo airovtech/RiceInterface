@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import net.smartworks.factory.ManagerFactory;
 import net.smartworks.rice.model.FtpHistory;
@@ -25,32 +26,43 @@ import net.smartworks.rice.model.SensorReport;
 import net.smartworks.rice.model.TestReport;
 import net.smartworks.util.FileUtil;
 import net.smartworks.util.IdUtil;
+import net.smartworks.util.PropertiesLoader;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
 
 public class FtpFileTransfer {
 
-	static String server = "125.130.69.151";
-	static int port = 21;
-	static String id = "smart";
-	static String password = "password";
+	static String server;
+	static int port;
+	static String id;
+	static String password;
 	FTPClient ftpClient;
 
 	public FtpFileTransfer(String server, int port, String id, String password) {
 		this.server = server;
 		this.port = port;
+		this.id = id;
+		this.password = password;
+		
 		ftpClient = new FTPClient();
 	}
 
 	public static void parsing() throws Exception {
 		
-		FtpFileTransfer ftp = new FtpFileTransfer(server, port, id, password);
+		Properties prop = PropertiesLoader.loadProp("ftp.config.properties");
+		String serverAddress = prop.getProperty("ftp.address");
+		int serverPort = Integer.parseInt(prop.getProperty("ftp.port"));
+		String userId = prop.getProperty("ftp.id");
+		String userPassword = prop.getProperty("ftp.password");
+		
+		FtpFileTransfer ftp = new FtpFileTransfer(serverAddress, serverPort, userId, userPassword);
+		
 		ftp.connect();
 		ftp.login(ftp.id, ftp.password);
-		// 로그파일이 있는 디렉토리로 이동한다
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String toDayStr = sdf.format(new Date());
@@ -64,9 +76,7 @@ public class FtpFileTransfer {
 		if (todayFtpHistory == null)
 			todayFtpHistory = new ArrayList<String>();
 		//test
-		targetDir = "/ads/ADS_20140423";
-		
-		System.out.println(targetDir);
+		targetDir = "/ads/ADS_20140422";
 		
 		ftp.cd(targetDir);
 		FTPFile[] files = ftp.list();
@@ -130,6 +140,7 @@ public class FtpFileTransfer {
 						} else {
 							sr.setSerialNo(columnDatas[7]);
 						}
+						sr.setLotNoSerialNo(sr.getLotNo() + sr.getSerialNo());
 						sensorDataList.add(sr);
 					}
 				}

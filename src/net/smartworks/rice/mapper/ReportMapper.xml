@@ -16,11 +16,20 @@
     <if test="lotNo != null">
        AND lotNo = #{lotNo}
     </if>
+    <if test="lotNoLike != null">
+       AND id in (select testReportId from OG_SensorReport where lotNoSerialNo like #{lotNoLike})
+    </if>
     <if test="dateTime != null">
        AND dateTime = #{dateTime}
     </if>
-    <if test="sensorSerialNo != null">
-       AND sensorSerialNo = #{sensorSerialNo}
+	<if test="dateTimeFrom != null">
+		and dateTime &gt;= #{dateTimeFrom}
+	</if>
+	<if test="dateTimeTo != null">
+		and dateTime &lt;= #{dateTimeTo}
+	</if>
+    <if test="firstSensorId != null">
+       AND firstSensorId = #{firstSensorId}
     </if>
   </select>
   <select id="getTestReports" parameterType="net.smartworks.rice.model.TestReportCond" resultType="net.smartworks.rice.model.TestReport">
@@ -36,11 +45,20 @@
     <if test="lotNo != null">
        AND lotNo = #{lotNo}
     </if>
+    <if test="lotNoLike != null">
+       AND id in (select testReportId from OG_SensorReport where lotNoSerialNo like #{lotNoLike})
+    </if>
     <if test="dateTime != null">
        AND dateTime = #{dateTime}
     </if>
-    <if test="sensorSerialNo != null">
-       AND sensorSerialNo = #{sensorSerialNo}
+	<if test="dateTimeFrom != null">
+		and dateTime &gt;= #{dateTimeFrom}
+	</if>
+	<if test="dateTimeTo != null">
+		and dateTime &lt;= #{dateTimeTo}
+	</if>
+    <if test="firstSensorId != null">
+       AND firstSensorId = #{firstSensorId}
     </if>
   </select>
   <select id="getSensorReports" parameterType="net.smartworks.rice.model.SensorReportCond" resultType="net.smartworks.rice.model.SensorReport">
@@ -77,8 +95,8 @@
   	values (#{id},#{project},#{lotNo},#{dateTime},#{fairQualityCount},#{faultCount},#{firstSensorId},#{reportFileName})
   </insert>
   <insert id="setSensorReport" parameterType="net.smartworks.rice.model.SensorReport">
-	insert into OG_SensorReport(id, project, testReportId, sensorNo, lotNo, dateTime, indoorTemperature, glassTemperature, indoorHumidity, decisionCode, serialNo)
-	values (#{id},#{project},#{testReportId},#{sensorNo},#{lotNo},#{dateTime},#{indoorTemperature},#{glassTemperature},#{indoorHumidity},#{decisionCode},#{serialNo})
+	insert into OG_SensorReport(id, project, testReportId, sensorNo, lotNo, dateTime, indoorTemperature, glassTemperature, indoorHumidity, decisionCode, serialNo, lotNoSerialNo)
+	values (#{id},#{project},#{testReportId},#{sensorNo},#{lotNo},#{dateTime},#{indoorTemperature},#{glassTemperature},#{indoorHumidity},#{decisionCode},#{serialNo},#{lotNoSerialNo})
   </insert>
   <select id="getSummaryReport" parameterType="net.smartworks.rice.model.SummaryReportCond" resultType="net.smartworks.rice.model.SummaryReport">
 	select

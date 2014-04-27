@@ -26,6 +26,7 @@ public class SensorReport {
 	private String decisionCode;
 	private String decisionCodeDesc;
 	private String serialNo;
+	private String lotNoSerialNo;
 	
 	public String getId() {
 		return id;
@@ -98,5 +99,11 @@ public class SensorReport {
 	}
 	public void setDecisionCodeDesc(String decisionCodeDesc) {
 		this.decisionCodeDesc = decisionCodeDesc;
+	}
+	public String getLotNoSerialNo() {
+		return lotNoSerialNo;
+	}
+	public void setLotNoSerialNo(String lotNoSerialNo) {
+		this.lotNoSerialNo = lotNoSerialNo;
 	}
 }

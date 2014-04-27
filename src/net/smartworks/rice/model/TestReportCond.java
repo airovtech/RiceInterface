@@ -23,7 +23,7 @@ public class TestReportCond extends Cond {
 	private Date dateTimeTo;
 	private int fairQualityCount;
 	private int faultCount;
-	private String sensorSerialNo;
+	private String firstSensorId;
 
 	public int getTotalTestCount() {
 		return fairQualityCount + faultCount;
@@ -51,7 +51,11 @@ public class TestReportCond extends Cond {
 		return lotNoLike;
 	}
 	public void setLotNoLike(String lotNoLike) {
-		this.lotNoLike = lotNoLike;
+		if (lotNoLike != null && lotNoLike.indexOf("%") == -1) {
+			this.lotNoLike = "%"+lotNoLike+"%";
+		} else {
+			this.lotNoLike = lotNoLike;
+		}
 	}
 	public Date getDateTime() {
 		return dateTime;
@@ -85,10 +89,10 @@ public class TestReportCond extends Cond {
 	public void setFaultCount(int faultCount) {
 		this.faultCount = faultCount;
 	}
-	public String getSensorSerialNo() {
-		return sensorSerialNo;
+	public String getFirstSensorId() {
+		return firstSensorId;
 	}
-	public void setSensorSerialNo(String sensorSerialNo) {
-		this.sensorSerialNo = sensorSerialNo;
+	public void setFirstSensorId(String firstSensorId) {
+		this.firstSensorId = firstSensorId;
 	}
 }

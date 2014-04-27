@@ -25,6 +25,7 @@ public class SensorReportCond extends Cond {
 	private String indoorHumidity;
 	private String decisionCode;
 	private String serialNo;
+	private String likeLotNoSerailNo;
 	
 	public String getId() {
 		return id;
@@ -91,5 +92,11 @@ public class SensorReportCond extends Cond {
 	}
 	public void setSerialNo(String serialNo) {
 		this.serialNo = serialNo;
+	}
+	public String getLikeLotNoSerailNo() {
+		return likeLotNoSerailNo;
+	}
+	public void setLikeLotNoSerailNo(String likeLotNoSerailNo) {
+		this.likeLotNoSerailNo = likeLotNoSerailNo;
 	}
 }
