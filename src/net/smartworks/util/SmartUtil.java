@@ -215,7 +215,7 @@ public class SmartUtil {
 	
 	public static Date convertDateStringToDate(String yyyyMMdd) throws Exception{
 		if(SmartUtil.isBlankObject(yyyyMMdd) || yyyyMMdd.length()!=10) return null;
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 		try{
 			return new Date((df.parse(yyyyMMdd)).getTime());
 		}catch(Exception e){

@@ -81,6 +81,9 @@ $(function() {
 		try{
 			var input = $(targetElement(e));
 			var searchInstance = input.parents('form[name="frmSearchInstance"]');
+			$('input[name="txtSearchDateFrom"]').attr('value', '');
+			$('input[name="txtSearchDateTo"]').attr('value', '');
+			$('input[name="txtSearchLotNo"]').attr('value', '');
 			if(input.find('option:selected').attr('value') === "searchLotNo"){
 				searchInstance.find('.js_search_lotno').show();
 				searchInstance.find('.js_search_datetime').hide();
@@ -88,6 +91,7 @@ $(function() {
 				searchInstance.find('.js_search_lotno').hide();
 				searchInstance.find('.js_search_datetime').show();
 			}
+			selectListParam(input.siblings('.js_progress_span:first'), false);
 		}catch(error){
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_search_type]', null, error);
 		}			
@@ -106,9 +110,92 @@ $(function() {
 		return false;
 	});
 	
-
-
+	$('.js_select_test_report').live("click", function(e){
+		try{
+			smartPop.progressCenter();
+			var input = $(targetElement(e));
+			if(!input.hasClass('js_select_test_report')) input = input.parents('.js_select_test_report');
+			var reportId = input.attr('reportId');
+			$.ajax({url : "/RiceInterface/jsp/test_detail.jsp?reportId=" + reportId, success : function(data, status, jqXHR) {
+					try{
+						$('.js_test_detail_page').html(data);
+						smartPop.closeProgress();
+					}catch(error){
+						smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_test_report test_detail.jsp]', null, error);
+					}			
+				}
+			});
+		}catch(error){
+			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_test_report]', null, error);
+		}			
+		return false;
+	});
+	
+	$('.js_select_list_type').live("click", function(e){
+		try{
+			smartPop.progressCenter();
+			var input = $(targetElement(e));
+			var listType = input.attr('listType');
+			var url = (listType === 'testList') ? "/RiceInterface/jsp/test_list.jsp" : "/RiceInterface/jsp/summary_list.jsp";
+			$.ajax({url : url, data : { cleanup : 'true'}, success : function(data, status, jqXHR) {
+					try{
+						cleanupListParams(listType);
+						$('#test_list_page').html(data);
+						input.parent().removeClass('unselected').siblings().addClass('unselected');
+						if(listType === 'testList'){
+							$('.js_test_detail_page').html('');
+							smartPop.closeProgress();
+						}else{
+//							$.ajax({url : '/RiceInterface/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
+//									$('.js_test_detail_page').html(data);
+//									smartPop.closeProgress();
+//								}
+//							});
+							smartPop.closeProgress();
+						}
+					}catch(error){
+						smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_list_type ' + url + ']', null, error);
+					}			
+				}
+			});
+		}catch(error){
+			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_list_type]', null, error);
+		}			
+		return false;
+	});
+	
+	$('.js_select_summary_type').live("change", function(e){
+		try{
+			var input = $(targetElement(e));
+			$('input[name="txtSearchDateFrom"]').attr('value', '');
+			$('input[name="txtSearchDateTo"]').attr('value', '');
+			selectSummaryType(input.siblings('.js_progress_span:first'), false);
+		}catch(error){
+			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_search_type]', null, error);
+		}			
+		return false;
+	});
+	
 });
+
+var cleanupListParams = function(listType){
+	$('input[name="txtSearchDateTo"]').attr('value', '');
+	$('input[name="txtSearchLotNo"]').attr('value', '');
+	if(listType === 'testList'){
+		$('input[name="txtSearchDateFrom"]').attr('value', '');
+		$('.js_search_datetime').hide();
+		$('.js_search_lotno').show();
+		$('.js_select_search_type').show().find('option:first').attr('selected', 'selected');
+		$('.js_select_summary_type').hide();
+	}else if(listType === 'summaryList'){
+		$('input[name="txtSearchDateFrom"]').attr('value', '');
+		$('.js_search_datetime').show();
+		$('.js_search_lotno').hide();
+		$('.js_select_search_type').hide();
+		$('.js_select_summary_type').show().find('option:first').attr('selected', 'selected');
+	}
+};
+
 }catch(error){
 	smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice script]', null, error);
 }

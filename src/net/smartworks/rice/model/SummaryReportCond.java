@@ -14,6 +14,11 @@ import net.smartworks.common.Cond;
 
 public class SummaryReportCond extends Cond {
 	
+	public static final String SELECTOR_DAILY = "byDay";
+	public static final String SELECTOR_WEEKLY = "byWeek";
+	public static final String SELECTOR_MONTHLY = "byMonth";
+	public static final String SELECTOR_YEARLY = "byYear";
+	
 	private Date fromDate;
 	private Date toDate;
 	

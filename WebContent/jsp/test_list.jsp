@@ -9,12 +9,13 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%
 
+	String cleanup = request.getParameter("cleanup");
 	RequestParams requestParams = (RequestParams)request.getAttribute("requestParams");
 	
-	if(SmartUtil.isBlankObject(requestParams)){
+	if(SmartUtil.isBlankObject(requestParams) || "true".equals(cleanup)){
 		String savedWorkId = (String)session.getAttribute("workId");
 		requestParams = (RequestParams)session.getAttribute("requestParams");
-		if(!"RiceInterface".equals(savedWorkId) || SmartUtil.isBlankObject(requestParams)){
+		if(!RequestParams.LIST_TYPE_TEST.equals(savedWorkId) || SmartUtil.isBlankObject(requestParams)){
 			requestParams = new RequestParams();
 			requestParams.setPageSize(20);
 			requestParams.setCurrentPage(1);
@@ -22,7 +23,7 @@
 		}
 	}
 	session.setAttribute("requestParams", requestParams);
-	session.setAttribute("workId", "RiceInterface");
+	session.setAttribute("workId", RequestParams.LIST_TYPE_TEST);
 	
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	TestReportCond reportCond = new TestReportCond();
@@ -92,7 +93,7 @@
 				</a>
 				<span class="js_progress_span"></span>
 			</th>
-	 		<th class="r_line">
+	 		<th>
 	 			<a href="" class="js_select_field_sorting" fieldId="<%=TestReport.FIELD_ID_FAULTCOUNT%>">불량 수량
 			 		<span class="<%
 					if(sortedField.getFieldId().equals(TestReport.FIELD_ID_FAULTCOUNT)){
@@ -112,29 +113,17 @@
 		int currentCount = totalSize-(currentPage-1)*pageSize;
 		for (TestReport report : reports) {
 		%>
-			<tr class="instance_list js_content_work_space" href="">
+			<tr class="instance_list js_select_test_report" href="" reportId="<%=report.getId()%>">
 				<td class="tc"><%=currentCount%></td>
 				<%
 				currentCount--;
 				%>
-				<td>
-					<a href=""><%=report.getLotNo() %></a>
-				</td>
-				<td>
-					<a href=""><%=report.getSensorSerialNo() %></a>
-				</td>
-				<td class="tr">
-					<a href=""><%=SmartUtil.printDateTime(report.getDateTime())%></a>
-				</td>
-				<td class="tr">
-					<a href=""><%=report.getTotalTestCount() %></a>
-				</td>
-				<td class="tr">
-					<a href=""><%=report.getFairQualityCount() %></a>
-				</td>
-				<td class="tr">
-					<a href=""><%=report.getFaultCount() %></a>
-				</td>
+				<td><%=report.getLotNo() %></td>
+				<td><%=report.getFirstSensorId() %></td>
+				<td class="tr"><%=SmartUtil.printDateTime(report.getDateTime())%></td>
+				<td class="tr"><%=report.getTotalTestCount() %></td>
+				<td class="tr"><%=report.getFairQualityCount() %></td>
+				<td class="tr"><%=report.getFaultCount() %></td>
 			</tr>
 	<%
 		}
@@ -177,7 +166,7 @@
 				</a>
 				<span class="js_progress_span"></span>
 			</th>
-	 		<th class="r_line">
+	 		<th>
 	 			<a href="" class="js_select_field_sorting" fieldId="<%=TestReport.FIELD_ID_FAULTCOUNT%>">불량 수량
 			 		<span class="<%
 					if(sortedField.getFieldId().equals(TestReport.FIELD_ID_FAULTCOUNT)){

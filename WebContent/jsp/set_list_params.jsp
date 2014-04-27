@@ -5,12 +5,12 @@
 <%@page import="net.smartworks.model.RequestParams"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%
+	
+	JSONObject requestBody = new JSONObject(request.getParameter("data"));
 
-	try{
-		RequestParams requestParams = new RequestParams();
-		
-		JSONObject requestBody = new JSONObject(request.getParameter("data"));
- 
+	String workId = (String)session.getAttribute("workId");
+	RequestParams requestParams = (RequestParams)session.getAttribute("requestParams");
+	if(RequestParams.LIST_TYPE_TEST.equals(requestParams.getListType())){
 		JSONObject frmSearchInstance = new JSONObject(requestBody.get("frmSearchInstance").toString());
 		if(frmSearchInstance != null) {
 			String selSearchType = "", txtSearchLotNo = "", txtSearchDateFrom = "", txtSearchDateTo = "";
@@ -31,7 +31,7 @@
 			requestParams.setSearchDateFrom(txtSearchDateFrom);
 			requestParams.setSearchDateTo(txtSearchDateTo);
 		}
-
+		
 		JSONObject frmSortingField = new JSONObject(requestBody.get("frmSortingField").toString());
 		if(frmSortingField != null){
 			String hdnSortingFieldId = (String)frmSortingField.get("hdnSortingFieldId");
@@ -41,9 +41,9 @@
 			sortingField.setAscending(Boolean.parseBoolean(hdnSortingIsAscending));
 			requestParams.setSortingField(sortingField);
 		}
-
+	
 		JSONObject existListPaging = new JSONObject(requestBody.get("frmInstanceListPaging").toString());
-
+	
 		String hdnCurrentPage = (String)existListPaging.get("hdnCurrentPage");
 		String selPageSize = (String)existListPaging.get("selPageSize");
 		boolean hdnNext10=false,hdnNextEnd=false,hdnPrev10=false,hdnPrevEnd=false;
@@ -71,15 +71,31 @@
 			requestParams.setPagingAction(RequestParams.PAGING_ACTION_PREV10);
 		else if(hdnPrevEnd)
 			requestParams.setPagingAction(RequestParams.PAGING_ACTION_PREVEND);
-
-		session.setAttribute("requestParams", requestParams);
-		session.setAttribute("workId", "RiceInterface");
-		
-   	}catch (Exception e){
-		// Exception Handling Required
-		e.printStackTrace();
-		// Exception Handling Required			
+	}else if(RequestParams.LIST_TYPE_SUMMARY.equals(requestParams.getListType())){
+		JSONObject frmSearchInstance = new JSONObject(requestBody.get("frmSearchInstance").toString());
+		if(frmSearchInstance != null) {
+			String selSummaryType = "", txtSearchDateFrom = "", txtSearchDateTo = "";
+			try{
+				selSummaryType = (String)frmSearchInstance.get("selSummaryType");
+			}catch(Exception e){}
+			try{
+				txtSearchDateFrom = (String)frmSearchInstance.get("txtSearchDateFrom");
+			}catch(Exception e){}
+			try{
+				txtSearchDateTo = (String)frmSearchInstance.get("txtSearchDateTo");
+			}catch(Exception e){}
+			requestParams.setSelectorType(selSummaryType);
+			requestParams.setSearchDateFrom(txtSearchDateFrom);
+			requestParams.setSearchDateTo(txtSearchDateTo);
+		}
 	}
+
+	session.setAttribute("requestParams", requestParams);
+		
 %>
 
-<jsp:include page="/jsp/test_list.jsp"></jsp:include>
+	<%if(RequestParams.LIST_TYPE_TEST.equals(requestParams.getListType())){ %>
+		<jsp:include page="/jsp/test_list.jsp"></jsp:include>
+	<%}else if(RequestParams.LIST_TYPE_SUMMARY.equals(requestParams.getListType())){ %>
+		<jsp:include page="/jsp/summary_list.jsp"></jsp:include>
+	<%} %>

@@ -10,6 +10,9 @@ public class RequestParams {
 	public static final int PAGING_ACTION_PREVEND = 4;
 	public static final int DEFAULT_PAGE_SIZE = 20;
 	
+	public static final String LIST_TYPE_TEST = "testList";
+	public static final String LIST_TYPE_SUMMARY = "summaryList";
+	
 	public static final String SEARCH_TYPE_LOTNO = "searchLotNo";
 	public static final String SEARCH_TYPE_DATETIME = "searchDateTime";
 	
@@ -17,6 +20,9 @@ public class RequestParams {
 	private int currentPage=1;
 	private int pagingAction;
 	private SortingField sortingField;
+	
+	private String listType;
+	private String selectorType;
 	private String searchType;
 	private String searchLotNo;
 	private String searchDateFrom;
@@ -45,6 +51,18 @@ public class RequestParams {
 	}
 	public void setSortingField(SortingField sortingField) {
 		this.sortingField = sortingField;
+	}
+	public String getListType() {
+		return listType;
+	}
+	public void setListType(String listType) {
+		this.listType = listType;
+	}
+	public String getSelectorType() {
+		return selectorType;
+	}
+	public void setSelectorType(String selectorType) {
+		this.selectorType = selectorType;
 	}
 	public String getSearchType() {
 		return searchType;

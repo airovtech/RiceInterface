@@ -1,3 +1,6 @@
+<%@page import="net.smartworks.rice.model.TestReport"%>
+<%@page import="net.smartworks.model.SortingField"%>
+<%@page import="net.smartworks.rice.model.SummaryReportCond"%>
 <%@page import="net.smartworks.util.SmartUtil"%>
 <%@page import="net.smartworks.model.RequestParams"%>
 <%@page import="net.smartworks.model.filter.SearchFilter"%>
@@ -95,7 +98,7 @@ try{
 		smartPop.progressCont(progressSpan);
 		console.log(JSON.stringify(paramsJson));
 		$.ajax({
-			url : "/RiceInterface/jsp/set_test_list_params.jsp?data=" + JSON.stringify(paramsJson),
+			url : "/RiceInterface/jsp/set_list_params.jsp?data=" + JSON.stringify(paramsJson),
 			contentType : 'application/json',
 			type : 'POST',
 			success : function(data, status, jqXHR) {
@@ -146,6 +149,16 @@ try{
 		selectListParam(progressSpan, false);
 	};
 	
+	selectSummaryType = function(progressSpan){
+		var forms = $('form:visible');
+		var paramsJson = {};
+		for(var i=0; i<forms.length; i++){
+			var form = $(forms[i]);
+			paramsJson[form.attr('name')] =form.serializeObject();
+		}
+		getIntanceList(paramsJson, progressSpan, false);		
+	};
+	
 }catch(error){
 }
 </script>
@@ -153,28 +166,24 @@ try{
 <body>
 
 	<%
-		RequestParams params = (RequestParams)request.getAttribute("requestParams");
-		String searchType = "", searchLotNo = "", searchDateFrom = "", searchDateTo = "";
-		if (params == null){
-			String savedWorkId = (String)session.getAttribute("workId");
-			if(!SmartUtil.isBlankObject(savedWorkId) && savedWorkId.equals("RiceInterface")){
-				params = (RequestParams)session.getAttribute("requestParams");
-			}
-		}
-		if (params != null){
-			searchType = params.getSearchType();
-			searchLotNo = params.getSearchLotNo();
-			searchDateFrom = params.getSearchDateFrom();
-			searchDateTo = params.getSearchDateTo();
-		}
+		String listType = RequestParams.LIST_TYPE_TEST, selectorType = "", searchType = "", searchLotNo = "", searchDateFrom = "", searchDateTo = "";
+		RequestParams params = new RequestParams();
+		params.setPageSize(20);
+		params.setCurrentPage(1);
+		params.setSortingField(new SortingField(TestReport.FIELD_ID_DATETIME, false));
+		params.setListType(RequestParams.LIST_TYPE_TEST);
+		listType = params.getListType();
+		selectorType = params.getSelectorType();
+		searchType = params.getSearchType();
+		searchLotNo = params.getSearchLotNo();
+		searchDateFrom = params.getSearchDateFrom();
+		searchDateTo = params.getSearchDateTo();
+		
+		request.setAttribute("requestParams", params);
+
 	%>
 	<!-- 목록영역  -->
 	<div class="contents_space">
-		<div>
-<%-- 			<jsp:include page="/jsp/test_chart.jsp">
-				<jsp:param value="" name="testId"/>
-			</jsp:include>
- --%>		</div>
 		<!-- 목록보기 -->
 		<div>
 			<!-- 목록보기 타이틀-->
@@ -182,7 +191,7 @@ try{
 				<form name="frmSearchInstance" class="title_line_btns">
 					<span class="po_left js_progress_span mt4"></span>
 					
-			  		<div <%if(!RequestParams.SEARCH_TYPE_DATETIME.equals(searchType)){%>style="display:none"<%} %> class="po_left mt3 js_search_datetime" onChange="selectSearchDate($(this).siblings('.js_progress_span:first'));return false;">
+			  		<div <%if(!RequestParams.LIST_TYPE_SUMMARY.equals(listType) && !RequestParams.SEARCH_TYPE_DATETIME.equals(searchType)){%>style="display:none"<%} %> class="po_left mt3 js_search_datetime" onChange="selectSearchDate($(this).siblings('.js_progress_span:first'));return false;">
 						<a href="" class="t_date linkline js_remove_search_date" <%if(SmartUtil.isBlankObject(searchDateFrom) && SmartUtil.isBlankObject(searchDateTo)){ %>style="display:none"<%} %>>삭제</a>
 			  			<div class="icon_fb_space" style="display:inline-block">
 			  				<input readonly="readonly" style="width:80px" type="text" name="txtSearchDateFrom" class="fieldline js_todaypicker" value="<%=SmartUtil.toNotNull(searchDateFrom) %>"/>
@@ -194,21 +203,26 @@ try{
 			  				<a href class="js_todaypicker_button"><span class="icon_fb_date"></span></a>
 			  			</div>
 			  		</div> 
-					<div <%if(RequestParams.SEARCH_TYPE_DATETIME.equals(searchType)){%>style="display:none"<%} %> class="srch_wh srch_wsize po_left ml10 mt3 js_search_lotno">
+					<div <%if(RequestParams.LIST_TYPE_SUMMARY.equals(listType) || RequestParams.SEARCH_TYPE_DATETIME.equals(searchType)){%>style="display:none"<%} %> class="srch_wh srch_wsize po_left ml10 mt3 js_search_lotno">
 						<input name="txtSearchLotNo" class="nav_input" value="<%=SmartUtil.toNotNull(searchLotNo)%>" type="text" placeholder="검색">
 						<button title="로트번호 검색" onclick="selectListParam($(this).parent().siblings('.js_progress_span:first'), false);return false;"></button>
 					</div>
-					<select name="selSearchType" class="form_space po_left js_select_search_type">
+					<select <%if(RequestParams.LIST_TYPE_SUMMARY.equals(listType)){ %>style="display:none"<%} %> name="selSearchType" class="form_space po_left js_select_search_type">
 						<option value="<%=RequestParams.SEARCH_TYPE_LOTNO %>" <%if(RequestParams.SEARCH_TYPE_LOTNO.equals(searchType)){%>selected<%} %>>로트번호 검색</option>
 						<option value="<%=RequestParams.SEARCH_TYPE_DATETIME %>" <%if(RequestParams.SEARCH_TYPE_DATETIME.equals(searchType)){%>selected<%} %>>날짜 검색</option>
 					</select>
-				</form>
-			
+					<select <%if(RequestParams.LIST_TYPE_TEST.equals(listType)){ %>style="display:none"<%} %> name="selSummaryType" class="form_space po_left js_select_summary_type">
+						<option value="<%=SummaryReportCond.SELECTOR_DAILY %>" <%if(SummaryReportCond.SELECTOR_DAILY.equals(selectorType)){%>selected<%} %>>일별</option>
+						<option value="<%=SummaryReportCond.SELECTOR_WEEKLY %>" <%if(SummaryReportCond.SELECTOR_WEEKLY.equals(selectorType)){%>selected<%} %>>주별</option>
+						<option value="<%=SummaryReportCond.SELECTOR_MONTHLY %>" <%if(SummaryReportCond.SELECTOR_MONTHLY.equals(selectorType)){%>selected<%} %>>월별</option>
+						<option value="<%=SummaryReportCond.SELECTOR_YEARLY %>" <%if(SummaryReportCond.SELECTOR_YEARLY.equals(selectorType)){%>selected<%} %>>년별</option>
+					</select>
+				</form>			
 				<div class="title_line_options titl_section">
 					<!-- 타이틀을 나타내는 곳 -->
-					<div class="title">
-						<span class="current"><a class="linkline" href="" viewType="listByTest">테스트별</a></span> | 
-						<span class=""><a style="font-size:12px;color:#888888" class="linkline" href="" viewType="listByPeriod">기간별</a></span>
+					<div class="title js_select_list_type">
+						<span><a class="linkline" href="" listType="<%=RequestParams.LIST_TYPE_TEST%>">테스트별</a></span> | 
+						<span class="unselected"><a class="linkline" href="" listType="<%=RequestParams.LIST_TYPE_SUMMARY%>">기간별</a></span>
 					</div>					
 					<span class="js_progress_span"></span>
 				</div>
@@ -218,14 +232,17 @@ try{
 			<!-- 목록 테이블 -->
 			<div class="list_contents">
 				<div id='test_list_page' >
-					<jsp:include page="/jsp/test_list.jsp">
-						<jsp:param value="" name="workId"/>
-					</jsp:include>
+					<%if(RequestParams.LIST_TYPE_TEST.equals(listType)){ %>
+						<jsp:include page="/jsp/test_list.jsp"/>
+					<%}else if(RequestParams.LIST_TYPE_SUMMARY.equals(listType)){ %>
+						<jsp:include page="/jsp/summary_list.jsp"/>
+					<%} %>
 				</div>
 			</div>
 			<!-- 목록 테이블 //-->
 		</div>
 		<!-- 목록 보기 -->
+		<div class="js_test_detail_page"></div>	
 	</div>
 	<!-- 목록영역 // -->
 
