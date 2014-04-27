@@ -17,7 +17,10 @@ public class TestReportCond extends Cond {
 	private String id;
 	private String project;
 	private String lotNo;
+	private String lotNoLike;
 	private Date dateTime;
+	private Date dateTimeFrom;
+	private Date dateTimeTo;
 	private int fairQualityCount;
 	private int faultCount;
 	private String sensorSerialNo;
@@ -44,12 +47,32 @@ public class TestReportCond extends Cond {
 	public void setLotNo(String lotNo) {
 		this.lotNo = lotNo;
 	}
+	public String getLotNoLike() {
+		return lotNoLike;
+	}
+	public void setLotNoLike(String lotNoLike) {
+		this.lotNoLike = lotNoLike;
+	}
 	public Date getDateTime() {
 		return dateTime;
 	}
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 	}
+	public Date getDateTimeFrom() {
+		return dateTimeFrom;
+	}
+	public void setDateTimeFrom(Date dateTimeFrom) {
+		this.dateTimeFrom = dateTimeFrom;
+	}
+	public Date getDateTimeTo() {
+		return dateTimeTo;
+	}
+
+	public void setDateTimeTo(Date dateTimeTo) {
+		this.dateTimeTo = dateTimeTo;
+	}
+
 	public int getFairQualityCount() {
 		return fairQualityCount;
 	}

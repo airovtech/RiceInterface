@@ -11,6 +11,15 @@ package net.smartworks.rice.model;
 import java.util.Date;
 
 public class TestReport {
+	
+	public static final String FIELD_ID_ID = "id";
+	public static final String FIELD_ID_LOTNO = "lotNo";
+	public static final String FIELD_ID_PROJECT = "project";
+	public static final String FIELD_ID_DATETIME = "dateTime";
+	public static final String FIELD_ID_FQCOUNT = "fairQualityCount";
+	public static final String FIELD_ID_FAULTCOUNT = "faultCount";
+	public static final String FIELD_ID_SENSOR_SN = "sensorSerialNo";
+	public static final String FIELD_ID_REPORTFILENAME = "reportFileName";
 
 	private String id;
 	private String project = "ADS";
