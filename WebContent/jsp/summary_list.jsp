@@ -1,3 +1,6 @@
+<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
+<%@page import="org.codehaus.jackson.map.ObjectWriter"%>
+<%@page import="net.smartworks.common.Data"%>
 <%@page import="java.util.Date"%>
 <%@page import="net.smartworks.rice.model.SummaryReport"%>
 <%@page import="net.smartworks.rice.model.SummaryReportCond"%>
@@ -36,7 +39,8 @@
 	
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	
-	SummaryReport[] reports = mgr.getSummaryReports(fromDate, toDate, selectorType);
+	SummaryReport[] reports = mgr.getSummaryReports(fromDate, toDate, selectorType);	
+
 %>
 
 <!-- 목록 테이블 -->
@@ -48,19 +52,19 @@
  		<th class="r_line">총 양품 수량</th>
  		<th class="r_line">총 불량 수량</th>
  		<th class="r_line">불량률</th>
- 		<th>보기</th>
+ 		<th>코드별 불량비율</th>
 	</tr>	
 	<%
 	if(!SmartUtil.isBlankObject(reports)){
 		for (SummaryReport report : reports) {
 		%>
-			<tr class="instance_list js_select_test_report" summaryId="<%=report.getTestDate()%>">
+			<tr>
 				<td><%=report.getTestDate() %></td>
 				<td class="tr"><%=report.getTotalTestCount()%></td>
 				<td class="tr"><%=report.getTotalFairQualityCount() %></td>
 				<td class="tr"><%=report.getTotalFaultCount() %></td>
-				<td class="tr"><%=report.getFaultPercent() %></td>
-				<td></td>
+				<td class="tr"><%=String.format("%3.2f", report.getFaultPercent())%>%</td>
+				<td class="tc"><a href="" class="linkline js_pop_detail_chart" fromDate="<%=requestParams.getSearchDateFrom() %>" toDate="<%=requestParams.getSearchDateTo() %>" selectorType="<%=selectorType %>" testDate="<%=report.getTestDate()%>">차트보기</a></td>
 			</tr>
 	<%
 		}

@@ -1957,8 +1957,26 @@ smartPop = {
 		}catch(error){
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-popup createReportPane]', null, error);
 		}				
-	}
+	},
 	
+	showDetailChart : function(fromDate, toDate, selectorType, testDate){
+		try{
+			$.get("/RiceInterface/jsp/pop_detail_chart.jsp?fromDate=" + fromDate + "&toDate="+ toDate + "&selectorType=" + selectorType + "&testDate=" + testDate, function(data){
+				$(data).modal({
+					opacity: 10,
+					overlayCss: {backgroundColor:"#000"},
+					containerCss:{
+						height:460,
+						width:460
+					},
+					overlayClose: false
+				});
+			});
+		}catch(error){
+			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-popup showDetailChart]', null, error);
+		}				
+	}
+
 };
 }catch(error){
 	smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-popup script]', null, error);

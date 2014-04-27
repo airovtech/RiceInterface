@@ -103,7 +103,15 @@ try{
 			type : 'POST',
 			success : function(data, status, jqXHR) {
 				$('#test_list_page').html(data);
-				smartPop.closeProgress();
+				if($('.js_select_list_type a[listType="testList"]').parent().hasClass('unselected')){
+					$.ajax({url : '/RiceInterface/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
+							$('.js_test_detail_page').html(data);
+							smartPop.closeProgress();
+						}
+					});
+				}else{
+					smartPop.closeProgress();
+				}
 			},
 			error : function(xhr, ajaxOptions, thrownError) {
 				smartPop.closeProgress();

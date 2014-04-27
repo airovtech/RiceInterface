@@ -190,7 +190,7 @@ public class UiManagerImpl implements IUiManager {
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
 		//기간별 생산(양품)수량
 		String xFieldName = "검사일";
-		String yValueName = "갯수";
+		String yValueName = "양품 수량";
 		
 		SqlSession session = null;
 		try {

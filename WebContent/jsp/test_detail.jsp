@@ -15,7 +15,7 @@
 	TestReport report = mgr.getTestReportWithSensorReports(reportId);
 %>
 
-<div class="list_title_space" style="margin-top:20px"">
+<div class="list_title_space" style="margin-top:20px">
 	<div class="title">테스트 상세정보</div>
 </div>
 <div class="list_contents border" style="padding: 10px">

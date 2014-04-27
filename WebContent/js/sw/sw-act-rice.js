@@ -146,12 +146,11 @@ $(function() {
 							$('.js_test_detail_page').html('');
 							smartPop.closeProgress();
 						}else{
-//							$.ajax({url : '/RiceInterface/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
-//									$('.js_test_detail_page').html(data);
-//									smartPop.closeProgress();
-//								}
-//							});
-							smartPop.closeProgress();
+							$.ajax({url : '/RiceInterface/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
+									$('.js_test_detail_page').html(data);
+									smartPop.closeProgress();
+								}
+							});
 						}
 					}catch(error){
 						smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_list_type ' + url + ']', null, error);
@@ -176,6 +175,20 @@ $(function() {
 		return false;
 	});
 	
+	$('.js_pop_detail_chart').live('click', function(e){
+		try{
+			var input = $(targetElement(e));
+			var fromDate = input.attr('fromDate');
+			var toDate = input.attr('toDate');
+			var selectorType = input.attr('selectorType');
+			var testDate = input.attr('testDate');
+			smartPop.showDetailChart(fromDate, toDate, selectorType, testDate);
+			return false;
+		}catch(error){
+			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_pop_detail_chart]', null, error);
+		}
+	});
+			
 });
 
 var cleanupListParams = function(listType){
