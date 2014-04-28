@@ -68,6 +68,7 @@ try{
 <script type="text/javascript" src="../js/jquery/history/jquery.history.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.json-2.3.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.simplemodal.1.4.2.min.js"></script>
 <script type="text/javascript" src="../js/ext/ext-all.js"></script>
 
 <script type="text/javascript" src="../js/sw/sw-language.js"></script>
