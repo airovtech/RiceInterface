@@ -28,6 +28,8 @@ import net.smartworks.util.FileUtil;
 import net.smartworks.util.IdUtil;
 import net.smartworks.util.PropertiesLoader;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
@@ -35,12 +37,13 @@ import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
 
 public class FtpFileTransfer {
-
+	
 	static String server;
 	static int port;
 	static String id;
 	static String password;
 	FTPClient ftpClient;
+	static Log log;
 
 	public FtpFileTransfer(String server, int port, String id, String password) {
 		this.server = server;
@@ -49,9 +52,12 @@ public class FtpFileTransfer {
 		this.password = password;
 		
 		ftpClient = new FTPClient();
+		log = LogFactory.getLog(FtpFileTransfer.class);
+		
 	}
 
 	public static void parsing() throws Exception {
+		
 		
 		Properties prop = PropertiesLoader.loadProp("ftp.config.properties");
 		String serverAddress = prop.getProperty("ftp.address");
@@ -60,6 +66,8 @@ public class FtpFileTransfer {
 		String userPassword = prop.getProperty("ftp.password");
 		
 		FtpFileTransfer ftp = new FtpFileTransfer(serverAddress, serverPort, userId, userPassword);
+
+		log.info("###### Start Ftp File Transfer Module at " + new Date() + " ######");
 		
 		ftp.connect();
 		ftp.login(ftp.id, ftp.password);
@@ -69,6 +77,7 @@ public class FtpFileTransfer {
 		String folderName = "ADS_" + toDayStr;
 		String targetDir = "/ads/" + folderName;
 		
+		log.info("	From Dir : " + targetDir);
 		
 		FtpHistoryCond historyCond = new FtpHistoryCond();
 		historyCond.setFolderName(folderName);
@@ -76,7 +85,7 @@ public class FtpFileTransfer {
 		if (todayFtpHistory == null)
 			todayFtpHistory = new ArrayList<String>();
 		//test
-		targetDir = "/ads/ADS_20140422";
+		targetDir = "/ads/ADS_20140326";
 		
 		ftp.cd(targetDir);
 		FTPFile[] files = ftp.list();
@@ -91,8 +100,7 @@ public class FtpFileTransfer {
 				File file = ftp.get(fileName, fileName);
 				//System.out.println(fileName  + " 전송완료!");
 				
-				//TODO 파싱
-				//System.out.println(FileUtil.readString(file));
+				log.info("	@@ Start Parsing File! : " + fileName);
 				
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddhhmmss");
 				
@@ -104,6 +112,7 @@ public class FtpFileTransfer {
 				
 				for (int j = 0; j < rows.length; j++) {
 					String rowData = rows[j].substring(1, rows[j].indexOf("]"));
+					log.info("	" + fileName + "'s rowData : " + rowData);
 					if (j == 0) {
 						//검사 데이터
 						String[] columnDatas = StringUtils.tokenizeToStringArray(rowData, ",");
@@ -151,6 +160,8 @@ public class FtpFileTransfer {
 				
 				//리포트를 저장한다
 				ManagerFactory.getInstance().getRptManager().setTestReport(report);
+
+				log.info("	Save TestReport Data! : Done!!!!");
 				
 				//ftp history 를 저장한다
 				FtpHistory history = new FtpHistory();
@@ -160,11 +171,13 @@ public class FtpFileTransfer {
 				history.setFileSerial(fileName.substring(fileName.indexOf("_") + 1, fileName.indexOf(".")));
 				history.setCreateDate(new Date());
 				ManagerFactory.getInstance().getRptManager().setFtpHistory(history);
+				
+				log.info("	Save Ftp History Data! : Done!!!!");
 			}
 		}
 		ftp.logout();
 		ftp.disconnect();
-		//System.exit(1);
+		log.info("###### End Ftp File Transfer Module at " + new Date() + " ######");
 	}
 
 	// 계정과 패스워드로 로그인
@@ -198,18 +211,16 @@ public class FtpFileTransfer {
 			if (!FTPReply.isPositiveCompletion(reply)) {
 				ftpClient.disconnect();
 				System.err.println("서버로부터 연결을 거부당했습니다");
-				System.exit(1);
 			}
 		} catch (IOException ioe) {
 			if (ftpClient.isConnected()) {
 				try {
 					ftpClient.disconnect();
 				} catch (IOException f) {
-					//
+					f.printStackTrace();
 				}
 			}
 			System.err.println("서버에 연결할 수 없습니다");
-			System.exit(1);
 		}
 	}
 
