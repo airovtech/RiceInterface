@@ -18,7 +18,7 @@ public class TestReport {
 	public static final String FIELD_ID_DATETIME = "dateTime";
 	public static final String FIELD_ID_FQCOUNT = "fairQualityCount";
 	public static final String FIELD_ID_FAULTCOUNT = "faultCount";
-	public static final String FIELD_ID_SENSOR_SN = "sensorSerialNo";
+	public static final String FIELD_ID_SENSOR_SN = "firstSensorId";
 	public static final String FIELD_ID_REPORTFILENAME = "reportFileName";
 
 	private String id;
@@ -84,8 +84,8 @@ public class TestReport {
 	public String getFirstSensorId() {
 		return firstSensorId;
 	}
-	public void setFirstSensorId(String sensorSerialNo) {
-		this.firstSensorId = sensorSerialNo;
+	public void setFirstSensorId(String firstSensorId) {
+		this.firstSensorId = firstSensorId;
 	}
 	public String getReportFileName() {
 		return reportFileName;
@@ -93,4 +93,5 @@ public class TestReport {
 	public void setReportFileName(String reportFileName) {
 		this.reportFileName = reportFileName;
 	}
+	
 }

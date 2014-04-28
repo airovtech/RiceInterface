@@ -11,6 +11,7 @@ package net.smartworks.rice.model;
 public class SummaryReportPopRSet {
 	
 	private String decisionCode;
+	private String decisionCodeDesc;
 	private int codeCount;
 	
 	public String getDecisionCode() {
@@ -24,5 +25,11 @@ public class SummaryReportPopRSet {
 	}
 	public void setCodeCount(int codeCount) {
 		this.codeCount = codeCount;
+	}
+	public String getDecisionCodeDesc() {
+		return decisionCodeDesc;
+	}
+	public void setDecisionCodeDesc(String decisionCodeDesc) {
+		this.decisionCodeDesc = decisionCodeDesc;
 	}
 }

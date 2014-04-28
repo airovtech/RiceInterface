@@ -145,7 +145,73 @@ public class UiManagerImpl implements IUiManager {
 	}
 
 	@Override
-	public SummaryReportPop getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception {
+	public Data getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception {
+		SqlSession session = null;
+		
+		String xFieldName = "판정코드";
+		String yValueName = "갯수";
+		
+		try {
+			SqlSessionFactory factory = SessionFactory.getInstance().getSqlSessionFactory();
+			session = factory.openSession();
+			SummaryReportPopCond reportCond = new SummaryReportPopCond();
+			reportCond.setSelector(selector);
+			reportCond.setFromDate(fromDate);
+			reportCond.setToDate(toDate);
+			reportCond.setSelectTestDate(selectTestDate);
+			
+			List<SummaryReportPopRSet> summaryReportRs = session.selectList("getSummaryReportPop", reportCond);
+
+			Data chartData = new Data();
+			chartData.setGroupNames(new String[]{yValueName});
+			chartData.setxFieldName(xFieldName);
+			chartData.setyValueName(yValueName);
+			
+			if (summaryReportRs != null) {
+				List<Map<String, Object>> values = new ArrayList<Map<String, Object>>();
+				for (SummaryReportPopRSet data : summaryReportRs) {
+					Map valueMap = new HashMap();
+				
+					valueMap.put(xFieldName, data.getDecisionCode() + "(" +data.getDecisionCodeDesc() + ")");
+					valueMap.put(yValueName, data.getCodeCount());
+					
+					values.add(valueMap);
+				}
+				chartData.setValues(values);
+			}
+			
+			
+			
+			/*SummaryReportPop result = new SummaryReportPop();
+			if (summaryReportRs != null && summaryReportRs.size() != 0) {
+				Map codeCountMap = new HashMap();
+				int fairCount = 0;
+				int faultCount = 0;
+				for (int i = 0; i < summaryReportRs.size(); i++) {
+					SummaryReportPopRSet rs = summaryReportRs.get(i);
+					String codeName = rs.getDecisionCode();
+					if (codeName.equalsIgnoreCase(SensorReport.fairQualityCode)) {
+						fairCount = fairCount + rs.getCodeCount();
+					} else {
+						faultCount = faultCount + rs.getCodeCount();
+					}
+					codeCountMap.put(codeName, rs.getCodeCount());
+				}
+				result.setFaultCodeCountMap(codeCountMap);
+				result.setTotalFairQualityCount(fairCount);
+				result.setTotalFaultCount(faultCount);
+			}*/
+			return chartData;
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (session != null)
+				session.close();
+		}
+	}
+	@Override
+	public SummaryReportPop getSummaryReportPopObj(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception {
 		SqlSession session = null;
 		try {
 			SqlSessionFactory factory = SessionFactory.getInstance().getSqlSessionFactory();
@@ -185,7 +251,6 @@ public class UiManagerImpl implements IUiManager {
 				session.close();
 		}
 	}
-
 	@Override
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
 		//기간별 생산(양품)수량

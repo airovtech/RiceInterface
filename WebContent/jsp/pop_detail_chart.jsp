@@ -18,7 +18,8 @@
 	
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	
-	Data data = mgr.getLineChartReportData(fromDate, toDate, selectorType);
+	//Data data = mgr.getLineChartReportData(fromDate, toDate, selectorType);
+	Data data = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr);
 	
 	String dataJson = null;
 	if(data!=null){
