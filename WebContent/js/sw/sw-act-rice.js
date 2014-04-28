@@ -182,7 +182,8 @@ $(function() {
 			var toDate = input.attr('toDate');
 			var selectorType = input.attr('selectorType');
 			var testDate = input.attr('testDate');
-			smartPop.showDetailChart(fromDate, toDate, selectorType, testDate);
+			var top = input.offset().top+ input.height() ;
+			smartPop.showDetailChart(fromDate, toDate, selectorType, testDate, top, window.innerWidth);
 			return false;
 		}catch(error){
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_pop_detail_chart]', null, error);

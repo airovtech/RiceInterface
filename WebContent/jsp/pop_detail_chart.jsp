@@ -34,7 +34,7 @@
 
 	<!-- 팝업 타이틀 -->
 	<div class="form_title">
-		<div class="pop_title"><%=testDateStr %> 코드별 불량비율</div>
+		<div class="pop_title"><%=testDateStr %></div>
 		<div class="txt_btn">			
 			<a href="" onclick="smartPop.close();return false;"><div class="btn_x"></div></a>
 		</div>

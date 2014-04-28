@@ -43,5 +43,11 @@
 <script type="text/javascript">
 $(function() {
 	smartChart.loadWithData(swReportType.CHART, <%=dataJson%>, swChartType.LINE, false, "chart_target");
+	var chartTarget = $('#chart_target');
+	chartTarget.find('text[text="양품 수량"]').css("font-size", "14px");
+	chartTarget.find('text[text="검사일"]').css("font-size", "14px");
+	try{
+		setTimeout(function(){parent.doIframeAutoHeight();}, 1000);
+	}catch(e){}
 });
 </script>

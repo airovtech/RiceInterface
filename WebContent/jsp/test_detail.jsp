@@ -87,3 +87,11 @@
 	}
 	%>
 </div>
+
+<script type="text/javascript">
+$(function() {
+	try{
+	setTimeout(function(){parent.doIframeAutoHeight();}, 1000);
+	}catch(e){}
+});
+</script>
