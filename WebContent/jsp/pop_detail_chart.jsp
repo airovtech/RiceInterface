@@ -33,7 +33,7 @@
 
 	<!-- 팝업 타이틀 -->
 	<div class="form_title">
-		<div class="pop_title">코드별 불량비율</div>
+		<div class="pop_title"><%=testDateStr %> 코드별 불량비율</div>
 		<div class="txt_btn">			
 			<a href="" onclick="smartPop.close();return false;"><div class="btn_x"></div></a>
 		</div>
@@ -48,9 +48,9 @@
 
 </div>
 <!-- 전체 레이아웃//-->
-<%-- <script type="text/javascript">
+<script type="text/javascript">
 $(function() {
 	smartChart.loadWithData(swReportType.CHART, <%=dataJson%>, swChartType.PIE, false, "detail_chart_target");
+	$('#detail_chart_target>div:first>span:first').hide();
 });
 </script>
- --%>

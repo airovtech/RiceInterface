@@ -1961,13 +1961,13 @@ smartPop = {
 	
 	showDetailChart : function(fromDate, toDate, selectorType, testDate){
 		try{
-			$.get("/RiceInterface/jsp/pop_detail_chart.jsp?fromDate=" + fromDate + "&toDate="+ toDate + "&selectorType=" + selectorType + "&testDate=" + testDate, function(data){
+			var url = "/RiceInterface/jsp/pop_detail_chart.jsp?fromDate=" + fromDate + "&toDate="+ toDate + "&selectorType=" + selectorType + "&testDate=" + testDate;
+			$.get( url, function(data){
 				$(data).modal({
 					opacity: 10,
 					overlayCss: {backgroundColor:"#000"},
 					containerCss:{
-						height:460,
-						width:460
+						width:380
 					},
 					overlayClose: false
 				});
