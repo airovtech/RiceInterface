@@ -174,6 +174,18 @@
 			,decisionCode
 		from OG_sensorReport
 		where 1=1
+	<if test="selector.equalsIgnoreCase('byDay')">
+		and DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' = #{selectTestDate} 
+	</if>
+    <if test="selector.equalsIgnoreCase('byWeek')">
+		and DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' = #{selectTestDate} 
+	</if>
+    <if test="selector.equalsIgnoreCase('byMonth')">
+		and DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' = #{selectTestDate}  
+	</if>
+    <if test="selector.equalsIgnoreCase('byYear')">
+		and DATENAME(yyyy, dateTime)+ '년 ' = #{selectTestDate} 
+	</if>
 	<if test="fromDate != null">
 		and dateTime &gt;= #{fromDate}
 	</if>
@@ -184,10 +196,6 @@
 	left outer join 
 	OG_CodeTable code
 	on baseTbl.decisionCode = code.code
-	where 1=1
-    <if test="selectTestDate != null">
-	and baseTbl.testDate = #{selectTestDate}
-    </if>
 	group by baseTbl.decisionCode, code.description
   </select>
   
