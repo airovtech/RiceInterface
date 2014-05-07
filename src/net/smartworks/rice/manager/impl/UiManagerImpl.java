@@ -19,6 +19,7 @@ import net.smartworks.factory.SessionFactory;
 import net.smartworks.rice.manager.IUiManager;
 import net.smartworks.rice.model.SensorReport;
 import net.smartworks.rice.model.SensorReportCond;
+import net.smartworks.rice.model.SummaryBarChartData;
 import net.smartworks.rice.model.SummaryLineChartData;
 import net.smartworks.rice.model.SummaryReport;
 import net.smartworks.rice.model.SummaryReportCond;
@@ -287,8 +288,52 @@ public class UiManagerImpl implements IUiManager {
 
 	@Override
 	public Data getBarChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		//기간별 양품, 불량 수량
+		String xFieldName = "검사일";
+		String yValueName = "수량";
+		String groupNames1 = "양품 수량";
+		String groupNames2 = "불량 수량";
+		
+		SqlSession session = null;
+		try {
+			SqlSessionFactory factory = SessionFactory.getInstance().getSqlSessionFactory();
+			session = factory.openSession();
+			SummaryReportPopCond reportCond = new SummaryReportPopCond();
+			reportCond.setSelector(selector);
+			reportCond.setFromDate(fromDate);
+			reportCond.setToDate(toDate);
+			
+			List<SummaryBarChartData> summaryCharts = session.selectList("getBarChartReportData", reportCond);
+			
+			Data chartData = new Data();
+			chartData.setGroupNames(new String[]{groupNames1, groupNames2});
+			chartData.setxFieldName(xFieldName);
+			chartData.setyValueName(yValueName);
+			
+			if (summaryCharts != null) {
+				List<Map<String, Object>> values = new ArrayList<Map<String, Object>>();
+				for (SummaryBarChartData data : summaryCharts) {
+					Map valueMap = new HashMap();
+				
+					String testDate = data.getTestDate();
+					int totalFairQualityCount = data.getTotalFairQualityCount();
+					int totalFaultCount = data.getTotalFaultCount();
+					
+					valueMap.put(xFieldName, testDate);
+					valueMap.put(groupNames1, totalFairQualityCount);
+					valueMap.put(groupNames2, totalFaultCount);
+					
+					values.add(valueMap);
+				}
+				chartData.setValues(values);
+			}
+			return chartData;
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (session != null)
+				session.close();
+		}
 	}
-
 }
