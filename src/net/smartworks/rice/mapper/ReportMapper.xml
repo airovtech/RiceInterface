@@ -92,6 +92,7 @@
     <if test="serialNo != null">
        AND serialNo = #{serialNo}
     </if>
+    ORDER BY ID
   </select>
   <insert id="setTestReport" parameterType="net.smartworks.rice.model.TestReport">
   	insert into OG_TestReport(id, project, lotNo, dateTime, fairQualityCount, faultCount, firstSensorId, reportFileName)

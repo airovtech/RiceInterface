@@ -12,9 +12,6 @@
 </head>
 <body>
 <%
-	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
-	SummaryReportPop rep = mgr.getSummaryReportPop(new Date(114,01,01), new Date(), "byYear", "");
-	out.println( rep.getTotalFaultCount() + "/" + rep.getTotalCount() + " : faultPercent - " + " % " + "</br>");
 	%>
 </body>
 </html>

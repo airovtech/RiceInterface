@@ -85,7 +85,7 @@ public class FtpFileTransfer {
 		if (todayFtpHistory == null)
 			todayFtpHistory = new ArrayList<String>();
 		//test
-		targetDir = "/ads/ADS_20140423";
+		//targetDir = "/ads/ADS_20140423";
 		
 		ftp.cd(targetDir);
 		FTPFile[] files = ftp.list();
