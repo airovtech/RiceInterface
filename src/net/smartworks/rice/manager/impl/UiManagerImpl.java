@@ -9,6 +9,7 @@
 package net.smartworks.rice.manager.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,26 @@ public class UiManagerImpl implements IUiManager {
 	public UiManagerImpl() {
 		//org.apache.ibatis.logging.LogFactory.useLog4JLogging();
 	}
+
+	private Date getFromDate(String selector) {
+		Calendar cal = Calendar.getInstance();
+		if (selector.equalsIgnoreCase(SummaryReportCond.SELECTOR_DAILY)) {
+			cal.add(Calendar.MONTH, -2);
+			return cal.getTime();
+		} else if (selector.equalsIgnoreCase(SummaryReportCond.SELECTOR_WEEKLY)) {
+			cal.add(Calendar.YEAR, -1);
+			return cal.getTime();
+		} else if (selector.equalsIgnoreCase(SummaryReportCond.SELECTOR_MONTHLY)) {
+			cal.add(Calendar.YEAR, -4);
+			return cal.getTime();
+		} else if (selector.equalsIgnoreCase(SummaryReportCond.SELECTOR_YEARLY)) {
+			cal.add(Calendar.YEAR, -50);
+			return cal.getTime();
+		} else {
+			return null;
+		}
+	}
+	
 	@Override
 	public int getTestReportSize(TestReportCond cond) throws Exception {
 		SqlSession session = null;
@@ -120,6 +141,11 @@ public class UiManagerImpl implements IUiManager {
 
 	@Override
 	public SummaryReport[] getSummaryReports(Date fromDate, Date toDate, String selector) throws Exception {
+		
+		if (fromDate == null && toDate == null) {
+			fromDate = getFromDate(selector);
+		}
+		
 		SqlSession session = null;
 		try {
 			SqlSessionFactory factory = SessionFactory.getInstance().getSqlSessionFactory();
@@ -151,6 +177,11 @@ public class UiManagerImpl implements IUiManager {
 	}
 	@Override
 	public Data getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate, String chartType) throws Exception {
+		
+		if (fromDate == null && toDate == null) {
+			fromDate = getFromDate(selector);
+		}
+		
 		SqlSession session = null;
 		
 		String xFieldName = "판정코드";
@@ -201,6 +232,11 @@ public class UiManagerImpl implements IUiManager {
 	}
 	@Override
 	public SummaryReportPop getSummaryReportPopObj(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception {
+		
+		if (fromDate == null && toDate == null) {
+			fromDate = getFromDate(selector);
+		}
+		
 		SqlSession session = null;
 		try {
 			SqlSessionFactory factory = SessionFactory.getInstance().getSqlSessionFactory();
@@ -240,8 +276,14 @@ public class UiManagerImpl implements IUiManager {
 				session.close();
 		}
 	}
+	
 	@Override
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
+
+		if (fromDate == null && toDate == null) {
+			fromDate = getFromDate(selector);
+		}
+		
 		//기간별 생산(양품)수량
 		String xFieldName = "검사일";
 		String yValueName = "양품 수량";
@@ -288,6 +330,11 @@ public class UiManagerImpl implements IUiManager {
 
 	@Override
 	public Data getBarChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
+		
+		if (fromDate == null && toDate == null) {
+			fromDate = getFromDate(selector);
+		}
+		
 		//기간별 양품, 불량 수량
 		String xFieldName = "검사일";
 		String yValueName = "수량";
