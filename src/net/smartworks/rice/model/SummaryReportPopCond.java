@@ -14,6 +14,9 @@ import net.smartworks.common.Cond;
 
 public class SummaryReportPopCond extends Cond {
 	
+	public static final String CHARTTYPEALL = "ALL";
+	public static final String CHARTTYPEFAULT = "FAULT";
+	
 	private Date fromDate;
 	private Date toDate;
 	private String selector;
@@ -42,5 +45,8 @@ public class SummaryReportPopCond extends Cond {
 	}
 	public void setSelectTestDate(String selectTestDate) {
 		this.selectTestDate = selectTestDate;
+	}
+	public String getFairQualityCode() {
+		return SensorReport.fairQualityCode;
 	}
 }

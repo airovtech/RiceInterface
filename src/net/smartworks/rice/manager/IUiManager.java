@@ -35,6 +35,11 @@ public interface IUiManager {
 	//팝업데이터를 다시 취합하기 위하여 해당 정보들이 필요
 	public Data getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception;
 	
+	//팝업데이터 차트를 타입별로 본다
+	//SummaryReportPopCond.CHARTTYPEALL : 전체 검사수량 내 양품수량, 불량수량 비율
+	//SummaryReportPopCond.CHARTTYPEFAULT : 불량수량 내 불량 코드 비율
+	public Data getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate, String chartType) throws Exception;
+	
 	public SummaryReportPop getSummaryReportPopObj(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception;
 	
 	//차트 데이터

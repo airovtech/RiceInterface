@@ -146,6 +146,10 @@ public class UiManagerImpl implements IUiManager {
 
 	@Override
 	public Data getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception {
+		return getSummaryReportPop(fromDate, toDate, selector, selectTestDate, SummaryReportPopCond.CHARTTYPEALL);
+	}
+	@Override
+	public Data getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate, String chartType) throws Exception {
 		SqlSession session = null;
 		
 		String xFieldName = "판정코드";
@@ -160,7 +164,12 @@ public class UiManagerImpl implements IUiManager {
 			reportCond.setToDate(toDate);
 			reportCond.setSelectTestDate(selectTestDate);
 			
-			List<SummaryReportPopRSet> summaryReportRs = session.selectList("getSummaryReportPop", reportCond);
+			List<SummaryReportPopRSet> summaryReportRs;
+			if (chartType == null || chartType.equalsIgnoreCase(SummaryReportPopCond.CHARTTYPEALL)) {
+				summaryReportRs = session.selectList("getSummaryReportPopAll", reportCond);
+			} else {
+				summaryReportRs = session.selectList("getSummaryReportPopFault", reportCond);
+			}
 
 			Data chartData = new Data();
 			chartData.setGroupNames(new String[]{yValueName});
@@ -180,27 +189,6 @@ public class UiManagerImpl implements IUiManager {
 				chartData.setValues(values);
 			}
 			
-			
-			
-			/*SummaryReportPop result = new SummaryReportPop();
-			if (summaryReportRs != null && summaryReportRs.size() != 0) {
-				Map codeCountMap = new HashMap();
-				int fairCount = 0;
-				int faultCount = 0;
-				for (int i = 0; i < summaryReportRs.size(); i++) {
-					SummaryReportPopRSet rs = summaryReportRs.get(i);
-					String codeName = rs.getDecisionCode();
-					if (codeName.equalsIgnoreCase(SensorReport.fairQualityCode)) {
-						fairCount = fairCount + rs.getCodeCount();
-					} else {
-						faultCount = faultCount + rs.getCodeCount();
-					}
-					codeCountMap.put(codeName, rs.getCodeCount());
-				}
-				result.setFaultCodeCountMap(codeCountMap);
-				result.setTotalFairQualityCount(fairCount);
-				result.setTotalFaultCount(faultCount);
-			}*/
 			return chartData;
 			
 		} catch (Exception e) {

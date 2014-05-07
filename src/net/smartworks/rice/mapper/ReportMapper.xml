@@ -139,19 +139,64 @@
 		</if>
 	) baseTbl
 	<if test="selector.equalsIgnoreCase('byDay')">
-		group by selectDay
+		group by selectDay order by selectDay desc
     </if>
     <if test="selector.equalsIgnoreCase('byWeek')">
-		group by selectWeek
+		group by selectWeek order by selectWeek desc
     </if>
     <if test="selector.equalsIgnoreCase('byMonth')">
-		group by selectMonth
+		group by selectMonth order by selectMonth desc
     </if>
     <if test="selector.equalsIgnoreCase('byYear')">
-		group by selectYear
+		group by selectYear order by selectYear desc
     </if>
   </select>
-  <select id="getSummaryReportPop" parameterType="net.smartworks.rice.model.SummaryReportPopCond" resultType="net.smartworks.rice.model.SummaryReportPopRSet">
+  <select id="getSummaryReportPopAll" parameterType="net.smartworks.rice.model.SummaryReportPopCond" resultType="net.smartworks.rice.model.SummaryReportPopRSet">
+	select
+		baseTbl.decisionCode
+		, decisionCode as decisionCodeDesc
+		,count(baseTbl.decisionCode) as codeCount
+	from
+	(
+		select
+			testReportId
+	<if test="selector.equalsIgnoreCase('byDay')">
+			,DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS testDate
+	</if>
+    <if test="selector.equalsIgnoreCase('byWeek')">
+			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS testDate
+	</if>
+    <if test="selector.equalsIgnoreCase('byMonth')">
+			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' AS testDate 
+	</if>
+    <if test="selector.equalsIgnoreCase('byYear')">
+			,DATENAME(yyyy, dateTime)+ '년 ' AS testDate 
+	</if>
+			,case when decisionCode= #{fairQualityCode} then '양품' else '불량' end as decisionCode
+		from OG_sensorReport
+		where 1=1
+	<if test="selector.equalsIgnoreCase('byDay')">
+		and DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' = #{selectTestDate} 
+	</if>
+    <if test="selector.equalsIgnoreCase('byWeek')">
+		and DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' = #{selectTestDate} 
+	</if>
+    <if test="selector.equalsIgnoreCase('byMonth')">
+		and DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' = #{selectTestDate}  
+	</if>
+    <if test="selector.equalsIgnoreCase('byYear')">
+		and DATENAME(yyyy, dateTime)+ '년 ' = #{selectTestDate} 
+	</if>
+	<if test="fromDate != null">
+		and dateTime &gt;= #{fromDate}
+	</if>
+	<if test="toDate != null">
+		and dateTime &lt;= #{toDate}
+	</if>
+	)baseTbl
+	group by baseTbl.decisionCode
+  </select>
+  <select id="getSummaryReportPopFault" parameterType="net.smartworks.rice.model.SummaryReportPopCond" resultType="net.smartworks.rice.model.SummaryReportPopRSet">
 	select
 	baseTbl.decisionCode
 	,code.description as decisionCodeDesc
@@ -175,6 +220,7 @@
 			,decisionCode
 		from OG_sensorReport
 		where 1=1
+		and decisionCode != #{fairQualityCode}
 	<if test="selector.equalsIgnoreCase('byDay')">
 		and DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' = #{selectTestDate} 
 	</if>
