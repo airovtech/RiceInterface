@@ -142,9 +142,9 @@ public class UiManagerImpl implements IUiManager {
 	@Override
 	public SummaryReport[] getSummaryReports(Date fromDate, Date toDate, String selector) throws Exception {
 		
-		/*if (fromDate == null && toDate == null) {
+		if (fromDate == null && toDate == null) {
 			fromDate = getFromDate(selector);
-		}*/
+		}
 		
 		SqlSession session = null;
 		try {
@@ -178,9 +178,9 @@ public class UiManagerImpl implements IUiManager {
 	@Override
 	public Data getSummaryReportPop(Date fromDate, Date toDate, String selector, String selectTestDate, String chartType) throws Exception {
 		
-		/*if (fromDate == null && toDate == null) {
+		if (fromDate == null && toDate == null) {
 			fromDate = getFromDate(selector);
-		}*/
+		}
 		
 		SqlSession session = null;
 		
@@ -233,9 +233,9 @@ public class UiManagerImpl implements IUiManager {
 	@Override
 	public SummaryReportPop getSummaryReportPopObj(Date fromDate, Date toDate, String selector, String selectTestDate) throws Exception {
 		
-		/*if (fromDate == null && toDate == null) {
+		if (fromDate == null && toDate == null) {
 			fromDate = getFromDate(selector);
-		}*/
+		}
 		
 		SqlSession session = null;
 		try {
@@ -280,9 +280,9 @@ public class UiManagerImpl implements IUiManager {
 	@Override
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
 
-		/*if (fromDate == null && toDate == null) {
+		if (fromDate == null && toDate == null) {
 			fromDate = getFromDate(selector);
-		}*/
+		}
 		
 		//기간별 생산(양품)수량
 		String xFieldName = "검사일";
@@ -331,9 +331,9 @@ public class UiManagerImpl implements IUiManager {
 	@Override
 	public Data getBarChartReportData(Date fromDate, Date toDate, String selector) throws Exception {
 		
-		/*if (fromDate == null && toDate == null) {
+		if (fromDate == null && toDate == null) {
 			fromDate = getFromDate(selector);
-		}*/
+		}
 		
 		//기간별 양품, 불량 수량
 		String xFieldName = "검사일";
