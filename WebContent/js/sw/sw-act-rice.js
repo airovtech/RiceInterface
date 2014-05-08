@@ -103,7 +103,7 @@ $(function() {
 			var input = $(targetElement(e));
 			
 			var maximumDate = 0;
-			var summaryType = $('.js_select_summary_type option:selected').attr('value');
+			var summaryType = $('.js_select_summary_type:visible option:selected').attr('value');
 			if(summaryType==='byDay') maximumDate = 60*24*60*60*1000;
 			else if(summaryType==='byWeek') maximumDate = 365*24*60*60*1000;
 			else if(summaryType==='byMonth') maximumDate = 4*365*24*60*60*1000;

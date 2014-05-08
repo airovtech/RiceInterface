@@ -140,7 +140,7 @@ try{
 			removeSearchDate.hide();
 		}
 		if(isEmpty(searchDateTo)) searchDateTo = (new Date()).format('yyyy.mm.dd');
-		var summaryType = $('.js_select_summary_type option:selected').attr('value');
+		var summaryType = $('.js_select_summary_type:visible option:selected').attr('value');
 		if(!isEmpty(searchDateFrom) && !isEmpty(searchDateTo)){
 			
 			var fromDate, toDate;
