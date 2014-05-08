@@ -11,6 +11,7 @@ package net.smartworks.rice.model;
 import java.util.Date;
 
 import net.smartworks.common.Cond;
+import net.smartworks.util.DateUtil;
 
 public class SummaryReportCond extends Cond {
 	
@@ -25,13 +26,15 @@ public class SummaryReportCond extends Cond {
 	private String selector;
 
 	public Date getFromDate() {
-		return fromDate;
+		return DateUtil.toFromDate(this.fromDate, DateUtil.CYCLE_DAY);
+		//return fromDate;
 	}
 	public void setFromDate(Date fromDate) {
 		this.fromDate = fromDate;
 	}
 	public Date getToDate() {
-		return toDate;
+		return DateUtil.toToDate(this.toDate, DateUtil.CYCLE_DAY);
+		//return toDate;
 	}
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
