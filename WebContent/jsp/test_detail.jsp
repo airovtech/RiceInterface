@@ -52,8 +52,8 @@
 			for (SensorReport sensorReport : report.getSensorReports()) {
 			%>
 				<tr>
-					<td><%=sensorReport.getSensorNo() %></td>
-					<td><%=sensorReport.getDecisionCode() %></td>
+					<td class="tc"><%=sensorReport.getSensorNo() %></td>
+					<td class="tc"><%=sensorReport.getDecisionCode() %></td>
 					<td><%=sensorReport.getDecisionCodeDesc() %></td>
 					<td class="tr"><%=sensorReport.getIndoorTemperature() %></td>
 					<td class="tr"><%=sensorReport.getGlassTemperature() %></td>

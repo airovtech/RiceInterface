@@ -354,6 +354,12 @@ try{
 			                    }
 			                }
 						});
+						series.push({
+							type : swChartType.COLUMN,
+			                gutter: 80,
+							axis : axis,
+							xField : swReportInfo.xFieldName
+						});
 					}
 					return series;
 				}else if(chartType === swChartType.RADAR){
@@ -969,9 +975,12 @@ try{
 				if(swReportInfo.chartType === swChartType.PIE){
 					for(var i=0; i< swReportInfo.groupNames.length; i++)
 						Ext.create('Ext.chart.Chart',{						
-							width: swReportInfo.height-60,
+							width: swReportInfo.height,
 							height: swReportInfo.height,
-							margin: '20 10 20 10' ,
+							insetPadding: 25,
+							legend: {
+								position: 'right'
+							},
 					        html: '<span style="font-weight: bold; font-size: 13px; font-family: dotum,Helvetica,sans-serif;">' + swReportInfo.groupNames[i] + '</span>',
 							animate: true,
 							renderTo : Ext.get(swReportInfo.target),
