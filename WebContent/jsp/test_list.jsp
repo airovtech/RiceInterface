@@ -20,6 +20,7 @@
 			requestParams.setPageSize(20);
 			requestParams.setCurrentPage(1);
 			requestParams.setSortingField(new SortingField(TestReport.FIELD_ID_DATETIME, false));
+			requestParams.setListType(RequestParams.LIST_TYPE_TEST);
 		}
 	}
 	session.setAttribute("requestParams", requestParams);
