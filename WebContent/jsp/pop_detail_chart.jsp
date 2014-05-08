@@ -52,8 +52,8 @@
 	<!-- 팝업 타이틀 //-->
 	<!-- 컨텐츠 -->
 	<div class="contents_space" style="width:800px">
-		<span style="display:inline-block;width:390px" id="detail_chart_target1"></span>
 		<span style="display:inline-block;width:390px" id="detail_chart_target2"></span>
+		<span style="display:inline-block;width:390px" id="detail_chart_target1"></span>
 	</div>
 	<!-- 컨텐츠 //-->
 

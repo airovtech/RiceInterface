@@ -58,18 +58,26 @@
 </div>
 	
 <script type="text/javascript">
-$(function() {
-	smartChart.loadWithData(swReportType.CHART, <%=dataJson1%>, swChartType.LINE, false, "chart_target1");
-	var chartTarget1 = $('#chart_target1');
-	chartTarget1.find('text[text="양품 수량"]').css("font-size", "14px");
-	chartTarget1.find('text[text="검사일"]').css("font-size", "14px");
+	var loadSummaryCharts = function(){
+		smartChart.loadWithData(swReportType.CHART, <%=dataJson1%>, swChartType.LINE, false, "chart_target1");
+		var chartTarget1 = $('#chart_target1');
+		chartTarget1.find('text[text="양품 수량"]').css("font-size", "14px");
+		chartTarget1.find('text[text="검사일"]').css("font-size", "14px");
+		
+		smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.COLUMN, true, "chart_target2");
+		var chartTarget2 = $('#chart_target2');
+		chartTarget2.find('text[text="수량"]').css("font-size", "14px");
+		chartTarget2.find('text[text="검사일"]').css("font-size", "14px");
+	};
 	
-	smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.COLUMN, true, "chart_target2");
-	var chartTarget2 = $('#chart_target2');
-	chartTarget2.find('text[text="수량"]').css("font-size", "14px");
-	chartTarget2.find('text[text="검사일"]').css("font-size", "14px");
-	try{
-		setTimeout(function(){parent.doIframeAutoHeight();}, 1000);
+	loadSummaryCharts();
+ 	try{
+		parent.doIframeAutoHeight();
 	}catch(e){}
-});
+	
+	$(function() {
+		$(window).resize(function() {
+			loadSummaryCharts();
+		});
+	});
 </script>

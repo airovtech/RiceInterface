@@ -304,8 +304,14 @@ try{
 				        display: 'rotate',
 				        contrast: true,
 				        font: smartChart.labelFont,
-	                    renderer: function(v) {
-	                    	return v.split("(")[0];
+	                    renderer: function(v, storeItem, item) {
+	                    	console.log(v, storeItem, item);
+//	                    	return v.split("(")[0];
+	                    	var total = 0;
+	                    	for(var i=0; i<swReportInfo.values.length; i++){
+	                    		total += swReportInfo.values[i][ swReportInfo.groupNames[index]];
+	                    	}
+	                    	return Math.round(item.data[swReportInfo.groupNames[index]]/total * 100) + "%";
 	                    }
 				    }		}];
 			}catch(error){
@@ -335,6 +341,12 @@ try{
 					var series = new Array();
 					for(var i=0; i<swReportInfo.groupNames.length; i++){
 						series.push({
+							type : swChartType.COLUMN,
+							axis : axis,
+							showInLegend: false,
+							xField : swReportInfo.xFieldName
+						});
+						series.push({
 							type : chartType,
 							axis : axis,
 							xField : swReportInfo.xFieldName,
@@ -353,12 +365,6 @@ try{
 			                    	this.setTitle(item.series.yField + "<br>" + Ext.util.Format.number(item.value[1], "0,0"));
 			                    }
 			                }
-						});
-						series.push({
-							type : swChartType.COLUMN,
-			                gutter: 80,
-							axis : axis,
-							xField : swReportInfo.xFieldName
 						});
 					}
 					return series;
@@ -444,7 +450,7 @@ try{
 						axis : axis,
 						xField : swReportInfo.xFieldName,
 						yField : swReportInfo.groupNames,
-					    showInLegend: swReportInfo.is3Dimension,
+					    showInLegend: true,
 						highlight : true,
 						stacked : swReportInfo.isStacked,
 		                tips: {
@@ -1041,6 +1047,25 @@ try{
 				            series: smartChart.getSeries(swReportInfo.chartType, target)
 						});
 		
+				}else if(swReportInfo.chartType === swChartType.COLUMN){
+					Ext.create('Ext.chart.Chart',{
+						width: swReportInfo.width,
+						height: swReportInfo.height,
+						animate: true,
+						theme: 'Base',
+						resizable: false,
+						autoSize: true,
+						insetPadding: 20,// radar
+						renderTo : Ext.get(swReportInfo.target),
+						store : Ext.create('Ext.data.JsonStore', {
+							fields : smartChart.getFields(target),
+							data : swReportInfo.values
+						}),
+						shadow : true,
+						legend : legendOption,
+						axes : smartChart.getAxes(swReportInfo.chartType, target),
+						series : smartChart.getSeries(swReportInfo.chartType, target)
+					});
 				}else{
 					Ext.create('Ext.chart.Chart',{
 						width: swReportInfo.width,

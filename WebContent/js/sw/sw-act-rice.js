@@ -109,8 +109,8 @@ $(function() {
 			else if(summaryType==='byMonth') maximumDate = 4*365*24*60*60*1000;
 						
 			$('input[name="txtSearchDateFrom"]').attr('value', maximumDate==0?'':(new Date((new Date()).getTime()-maximumDate)).format('yyyy.mm.dd'));
-			$('input[name="txtSearchDateTo"]').attr('value', '');			
-			selectSearchDate(input.parent().siblings('.js_progress_span:first'));
+			$('input[name="txtSearchDateTo"]').attr('value', maximumDate==0?'':(new Date()).format('yyyy.mm.dd'));			
+			selectSearchDate(input.parent().siblings('.js_progress_span:first'), input);
 		}catch(error){
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_remove_search_date]', null, error);
 		}			
@@ -184,7 +184,7 @@ $(function() {
 				fromStr = new Date(fromDate.getTime()-4*365*24*60*60*1000).format("yyyy.mm.dd");
 			}
 			$('input[name="txtSearchDateFrom"]').attr('value', fromStr);
-			$('input[name="txtSearchDateTo"]').attr('value', '');
+			$('input[name="txtSearchDateTo"]').attr('value', fromStr===''?'':(new Date()).format('yyyy.mm.dd'));			
 			selectSummaryType(input.siblings('.js_progress_span:first'), false);
 		}catch(error){
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_search_type]', null, error);
@@ -222,6 +222,7 @@ var cleanupListParams = function(listType){
 		var today = new Date();
 		var fromDate = new Date(today.getTime()-(4*365*24*60*60*1000));
 		$('input[name="txtSearchDateFrom"]').attr('value', fromDate.format('yyyy.mm.dd'));
+		$('input[name="txtSearchDateTo"]').attr('value', (new Date()).format('yyyy.mm.dd'));
 		$('.js_search_datetime').show();
 		$('.js_search_lotno').hide();
 		$('.js_select_search_type').hide();

@@ -1,3 +1,5 @@
+<%@page import="java.util.Locale"%>
+<%@page import="java.text.NumberFormat"%>
 <%@page import="net.smartworks.util.SmartUtil"%>
 <%@page import="net.smartworks.common.Order"%>
 <%@page import="net.smartworks.model.SortingField"%>
@@ -41,7 +43,7 @@
 	 	if(reportCond.getDateTimeTo()==null) requestParams.setSearchDateTo("");
 	}
 	int totalSize = mgr.getTestReportSize(reportCond);
-	if(totalSize<requestParams.getPageSize()*requestParams.getCurrentPage()){
+	if(totalSize<requestParams.getPageSize()*(requestParams.getCurrentPage()-1)){
 		requestParams.setCurrentPage(1);
 		session.setAttribute("requestParams", requestParams);
 	}
@@ -126,9 +128,9 @@
 				<td class="tc"><%=report.getLotNo() %></td>
 				<td class="tc"><%=report.getFirstSensorId() %></td>
 				<td class="tc"><%=SmartUtil.printDateTime(report.getDateTime())%></td>
-				<td class="tr"><%=report.getTotalTestCount() %></td>
-				<td class="tr"><%=report.getFairQualityCount() %></td>
-				<td class="tr"><%=report.getFaultCount() %></td>
+				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getTotalTestCount()) %></td>
+				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getFairQualityCount()) %></td>
+				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getFaultCount()) %></td>
 			</tr>
 	<%
 		}

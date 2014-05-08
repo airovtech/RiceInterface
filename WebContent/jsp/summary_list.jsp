@@ -50,6 +50,8 @@
 		if(maximum>0){
 			fromDate = new Date(today.getTime()-maximum);
 			requestParams.setSearchDateFrom((new SimpleDateFormat("yyyy.MM.dd")).format(fromDate.getTime()));
+			toDate = new Date();
+			requestParams.setSearchDateTo((new SimpleDateFormat("yyyy.MM.dd")).format(toDate.getTime()));
 		}
 	
 	}
