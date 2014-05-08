@@ -101,7 +101,14 @@ $(function() {
 	$('.js_remove_search_date').live("click", function(e){
 		try{
 			var input = $(targetElement(e));
-			$('input[name="txtSearchDateFrom"]').attr('value', '');
+			
+			var maximumDate = 0;
+			var summaryType = $('.js_select_summary_type option:selected').attr('value');
+			if(summaryType==='byDay') maximumDate = 60*24*60*60*1000;
+			else if(summaryType==='byWeek') maximumDate = 365*24*60*60*1000;
+			else if(summaryType==='byMonth') maximumDate = 4*365*24*60*60*1000;
+						
+			$('input[name="txtSearchDateFrom"]').attr('value', maximumDate==0?'':(new Date((new Date()).getTime()-maximumDate)).format('yyyy.mm.dd'));
 			$('input[name="txtSearchDateTo"]').attr('value', '');			
 			selectSearchDate(input.parent().siblings('.js_progress_span:first'));
 		}catch(error){
@@ -166,7 +173,17 @@ $(function() {
 	$('.js_select_summary_type').live("change", function(e){
 		try{
 			var input = $(targetElement(e));
-			$('input[name="txtSearchDateFrom"]').attr('value', '');
+			var selectedType = input.find('option:selected').attr('value');
+			var fromDate = new Date();
+			var fromStr = "";
+			if(selectedType === "byDay"){
+				fromStr = (new Date(fromDate.getTime()-60*24*60*60*1000)).format("yyyy.mm.dd");
+			}else if(selectedType === "byWeek"){
+				fromStr = new Date(fromDate.getTime()-365*24*60*60*1000).format("yyyy.mm.dd");
+			}else if(selectedType === "byMonth"){
+				fromStr = new Date(fromDate.getTime()-4*365*24*60*60*1000).format("yyyy.mm.dd");
+			}
+			$('input[name="txtSearchDateFrom"]').attr('value', fromStr);
 			$('input[name="txtSearchDateTo"]').attr('value', '');
 			selectSummaryType(input.siblings('.js_progress_span:first'), false);
 		}catch(error){
@@ -202,11 +219,13 @@ var cleanupListParams = function(listType){
 		$('.js_select_search_type').show().find('option:first').attr('selected', 'selected');
 		$('.js_select_summary_type').hide();
 	}else if(listType === 'summaryList'){
-		$('input[name="txtSearchDateFrom"]').attr('value', '');
+		var today = new Date();
+		var fromDate = new Date(today.getTime()-(4*365*24*60*60*1000));
+		$('input[name="txtSearchDateFrom"]').attr('value', fromDate.format('yyyy.mm.dd'));
 		$('.js_search_datetime').show();
 		$('.js_search_lotno').hide();
 		$('.js_select_search_type').hide();
-		$('.js_select_summary_type').show().find('option:first').attr('selected', 'selected');
+		$('.js_select_summary_type').show().find('option[value="byMonth"]').attr('selected', 'selected');
 	}
 };
 

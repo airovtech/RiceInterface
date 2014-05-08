@@ -24,11 +24,20 @@
 	
 	Data data = mgr.getLineChartReportData(fromDate, toDate, selectorType);
 	
-	String dataJson = null;
+	String dataJson1 = null;
 	if(data!=null){
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		dataJson = ow.writeValueAsString(data);
-		System.out.println(dataJson);
+		dataJson1 = ow.writeValueAsString(data);
+		System.out.println(dataJson1);
+	}
+	
+	data = mgr.getBarChartReportData(fromDate, toDate, selectorType);
+	
+	String dataJson2 = null;
+	if(data!=null){
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		dataJson2 = ow.writeValueAsString(data);
+		System.out.println(dataJson2);
 	}
 	
 %>
@@ -37,15 +46,28 @@
 </div>
 <div class="list_contents border" style="padding: 10px">
 
-	<table id="chart_target"></table>
+	<table id="chart_target1"></table>
+</div>
+	
+<div class="list_title_space" style="margin-top:20px">
+	<div class="title">기간별 양품/불량 갯수</div>
+</div>
+<div class="list_contents border" style="padding: 10px">
+
+	<table id="chart_target2"></table>
 </div>
 	
 <script type="text/javascript">
 $(function() {
-	smartChart.loadWithData(swReportType.CHART, <%=dataJson%>, swChartType.LINE, false, "chart_target");
-	var chartTarget = $('#chart_target');
-	chartTarget.find('text[text="양품 수량"]').css("font-size", "14px");
-	chartTarget.find('text[text="검사일"]').css("font-size", "14px");
+	smartChart.loadWithData(swReportType.CHART, <%=dataJson1%>, swChartType.LINE, false, "chart_target1");
+	var chartTarget1 = $('#chart_target1');
+	chartTarget1.find('text[text="양품 수량"]').css("font-size", "14px");
+	chartTarget1.find('text[text="검사일"]').css("font-size", "14px");
+	
+	smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.COLUMN, true, "chart_target2");
+	var chartTarget2 = $('#chart_target2');
+	chartTarget2.find('text[text="수량"]').css("font-size", "14px");
+	chartTarget2.find('text[text="검사일"]').css("font-size", "14px");
 	try{
 		setTimeout(function(){parent.doIframeAutoHeight();}, 1000);
 	}catch(e){}

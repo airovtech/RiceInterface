@@ -1,3 +1,4 @@
+<%@page import="net.smartworks.rice.model.SummaryReportPopCond"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@page import="org.codehaus.jackson.map.ObjectWriter"%>
 <%@page import="net.smartworks.common.Data"%>
@@ -14,18 +15,26 @@
 	String testDateStr = request.getParameter("testDate");
 
 	Date fromDate = SmartUtil.convertDateStringToDate(fromDateStr);
-	Date toDate = SmartUtil.convertDateStringToDate(fromDateStr);
+	Date toDate = SmartUtil.convertDateStringToDate(toDateStr);
 	
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	
-	//Data data = mgr.getLineChartReportData(fromDate, toDate, selectorType);
-	Data data = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr);
+	Data data = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr, SummaryReportPopCond.CHARTTYPEFAULT);
 	
-	String dataJson = null;
+	String dataJson1 = null;
 	if(data!=null){
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		dataJson = ow.writeValueAsString(data);
-		System.out.println(dataJson);
+		dataJson1 = ow.writeValueAsString(data);
+		System.out.println(dataJson1);
+	}
+	
+	data = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr, SummaryReportPopCond.CHARTTYPEALL);
+	
+	String dataJson2 = null;
+	if(data!=null){
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		dataJson2 = ow.writeValueAsString(data);
+		System.out.println(dataJson2);
 	}
 %>
 
@@ -42,8 +51,9 @@
 	</div>
 	<!-- 팝업 타이틀 //-->
 	<!-- 컨텐츠 -->
-	<div class="contents_space">
-		<div id="detail_chart_target"></div>
+	<div class="contents_space" style="width:800px">
+		<span style="display:inline-block" id="detail_chart_target1"></span>
+		<span style="display:inline-block" id="detail_chart_target2"></span>
 	</div>
 	<!-- 컨텐츠 //-->
 
@@ -51,7 +61,17 @@
 <!-- 전체 레이아웃//-->
 <script type="text/javascript">
 $(function() {
-	smartChart.loadWithData(swReportType.CHART, <%=dataJson%>, swChartType.PIE, false, "detail_chart_target");
-	$('#detail_chart_target>div:first>span:first').hide();
+	smartChart.loadWithData(swReportType.CHART, <%=dataJson1%>, swChartType.PIE, false, "detail_chart_target1");
+	$('#detail_chart_target1>div:first>span:first').hide();
+	var detailChartTarget1 = $('#detail_chart_target1');
+	var xNames = detailChartTarget1.find('text>tspan');
+	if(!isEmpty(xNames)){
+		for(var i=0; i<xNames.length; i++){
+			xName = $(xNames[i]);
+			xName.text(xName.text().split("(")[0]);
+		}
+	}
+	smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.PIE, false, "detail_chart_target2");
+	$('#detail_chart_target2>div:first>span:first').hide();
 });
 </script>

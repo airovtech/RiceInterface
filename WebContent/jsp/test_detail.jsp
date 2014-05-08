@@ -16,7 +16,7 @@
 %>
 
 <div class="list_title_space" style="margin-top:20px">
-	<div class="title">테스트 상세정보</div>
+	<div class="title">상세정보</div>
 </div>
 <div class="list_contents border" style="padding: 10px">
 	<table>
@@ -24,14 +24,12 @@
 			<tr>
 				<td width="30%" class="tl"><span style="color: #23579e;font-weight: bold;">로트 넘버 : </span><%=report.getLotNo() %></td>
 				<td width="30%" class="tl"><span style="color: #23579e;font-weight: bold;">날짜/시간 : </span><%=SmartUtil.printDateTime(report.getDateTime()) %></td>
+				<td width="40%"></td>
 			</tr>
 			<tr>
 				<td width="30%" class="tl"><span style="color: #23579e;font-weight: bold;">검사 수량 : </span><%=report.getTotalTestCount() %></td>
 				<td width="30%" class="tl"><span style="color: #23579e;font-weight: bold;">양품 수량 : </span><%=report.getFairQualityCount() %></td>
-			</tr>
-			<tr>
 				<td width="30%" class="tl"><span style="color: #23579e;font-weight: bold;">불량 수량 : </span><%=report.getFaultCount() %></td>
-				<td width="70%"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -60,7 +58,7 @@
 					<td class="tr"><%=sensorReport.getIndoorTemperature() %></td>
 					<td class="tr"><%=sensorReport.getGlassTemperature() %></td>
 					<td class="tr"><%=sensorReport.getIndoorHumidity() %></td>
-					<td><%=sensorReport.getSerialNo() %></td>
+					<td class="tr"><%=sensorReport.getSerialNo() %></td>
 				</tr>
 		<%
 			}

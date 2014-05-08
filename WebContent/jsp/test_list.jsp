@@ -118,9 +118,9 @@
 				<%
 				currentCount--;
 				%>
-				<td><%=report.getLotNo() %></td>
-				<td><%=report.getFirstSensorId() %></td>
-				<td class="tr"><%=SmartUtil.printDateTime(report.getDateTime())%></td>
+				<td class="tc"><%=report.getLotNo() %></td>
+				<td class="tc"><%=report.getFirstSensorId() %></td>
+				<td class="tc"><%=SmartUtil.printDateTime(report.getDateTime())%></td>
 				<td class="tr"><%=report.getTotalTestCount() %></td>
 				<td class="tr"><%=report.getFairQualityCount() %></td>
 				<td class="tr"><%=report.getFaultCount() %></td>

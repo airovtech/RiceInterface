@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@page import="org.codehaus.jackson.map.ObjectWriter"%>
 <%@page import="net.smartworks.common.Data"%>
@@ -26,14 +27,30 @@
 			requestParams.setPageSize(20);
 			requestParams.setCurrentPage(1);
 			requestParams.setSortingField(new SortingField(TestReport.FIELD_ID_DATETIME, false));
-			requestParams.setSelectorType(SummaryReportCond.SELECTOR_DAILY);
+			requestParams.setSelectorType(SummaryReportCond.SELECTOR_MONTHLY);
 			requestParams.setListType(RequestParams.LIST_TYPE_SUMMARY);
 		}
 	}
 	
 	Date fromDate = SmartUtil.convertDateStringToDate(requestParams.getSearchDateFrom());
 	Date toDate = SmartUtil.convertDateStringToDate(requestParams.getSearchDateTo());
-	String selectorType = SmartUtil.isBlankObject(requestParams.getSelectorType())? SummaryReportCond.SELECTOR_DAILY : requestParams.getSelectorType();
+	String selectorType = SmartUtil.isBlankObject(requestParams.getSelectorType())? SummaryReportCond.SELECTOR_MONTHLY : requestParams.getSelectorType();
+	if(fromDate==null ){
+		Date today = new Date();
+		long oneMinute = 60*1000;
+		long maximum = 0;
+		if(selectorType.equals(SummaryReportCond.SELECTOR_DAILY))
+			maximum = oneMinute*60*24*60;
+		else if(selectorType.equals(SummaryReportCond.SELECTOR_WEEKLY))
+			maximum = oneMinute*365*24*60;
+		else if(selectorType.equals(SummaryReportCond.SELECTOR_MONTHLY))
+			maximum = oneMinute*4*365*24*60;
+		if(maximum>0){
+			fromDate = new Date(today.getTime()-maximum);
+			requestParams.setSearchDateFrom((new SimpleDateFormat("yyyy.MM.dd")).format(fromDate.getTime()));
+		}
+	
+	}
 	session.setAttribute("requestParams", requestParams);
 	session.setAttribute("workId", RequestParams.LIST_TYPE_SUMMARY);
 	

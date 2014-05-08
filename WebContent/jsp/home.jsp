@@ -139,7 +139,10 @@ try{
 		}else{
 			removeSearchDate.hide();
 		}
+		if(isEmpty(searchDateTo)) searchDateTo = (new Date()).format('yyyy.mm.dd');
+		var summaryType = $('.js_select_summary_type option:selected').attr('value');
 		if(!isEmpty(searchDateFrom) && !isEmpty(searchDateTo)){
+			
 			var fromDate, toDate;
 			try{
 				fromDate = new Date(searchDateFrom);
@@ -153,6 +156,14 @@ try{
 					$('input[name="txtSearchDateTo"]').attr('value', '')
 					return;
 				}
+			}
+			var maximumDate = (new Date()).getTime();
+			if(summaryType==='byDay') maximumDate = 60*24*60*60*1000;
+			else if(summaryType==='byWeek') maximumDate = 365*24*60*60*1000;
+			else if(summaryType==='byMonth') maximumDate = 4*365*24*60*60*1000;
+			if((toDate.getTime()-fromDate.getTime())>maximumDate){
+				smartPop.showInfo(smartPop.ERROR, "기간별 조회한계(일별:2달, 주별:1년, 월별:4년)를 초과 하였습니다. 다시 선택하여 주시기 바랍니다.");				
+				return;
 			}
 		}
 		selectListParam(progressSpan, false);
@@ -229,8 +240,8 @@ try{
 				</form>			
 				<div class="title_line_options titl_section">
 					<!-- 타이틀을 나타내는 곳 -->
-					<div class="title js_select_list_type">
-						<span><a class="linkline" href="" listType="<%=RequestParams.LIST_TYPE_TEST%>">테스트별</a></span> | 
+					<div class="title list_type js_select_list_type">
+						<span><a class="linkline" href="" listType="<%=RequestParams.LIST_TYPE_TEST%>">검사별</a></span> | 
 						<span class="unselected"><a class="linkline" href="" listType="<%=RequestParams.LIST_TYPE_SUMMARY%>">기간별</a></span>
 					</div>					
 					<span class="js_progress_span"></span>

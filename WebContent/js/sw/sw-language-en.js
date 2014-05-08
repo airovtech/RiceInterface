@@ -371,7 +371,7 @@ smartMessage.bundle['en'] = {
 	accessViolationLocWorkInstanceSpace : "No Permission allowed for this Work Instance. Please contact the Administrator!",
 	accessViolationLocWorkspace : "No Permission allowed for this Workspace. Please contact the Administrator!",
 	accessViolationLocBuilder : "No Permission allowed for this Builder Space. Please contact the Administrator!",
-	reportIsNotAvailableInReportWork : "Report is not available in the Report Work. Please select other Work!"	
+	reportIsNotAvailableInReportWork : "Report is not available in the Report Work. Please select other Work!"
 };
 }catch(error){
 	smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-language-en script]', null, error);

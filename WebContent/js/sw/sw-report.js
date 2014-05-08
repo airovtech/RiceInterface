@@ -290,7 +290,7 @@ try{
 	                tips: {
 	                    trackMouse: true,
 	                    height : 32,
-	                    width : 100,
+	                    width : 160,
 	                    renderer: function(storeItem, item) {
 	                    	var total = 0;
 	                    	for(var i=0; i<swReportInfo.values.length; i++){
@@ -303,7 +303,10 @@ try{
 				        field: swReportInfo.xFieldName,
 				        display: 'rotate',
 				        contrast: true,
-				        font: smartChart.labelFont
+				        font: smartChart.labelFont,
+	                    renderer: function(v) {
+	                    	return v.split("(")[0];
+	                    }
 				    }		}];
 			}catch(error){
 				smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-repprt Ext.onReady getSeriesForPIE]', null, error);

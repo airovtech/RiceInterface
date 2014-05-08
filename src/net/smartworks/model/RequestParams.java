@@ -1,6 +1,7 @@
 package net.smartworks.model;
 
 import net.smartworks.model.SortingField;
+import net.smartworks.rice.model.SummaryReportCond;
 
 public class RequestParams {
 
@@ -22,7 +23,7 @@ public class RequestParams {
 	private SortingField sortingField;
 	
 	private String listType;
-	private String selectorType;
+	private String selectorType=SummaryReportCond.SELECTOR_MONTHLY;
 	private String searchType;
 	private String searchLotNo;
 	private String searchDateFrom;
