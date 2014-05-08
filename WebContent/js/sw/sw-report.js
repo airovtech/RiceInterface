@@ -305,8 +305,6 @@ try{
 				        contrast: true,
 				        font: smartChart.labelFont,
 	                    renderer: function(v, storeItem, item) {
-	                    	console.log(v, storeItem, item);
-//	                    	return v.split("(")[0];
 	                    	var total = 0;
 	                    	for(var i=0; i<swReportInfo.values.length; i++){
 	                    		total += swReportInfo.values[i][ swReportInfo.groupNames[index]];
@@ -984,6 +982,7 @@ try{
 							width: swReportInfo.height,
 							height: swReportInfo.height,
 							insetPadding: 25,
+							shodow:true,
 							legend: {
 								position: 'right'
 							},

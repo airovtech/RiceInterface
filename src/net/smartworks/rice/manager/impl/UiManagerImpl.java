@@ -213,7 +213,8 @@ public class UiManagerImpl implements IUiManager {
 				for (SummaryReportPopRSet data : summaryReportRs) {
 					Map valueMap = new HashMap();
 				
-					valueMap.put(xFieldName, data.getDecisionCode() + "(" +data.getDecisionCodeDesc() + ")");
+//					valueMap.put(xFieldName, data.getDecisionCode() + "(" +data.getDecisionCodeDesc() + ")");
+					valueMap.put(xFieldName, data.getDecisionCodeDesc());
 					valueMap.put(yValueName, data.getCodeCount());
 					
 					values.add(valueMap);

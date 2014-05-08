@@ -42,7 +42,7 @@
 	
 %>
 <div class="list_title_space" style="margin-top:20px">
-	<div class="title">기간별 양품 갯수</div>
+	<div class="title">기간별 양품 수량</div>
 </div>
 <div class="list_contents border" style="padding: 10px">
 
@@ -50,7 +50,7 @@
 </div>
 	
 <div class="list_title_space" style="margin-top:20px">
-	<div class="title">기간별 양품/불량 갯수</div>
+	<div class="title">기간별 양품/불량 수량</div>
 </div>
 <div class="list_contents border" style="padding: 10px">
 
