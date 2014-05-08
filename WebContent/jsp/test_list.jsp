@@ -40,6 +40,10 @@
 	 	if(reportCond.getDateTimeTo()==null) requestParams.setSearchDateTo("");
 	}
 	int totalSize = mgr.getTestReportSize(reportCond);
+	if(totalSize<requestParams.getPageSize()*requestParams.getCurrentPage()){
+		requestParams.setCurrentPage(1);
+		session.setAttribute("requestParams", requestParams);
+	}
 	reportCond.setPageNo(requestParams.getCurrentPage());
 	reportCond.setPageSize(requestParams.getPageSize());
 	reportCond.setOrders(new Order[]{new Order(requestParams.getSortingField().getFieldId(), requestParams.getSortingField().isAscending())});
