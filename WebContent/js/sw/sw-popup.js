@@ -1966,7 +1966,7 @@ smartPop = {
 			$.get( url, function(data){
 				$(data).modal({
 					opacity: 10,
-					position: [top, left],
+					position: [60, left],
 					overlayCss: {backgroundColor:"#000"},
 					containerCss:{
 						width:840
