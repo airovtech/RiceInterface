@@ -28,7 +28,7 @@
 	<beans:property name="quartzProperties">
 		<beans:props>
 			<beans:prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</beans:prop>
-    			<beans:prop key="org.quartz.threadPool.threadCount">3</beans:prop>
+    			<beans:prop key="org.quartz.threadPool.threadCount">1</beans:prop>
     			<beans:prop key="org.quartz.threadPool.threadPriority">4</beans:prop>
     			<beans:prop key="org.quartz.jobStore.class">org.quartz.simpl.RAMJobStore</beans:prop>
     			<beans:prop key="org.quartz.jobStore.misfireThreshold">60000</beans:prop>
