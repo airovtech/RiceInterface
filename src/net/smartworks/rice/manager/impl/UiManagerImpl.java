@@ -212,12 +212,7 @@ public class UiManagerImpl implements IUiManager {
 				List<Map<String, Object>> values = new ArrayList<Map<String, Object>>();
 				for (SummaryReportPopRSet data : summaryReportRs) {
 					Map valueMap = new HashMap();
-
-					if (chartType == null || chartType.equalsIgnoreCase(SummaryReportPopCond.CHARTTYPEALL)) {
-						valueMap.put(xFieldName, data.getDecisionCode());
-					} else {
-						valueMap.put(xFieldName, data.getDecisionCode() + "(" +data.getDecisionCodeDesc() + ")");
-					}
+					valueMap.put(xFieldName, data.getDecisionCodeDesc());
 					valueMap.put(yValueName, data.getCodeCount());
 					
 					values.add(valueMap);

@@ -1961,7 +1961,7 @@ smartPop = {
 	
 	showDetailChart : function(fromDate, toDate, selectorType, testDate, top, width){
 		try{
-			var left = (width-740)/2;
+			var left = (width-840)/2;
 			var url = "/RiceInterface/jsp/pop_detail_chart.jsp?fromDate=" + fromDate + "&toDate="+ toDate + "&selectorType=" + selectorType + "&testDate=" + testDate;
 			$.get( url, function(data){
 				$(data).modal({
@@ -1969,7 +1969,7 @@ smartPop = {
 					position: [top, left],
 					overlayCss: {backgroundColor:"#000"},
 					containerCss:{
-						width:740
+						width:840
 					},
 					overlayClose: false
 				});

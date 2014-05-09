@@ -130,11 +130,11 @@ try{
 		getIntanceList(paramsJson, progressSpan, isGray);		
 	};
 	
-	selectSearchDate = function(progressSpan){
+	selectSearchDate = function(progressSpan, input){
 		var searchDateFrom = $('input[name="txtSearchDateFrom"]').attr('value');
 		var searchDateTo = $('input[name="txtSearchDateTo"]').attr('value');
 		var removeSearchDate = $('.js_remove_search_date');
-		if(!isEmpty(searchDateFrom) || !isEmpty(searchDateTo)){
+		if(isEmpty($('.js_select_summary_type:visible')) && (!isEmpty(searchDateFrom) || !isEmpty(searchDateTo))){
 			removeSearchDate.show();
 		}else{
 			removeSearchDate.hide();
@@ -152,8 +152,9 @@ try{
 			}catch(e){}
 			if(fromDate!=null && toDate!=null){
 				if(fromDate>toDate){
-					smartPop.showInfo(smartPop.ERROR, smartMessage.get("eventOldEndDateError"));
-					$('input[name="txtSearchDateTo"]').attr('value', '')
+					smartPop.showInfo(smartPop.WARN, smartMessage.get("eventOldEndDateError"), function(){
+						$('.js_remove_search_date').click();
+					});
 					return;
 				}
 			}
@@ -162,7 +163,14 @@ try{
 			else if(summaryType==='byWeek') maximumDate = 365*24*60*60*1000;
 			else if(summaryType==='byMonth') maximumDate = 4*365*24*60*60*1000;
 			if((toDate.getTime()-fromDate.getTime())>maximumDate){
-				smartPop.showInfo(smartPop.ERROR, "기간별 조회한계(일별:2달, 주별:1년, 월별:4년)를 초과 하였습니다. 다시 선택하여 주시기 바랍니다.");				
+				smartPop.showInfo(smartPop.WARN, "기간별 조회한계(일별:2달, 주별:1년, 월별:4년)를 초과 하였습니다. 다시 선택하여 주시기 바랍니다.",function(){
+					if(input.attr('name') === 'txtSearchDateFrom' ){
+						$('input[name="txtSearchDateFrom"]').attr('value', (new Date(toDate.getTime()-maximumDate)).format('yyyy.mm.dd'));
+					}else{
+						$('input[name="txtSearchDateTo"]').attr('value', (new Date(fromDate.getTime()+maximumDate)).format('yyyy.mm.dd'));
+					}
+					selectListParam(progressSpan, false);
+				});
 				return;
 			}
 		}
@@ -211,15 +219,15 @@ try{
 				<form name="frmSearchInstance" class="title_line_btns">
 					<span class="po_left js_progress_span mt4"></span>
 					
-			  		<div <%if(!RequestParams.LIST_TYPE_SUMMARY.equals(listType) && !RequestParams.SEARCH_TYPE_DATETIME.equals(searchType)){%>style="display:none"<%} %> class="po_left mt3 js_search_datetime" onChange="selectSearchDate($(this).siblings('.js_progress_span:first'));return false;">
+			  		<div <%if(!RequestParams.LIST_TYPE_SUMMARY.equals(listType) && !RequestParams.SEARCH_TYPE_DATETIME.equals(searchType)){%>style="display:none"<%} %> class="po_left mt3 js_search_datetime">
 						<a href="" class="t_date linkline js_remove_search_date" <%if(SmartUtil.isBlankObject(searchDateFrom) && SmartUtil.isBlankObject(searchDateTo)){ %>style="display:none"<%} %>>삭제</a>
 			  			<div class="icon_fb_space" style="display:inline-block">
-			  				<input readonly="readonly" style="width:80px" type="text" name="txtSearchDateFrom" class="fieldline js_todaypicker" value="<%=SmartUtil.toNotNull(searchDateFrom) %>"/>
+			  				<input readonly="readonly" style="width:80px" type="text" name="txtSearchDateFrom" class="fieldline js_todaypicker" value="<%=SmartUtil.toNotNull(searchDateFrom) %>" onChange="selectSearchDate($(this).parents('.js_search_datetime').siblings('.js_progress_span:first'), $(this));return false;"/>
 			  				<a href class="js_todaypicker_button"><span class="icon_fb_date"></span></a>
 			  			</div>
 			  			 ~ 
 			  			<div class="icon_fb_space" style="display:inline-block">
-			  				<input readonly="readonly" style="width:80px" type="text" name="txtSearchDateTo" class="fieldline js_todaypicker" value="<%=SmartUtil.toNotNull(searchDateTo) %>"/>
+			  				<input readonly="readonly" style="width:80px" type="text" name="txtSearchDateTo" class="fieldline js_todaypicker" value="<%=SmartUtil.toNotNull(searchDateTo) %>" onChange="selectSearchDate($(this).parents('.js_search_datetime').siblings('.js_progress_span:first'), $(this));return false;"/>
 			  				<a href class="js_todaypicker_button"><span class="icon_fb_date"></span></a>
 			  			</div>
 			  		</div> 

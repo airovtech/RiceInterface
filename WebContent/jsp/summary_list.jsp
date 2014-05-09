@@ -1,3 +1,5 @@
+<%@page import="java.util.Locale"%>
+<%@page import="java.text.NumberFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@page import="org.codehaus.jackson.map.ObjectWriter"%>
@@ -48,6 +50,8 @@
 		if(maximum>0){
 			fromDate = new Date(today.getTime()-maximum);
 			requestParams.setSearchDateFrom((new SimpleDateFormat("yyyy.MM.dd")).format(fromDate.getTime()));
+			toDate = new Date();
+			requestParams.setSearchDateTo((new SimpleDateFormat("yyyy.MM.dd")).format(toDate.getTime()));
 		}
 	
 	}
@@ -76,10 +80,10 @@
 		for (SummaryReport report : reports) {
 		%>
 			<tr>
-				<td><%=report.getTestDate() %></td>
-				<td class="tr"><%=report.getTotalTestCount()%></td>
-				<td class="tr"><%=report.getTotalFairQualityCount() %></td>
-				<td class="tr"><%=report.getTotalFaultCount() %></td>
+				<td class="tc"><%=report.getTestDate() %></td>
+				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getTotalTestCount())%></td>
+				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getTotalFairQualityCount()) %></td>
+				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getTotalFaultCount()) %></td>
 				<td class="tr"><%=String.format("%3.2f", report.getFaultPercent())%>%</td>
 				<td class="tc"><a href="" class="linkline js_pop_detail_chart" fromDate="<%=requestParams.getSearchDateFrom() %>" toDate="<%=requestParams.getSearchDateTo() %>" selectorType="<%=selectorType %>" testDate="<%=report.getTestDate()%>">차트보기</a></td>
 			</tr>

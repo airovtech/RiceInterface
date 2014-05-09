@@ -304,8 +304,12 @@ try{
 				        display: 'rotate',
 				        contrast: true,
 				        font: smartChart.labelFont,
-	                    renderer: function(v) {
-	                    	return v.split("(")[0];
+	                    renderer: function(v, storeItem, item) {
+	                    	var total = 0;
+	                    	for(var i=0; i<swReportInfo.values.length; i++){
+	                    		total += swReportInfo.values[i][ swReportInfo.groupNames[index]];
+	                    	}
+	                    	return Math.round(item.data[swReportInfo.groupNames[index]]/total * 100) + "%";
 	                    }
 				    }		}];
 			}catch(error){
@@ -334,6 +338,12 @@ try{
 				if(chartType === swChartType.LINE){
 					var series = new Array();
 					for(var i=0; i<swReportInfo.groupNames.length; i++){
+						series.push({
+							type : swChartType.COLUMN,
+							axis : axis,
+							showInLegend: false,
+							xField : swReportInfo.xFieldName
+						});
 						series.push({
 							type : chartType,
 							axis : axis,
@@ -438,7 +448,7 @@ try{
 						axis : axis,
 						xField : swReportInfo.xFieldName,
 						yField : swReportInfo.groupNames,
-					    showInLegend: swReportInfo.is3Dimension,
+					    showInLegend: true,
 						highlight : true,
 						stacked : swReportInfo.isStacked,
 		                tips: {
@@ -969,9 +979,13 @@ try{
 				if(swReportInfo.chartType === swChartType.PIE){
 					for(var i=0; i< swReportInfo.groupNames.length; i++)
 						Ext.create('Ext.chart.Chart',{						
-							width: swReportInfo.height-60,
+							width: swReportInfo.height,
 							height: swReportInfo.height,
-							margin: '20 10 20 10' ,
+							insetPadding: 25,
+							shodow:true,
+							legend: {
+								position: 'right'
+							},
 					        html: '<span style="font-weight: bold; font-size: 13px; font-family: dotum,Helvetica,sans-serif;">' + swReportInfo.groupNames[i] + '</span>',
 							animate: true,
 							renderTo : Ext.get(swReportInfo.target),
@@ -1032,6 +1046,25 @@ try{
 				            series: smartChart.getSeries(swReportInfo.chartType, target)
 						});
 		
+				}else if(swReportInfo.chartType === swChartType.COLUMN){
+					Ext.create('Ext.chart.Chart',{
+						width: swReportInfo.width,
+						height: swReportInfo.height,
+						animate: true,
+						theme: 'Base',
+						resizable: false,
+						autoSize: true,
+						insetPadding: 20,// radar
+						renderTo : Ext.get(swReportInfo.target),
+						store : Ext.create('Ext.data.JsonStore', {
+							fields : smartChart.getFields(target),
+							data : swReportInfo.values
+						}),
+						shadow : true,
+						legend : legendOption,
+						axes : smartChart.getAxes(swReportInfo.chartType, target),
+						series : smartChart.getSeries(swReportInfo.chartType, target)
+					});
 				}else{
 					Ext.create('Ext.chart.Chart',{
 						width: swReportInfo.width,
