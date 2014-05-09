@@ -292,11 +292,15 @@ try{
 	                    height : 32,
 	                    width : 160,
 	                    renderer: function(storeItem, item) {
+							if(!isEmpty(target)){
+								swReportInfo = smartChart.reportInfos[target];
+							}
 	                    	var total = 0;
 	                    	for(var i=0; i<swReportInfo.values.length; i++){
 	                    		total += swReportInfo.values[i][ swReportInfo.groupNames[index]];
 	                    	}
-	                    	this.setTitle(storeItem.data[ swReportInfo.xFieldName] + "<br>" + storeItem.data[swReportInfo.groupNames[index]] + "  (" + Math.round(storeItem.data[swReportInfo.groupNames[index]]/total * 100) + "%)");
+//	                    	this.setTitle(storeItem.data[ swReportInfo.xFieldName] + "<br>" + storeItem.data[swReportInfo.groupNames[index]] + "  (" + Math.round(storeItem.data[swReportInfo.groupNames[index]]/total * 100) + "%)");
+	                    	this.setTitle(item.storeItem.data[ swReportInfo.xFieldName] + "<br>" + item.storeItem.data[swReportInfo.groupNames[index]] + "  (" + Math.round(item.storeItem.data[swReportInfo.groupNames[index]]/total * 100) + "%)");
 	                    }
 	                },
 				    label: {
@@ -305,6 +309,9 @@ try{
 				        contrast: true,
 				        font: smartChart.labelFont,
 	                    renderer: function(v, storeItem, item) {
+							if(!isEmpty(target)){
+								swReportInfo = smartChart.reportInfos[target];
+							}
 	                    	var total = 0;
 	                    	for(var i=0; i<swReportInfo.values.length; i++){
 	                    		total += swReportInfo.values[i][ swReportInfo.groupNames[index]];
@@ -586,44 +593,44 @@ try{
 		
 		loadWithData : function(reportType, data, chartType, isStacked, target) {
 			try{
-				if(isEmpty(swReportInfo)){
+				reportInfo = smartChart.reportInfos[target];
+				if(isEmpty(reportInfo)){
 					reportInfo = new ReportInfo();
 					smartChart.reportInfos[target] = reportInfo;
-					swReportInfo = reportInfo;
 				}
-				swReportInfo.reportType = reportType;
+				reportInfo.reportType = reportType;
 				if(isEmpty(chartType)) chartType = swChartType.DEFAULT;
-				swReportInfo.chartType = chartType;
-				swReportInfo.isStacked = isStacked;
-				swReportInfo.target = target;
+				reportInfo.chartType = chartType;
+				reportInfo.isStacked = isStacked;
+				reportInfo.target = target;
 				$('#'+target).html('');
-				swReportInfo.width = $('#' + target).width();
+				reportInfo.width = $('#' + target).width();
 				if(data){
-					swReportInfo.xFieldName = data.xFieldName;
-					swReportInfo.yValueName = data.yValueName;
-					swReportInfo.xGroupName = data.xGroupName;
-					swReportInfo.yGroupName = data.yGroupName;
-					swReportInfo.groupHeaders = data.groupHeaders;
-					swReportInfo.groupNames = data.groupNames;
-					swReportInfo.values = data.values;
-					if((swReportInfo.stringLabelRotation === "auto" && (swReportInfo.values.length>12 || swReportInfo.width<600)) || swReportInfo.stringLabelRotation === "rotated" ){
-						swReportInfo.labelRotate = {
+					reportInfo.xFieldName = data.xFieldName;
+					reportInfo.yValueName = data.yValueName;
+					reportInfo.xGroupName = data.xGroupName;
+					reportInfo.yGroupName = data.yGroupName;
+					reportInfo.groupHeaders = data.groupHeaders;
+					reportInfo.groupNames = data.groupNames;
+					reportInfo.values = data.values;
+					if((reportInfo.stringLabelRotation === "auto" && (reportInfo.values.length>12 || reportInfo.width<600)) || reportInfo.stringLabelRotation === "rotated" ){
+						reportInfo.labelRotate = {
 			                	rotate : {
 			                		degrees : 45
 			                	},
 								font: smartChart.labelFont
 			                };
 					}else{
-						swReportInfo.labelRotate = {
+						reportInfo.labelRotate = {
 								font: smartChart.labelFont
 						};
 					}
-					if(swReportInfo.reportType === swReportType.CHART){
-						smartChart.createChart();
-					}else if(swReportInfo.reportType === swReportType.MATRIX){
+					if(reportInfo.reportType === swReportType.CHART){
+						smartChart.createChart(target);
+					}else if(reportInfo.reportType === swReportType.MATRIX){
 						smartChart.createMatrix();				
 						smartChart.resize();
-					}else if(swReportInfo.reportType === swReportType.TABLE){
+					}else if(reportInfo.reportType === swReportType.TABLE){
 						
 					}
 				}
@@ -977,15 +984,27 @@ try{
 				}
 	
 				if(swReportInfo.chartType === swChartType.PIE){
+					if(swReportInfo.values==null || swReportInfo.values.length==0){
+						legendOption = false;
+					}else{
+						legendOption = {
+								position: 'float',
+								x : 100,
+								y : 500
+						};
+					}
 					for(var i=0; i< swReportInfo.groupNames.length; i++)
 						Ext.create('Ext.chart.Chart',{						
 							width: swReportInfo.height,
-							height: swReportInfo.height,
+							height: swReportInfo.height+300,
 							insetPadding: 25,
 							shodow:true,
-							legend: {
-								position: 'right'
-							},
+//							legend: {
+//								position: 'float',
+//								x : 100,
+//								y : 500
+//							},
+							legend: legendOption,
 					        html: '<span style="font-weight: bold; font-size: 13px; font-family: dotum,Helvetica,sans-serif;">' + swReportInfo.groupNames[i] + '</span>',
 							animate: true,
 							renderTo : Ext.get(swReportInfo.target),

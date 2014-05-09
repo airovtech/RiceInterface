@@ -19,21 +19,21 @@
 	
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	
-	Data data = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr, SummaryReportPopCond.CHARTTYPEFAULT);
+	Data data1 = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr, SummaryReportPopCond.CHARTTYPEFAULT);
 	
 	String dataJson1 = null;
-	if(data!=null){
+	if(data1!=null){
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		dataJson1 = ow.writeValueAsString(data);
+		dataJson1 = ow.writeValueAsString(data1);
 		System.out.println(dataJson1);
 	}
 	
-	data = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr, SummaryReportPopCond.CHARTTYPEALL);
+	Data data2 = mgr.getSummaryReportPop(fromDate, toDate, selectorType, testDateStr, SummaryReportPopCond.CHARTTYPEALL);
 	
 	String dataJson2 = null;
-	if(data!=null){
+	if(data2!=null){
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		dataJson2 = ow.writeValueAsString(data);
+		dataJson2 = ow.writeValueAsString(data2);
 		System.out.println(dataJson2);
 	}
 %>
@@ -51,11 +51,14 @@
 	</div>
 	<!-- 팝업 타이틀 //-->
 	<!-- 컨텐츠 -->
-	<div class="contents_space" style="width:800px">
-		<span style="display:inline-block;width:390px" id="detail_chart_target2"></span>
-		<span style="display:inline-block;width:390px" id="detail_chart_target1"></span>
+	<div class="contents_space" style="width:800px;margin-top:-150px">
+		<span style="display:inline-block;width:390px" id="detail_chart_target2">
+		</span>
+		<span style="display:inline-block;width:390px" id="detail_chart_target1">
+		</span>
 	</div>
-	<!-- 컨텐츠 //-->
+<!-- 	<div style="height:100px"></div>
+ -->	<!-- 컨텐츠 //-->
 
 </div>
 <!-- 전체 레이아웃//-->
@@ -71,7 +74,10 @@ $(function() {
 			xName.text(xName.text().split("(")[0]);
 		}
 	}
-	smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.PIE, false, "detail_chart_target2");
+<%-- 	<%if(data1.getValues()==null || data1.getValues().size()==0){%>
+		$('#detail_chart_target1 > div:first').append('<span class="tc">선택한 기간에 데이터가 존재하지 않습니다.</span');
+	<%}%>
+ --%> 	smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.PIE, false, "detail_chart_target2");
 	$('#detail_chart_target2>div:first>span:first').hide();
 });
 </script>
