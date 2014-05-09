@@ -195,6 +195,7 @@
 	</if>
 	)baseTbl
 	group by baseTbl.decisionCode
+	order by baseTbl.decisionCode desc
   </select>
   <select id="getSummaryReportPopFault" parameterType="net.smartworks.rice.model.SummaryReportPopCond" resultType="net.smartworks.rice.model.SummaryReportPopRSet">
 	select
