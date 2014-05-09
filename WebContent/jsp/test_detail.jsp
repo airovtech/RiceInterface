@@ -52,13 +52,13 @@
 			for (SensorReport sensorReport : report.getSensorReports()) {
 			%>
 				<tr>
-					<td class="tc"><%=sensorReport.getSensorNo() %></td>
-					<td class="tc"><%=sensorReport.getDecisionCode() %></td>
-					<td><%=sensorReport.getDecisionCodeDesc() %></td>
-					<td class="tr"><%=sensorReport.getIndoorTemperature() %></td>
-					<td class="tr"><%=sensorReport.getGlassTemperature() %></td>
-					<td class="tr"><%=sensorReport.getIndoorHumidity() %></td>
-					<td class="tr"><%=sensorReport.getSerialNo() %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getSensorNo()) %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getDecisionCode()) %></td>
+					<td><%=SmartUtil.toNotNull(sensorReport.getDecisionCodeDesc()) %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getIndoorTemperature()) %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getGlassTemperature()) %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getIndoorHumidity()) %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getSerialNo()) %></td>
 				</tr>
 		<%
 			}

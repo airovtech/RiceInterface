@@ -175,16 +175,16 @@ $(function() {
 			var input = $(targetElement(e));
 			var selectedType = input.find('option:selected').attr('value');
 			var fromDate = new Date();
+			var toDate = new Date($('input[name="txtSearchDateTo"]').attr('value'));
 			var fromStr = "";
 			if(selectedType === "byDay"){
-				fromStr = (new Date(fromDate.getTime()-60*24*60*60*1000)).format("yyyy.mm.dd");
+				fromStr = (new Date(toDate.getTime()-60*24*60*60*1000)).format("yyyy.mm.dd");
 			}else if(selectedType === "byWeek"){
-				fromStr = new Date(fromDate.getTime()-365*24*60*60*1000).format("yyyy.mm.dd");
+				fromStr = new Date(toDate.getTime()-365*24*60*60*1000).format("yyyy.mm.dd");
 			}else if(selectedType === "byMonth"){
-				fromStr = new Date(fromDate.getTime()-4*365*24*60*60*1000).format("yyyy.mm.dd");
+				fromStr = new Date(toDate.getTime()-4*365*24*60*60*1000).format("yyyy.mm.dd");
 			}
 			$('input[name="txtSearchDateFrom"]').attr('value', fromStr);
-			$('input[name="txtSearchDateTo"]').attr('value', fromStr===''?'':(new Date()).format('yyyy.mm.dd'));			
 			selectSummaryType(input.siblings('.js_progress_span:first'), false);
 		}catch(error){
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_select_search_type]', null, error);
