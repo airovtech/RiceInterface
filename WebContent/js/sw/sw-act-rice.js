@@ -188,6 +188,9 @@ $(function() {
 			}else if(selectedType === "byMonth"){
 				fromDate = new Date(toDate.getTime()-4*365*24*60*60*1000);
 				fromStr = fromDate.format("yyyy.mm.dd");
+			}else if(selectedType === "byYear"){
+				fromDate = new Date(toDate.getTime()-50*365*24*60*60*1000);
+				fromStr = fromDate.format("yyyy.mm.dd");
 			}
 			if(orgFromDate==null || orgFromDate<fromDate)
 				$('input[name="txtSearchDateFrom"]').attr('value', fromStr);
