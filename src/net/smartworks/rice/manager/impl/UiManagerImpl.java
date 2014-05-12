@@ -199,16 +199,6 @@ public class UiManagerImpl implements IUiManager {
 			List<SummaryReportPopRSet> summaryReportRs;
 			if (chartType == null || chartType.equalsIgnoreCase(SummaryReportPopCond.CHARTTYPEALL)) {
 				summaryReportRs = session.selectList("getSummaryReportPopAll", reportCond);
-				if(summaryReportRs != null){
-					List<SummaryReportPopRSet> tempSummaryReportRs = new ArrayList<SummaryReportPopRSet>();
-					for (int i=0; i<summaryReportRs.size(); i++) {
-						tempSummaryReportRs.add(null);
-					}
-					for (int i=0; i<summaryReportRs.size(); i++) {
-						tempSummaryReportRs.set(summaryReportRs.size()-1-i, summaryReportRs.get(i));
-					}
-					summaryReportRs = tempSummaryReportRs;
-				}
 			} else {
 				summaryReportRs = session.selectList("getSummaryReportPopFault", reportCond);
 			}

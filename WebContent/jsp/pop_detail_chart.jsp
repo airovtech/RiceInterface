@@ -64,7 +64,7 @@
 <!-- 전체 레이아웃//-->
 <script type="text/javascript">
 $(function() {
-	smartChart.loadWithData(swReportType.CHART, <%=dataJson1%>, swChartType.PIE, false, "detail_chart_target1");
+	smartChart.loadWithData(swReportType.CHART, <%=dataJson1%>, swChartType.PIE, false, "detail_chart_target1", 'Category2');
 	$('#detail_chart_target1>div:first>span:first').hide();
 	var detailChartTarget1 = $('#detail_chart_target1');
 	var xNames = detailChartTarget1.find('text>tspan');
@@ -77,7 +77,7 @@ $(function() {
 <%-- 	<%if(data1.getValues()==null || data1.getValues().size()==0){%>
 		$('#detail_chart_target1 > div:first').append('<span class="tc">선택한 기간에 데이터가 존재하지 않습니다.</span');
 	<%}%>
- --%> 	smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.PIE, false, "detail_chart_target2");
+ --%> 	smartChart.loadWithData(swReportType.CHART, <%=dataJson2%>, swChartType.PIE, false, "detail_chart_target2", 'Rice');
 	$('#detail_chart_target2>div:first>span:first').hide();
 });
 </script>

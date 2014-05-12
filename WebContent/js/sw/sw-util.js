@@ -409,7 +409,9 @@ var refreshCurrentContent = function(js_page){
 			smartPop.closeProgress();
 		}
 	});
+	
 };
+
 }catch(error){
 	smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-util script]', null, error);
 }

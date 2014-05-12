@@ -37,6 +37,7 @@ function ReportInfo()
 		this.isShowLegend = true;
 		this.stringLabelRotation = 'auto';
 		this.target = null;
+		this.theme = null;
 		this.width = 1024/2;
 		this.height = 768/2;
 		this.columnSpans =  1;
@@ -54,9 +55,21 @@ swReportInfo = new ReportInfo();
 
 swReportResizing = false;
 
+Ext.define('Ext.chart.theme.Rice', {
+    extend: 'Ext.chart.theme.Base',
+
+    constructor: function(config) {
+        this.callParent([Ext.apply({
+            colors: ['#2171B5',
+              '#DA3B13']
+        }, config)]);
+    }
+});
+	
 Ext.onReady(function () {
 
 try{
+
 	smartChart = {
 		companyId : currentUser.companyId,
 		userId : currentUser.userId,
@@ -165,7 +178,7 @@ try{
 				else if(chartType === swChartType.PIE)
 					return "Category2";
 				else if(chartType === swChartType.COLUMN)
-					return "Base";
+					return "Rice";
 				else if(chartType === swChartType.GUAGE)
 					return "Base";
 				else if(chartType === swChartType.RADAR)
@@ -591,7 +604,7 @@ try{
 			}			
 		},
 		
-		loadWithData : function(reportType, data, chartType, isStacked, target) {
+		loadWithData : function(reportType, data, chartType, isStacked, target, theme) {
 			try{
 				reportInfo = smartChart.reportInfos[target];
 				if(isEmpty(reportInfo)){
@@ -603,6 +616,7 @@ try{
 				reportInfo.chartType = chartType;
 				reportInfo.isStacked = isStacked;
 				reportInfo.target = target;
+				reportInfo.theme = theme;
 				$('#'+target).html('');
 				reportInfo.width = $('#' + target).width();
 				if(data){
@@ -999,11 +1013,7 @@ try{
 							height: swReportInfo.height+300,
 							insetPadding: 25,
 							shodow:true,
-//							legend: {
-//								position: 'float',
-//								x : 100,
-//								y : 500
-//							},
+							theme: swReportInfo.theme,
 							legend: legendOption,
 					        html: '<span style="font-weight: bold; font-size: 13px; font-family: dotum,Helvetica,sans-serif;">' + swReportInfo.groupNames[i] + '</span>',
 							animate: true,
@@ -1070,7 +1080,7 @@ try{
 						width: swReportInfo.width,
 						height: swReportInfo.height,
 						animate: true,
-						theme: 'Base',
+						theme: 'Rice',
 						resizable: false,
 						autoSize: true,
 						insetPadding: 20,// radar
