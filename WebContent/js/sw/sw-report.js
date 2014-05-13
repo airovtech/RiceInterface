@@ -60,8 +60,8 @@ Ext.define('Ext.chart.theme.Rice', {
 
     constructor: function(config) {
         this.callParent([Ext.apply({
-            colors: ['#2171B5',
-              '#DA3B13']
+            colors: ['#3B638A',
+              '#FF5357']
         }, config)]);
     }
 });
@@ -313,7 +313,8 @@ try{
 	                    		total += swReportInfo.values[i][ swReportInfo.groupNames[index]];
 	                    	}
 //	                    	this.setTitle(storeItem.data[ swReportInfo.xFieldName] + "<br>" + storeItem.data[swReportInfo.groupNames[index]] + "  (" + Math.round(storeItem.data[swReportInfo.groupNames[index]]/total * 100) + "%)");
-	                    	this.setTitle(item.storeItem.data[ swReportInfo.xFieldName] + "<br>" + item.storeItem.data[swReportInfo.groupNames[index]] + "  (" + Math.round(item.storeItem.data[swReportInfo.groupNames[index]]/total * 100) + "%)");
+	                    	var rate = item.storeItem.data[swReportInfo.groupNames[index]]/total * 100;
+	                    	this.setTitle(item.storeItem.data[ swReportInfo.xFieldName] + "<br>" + item.storeItem.data[swReportInfo.groupNames[index]] + "  (" + (rate<1 ? "1% 미만)" : Math.round(rate) + "%)"));
 	                    }
 	                },
 				    label: {
@@ -329,7 +330,8 @@ try{
 	                    	for(var i=0; i<swReportInfo.values.length; i++){
 	                    		total += swReportInfo.values[i][ swReportInfo.groupNames[index]];
 	                    	}
-	                    	return Math.round(item.data[swReportInfo.groupNames[index]]/total * 100) + "%";
+	                    	var rate = item.data[swReportInfo.groupNames[index]]/total * 100;
+	                    	return rate<1 ? "1% 미만" : Math.round(rate) + "%";
 	                    }
 				    }		}];
 			}catch(error){
