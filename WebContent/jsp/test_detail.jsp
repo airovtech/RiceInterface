@@ -50,15 +50,27 @@
 			</tr>	
 		<%
 			for (SensorReport sensorReport : report.getSensorReports()) {
+				
+				String decisionCode = sensorReport.getDecisionCode();
+				boolean isFairQualityCode = decisionCode.equalsIgnoreCase(SensorReport.fairQualityCode);
+				String serialNoStr = isFairQualityCode ? sensorReport.getSerialNo() : "-";
+				if (isFairQualityCode) {
+			%>
+				<tr class="instance_sensor_list js_pop_pcb_report" href="" sensor_bar="<%=sensorReport.getLotNo() + sensorReport.getSerialNo()%>">
+			<%
+				} else {
 			%>
 				<tr>
+			<%
+				}
+			%>	
 					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getSensorNo()) %></td>
-					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getDecisionCode()) %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(decisionCode) %></td>
 					<td><%=SmartUtil.toNotNull(sensorReport.getDecisionCodeDesc()) %></td>
 					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getIndoorTemperature()) %></td>
 					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getGlassTemperature()) %></td>
 					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getIndoorHumidity()) %></td>
-					<td class="tc"><%=SmartUtil.toNotNull(sensorReport.getSerialNo()) %></td>
+					<td class="tc"><%=SmartUtil.toNotNull(serialNoStr) %></td>
 				</tr>
 		<%
 			}

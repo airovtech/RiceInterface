@@ -26,9 +26,18 @@ public class SessionFactory {
 		}
 	}
 	public SqlSessionFactory getSqlSessionFactory() throws Exception {
+		return getSqlSessionFactory(null);
+	}
+	public SqlSessionFactory getSqlSessionFactory(String environment) throws Exception {
 		String resource = "net/smartworks/conf/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
-		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		
+		SqlSessionFactory sqlSessionFactory = null;
+		if (environment != null) {
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, environment);
+		} else {
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		}
 		return sqlSessionFactory;
 	}
 }

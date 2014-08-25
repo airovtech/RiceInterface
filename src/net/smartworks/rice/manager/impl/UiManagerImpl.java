@@ -18,6 +18,8 @@ import java.util.Map;
 import net.smartworks.common.Data;
 import net.smartworks.factory.SessionFactory;
 import net.smartworks.rice.manager.IUiManager;
+import net.smartworks.rice.model.PcbReport;
+import net.smartworks.rice.model.PcbReportCond;
 import net.smartworks.rice.model.SensorReport;
 import net.smartworks.rice.model.SensorReportCond;
 import net.smartworks.rice.model.SummaryBarChartData;
@@ -374,6 +376,27 @@ public class UiManagerImpl implements IUiManager {
 				chartData.setValues(values);
 			}
 			return chartData;
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (session != null)
+				session.close();
+		}
+	}
+
+	@Override
+	public PcbReport getPcbReport(String sensor_bar) throws Exception {
+		SqlSession session = null;
+		try {
+			SqlSessionFactory factory = SessionFactory.getInstance().getSqlSessionFactory("test_sensor_bar");
+			session = factory.openSession();
+			PcbReportCond cond = new PcbReportCond();
+			cond.setSensor_bar(sensor_bar);
+			PcbReport report = session.selectOne("getPcbReport", cond);
+			if (report == null)
+				return null;
+			return report;
 			
 		} catch (Exception e) {
 			throw e;

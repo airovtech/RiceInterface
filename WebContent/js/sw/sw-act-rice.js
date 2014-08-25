@@ -215,7 +215,19 @@ $(function() {
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_pop_detail_chart]', null, error);
 		}
 	});
-			
+
+	$('.js_pop_pcb_report').live('click', function(e){
+		try{
+			var input = $(targetElement(e));
+			if(!input.hasClass('js_pop_pcb_report')) input = input.parents('.js_pop_pcb_report');
+			var sensor_bar = input.attr('sensor_bar');
+			var top = input.offset().top+ input.height() ;
+			smartPop.showPcbReport(sensor_bar, top, window.innerWidth);
+			return false;
+		}catch(error){
+			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-act-rice js_pop_pcb_report]', null, error);
+		}
+	});	
 });
 
 var cleanupListParams = function(listType){

@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<environments default="development">
+	<environments default="test_development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
@@ -11,6 +11,33 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 				<property name="url" value="jdbc:jtds:sqlserver://70.26.11.17:1433/onegene" />
 				<property name="username" value="sa" />
 				<property name="password" value="dnjswls!21" />
+			</dataSource>
+		</environment>
+		<environment id="sensor_bar">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="net.sourceforge.jtds.jdbc.Driver" />
+				<property name="url" value="jdbc:jtds:sqlserver://70.26.12.216:1433/SMD" />
+				<property name="username" value="ads" />
+				<property name="password" value="ads" />
+			</dataSource>
+		</environment>
+		<environment id="test_development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="net.sourceforge.jtds.jdbc.Driver" />
+				<property name="url" value="jdbc:jtds:sqlserver://localhost:1433/onegene_rice_test" />
+				<property name="username" value="sa" />
+				<property name="password" value="mis" />
+			</dataSource>
+		</environment>
+		<environment id="test_sensor_bar">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="net.sourceforge.jtds.jdbc.Driver" />
+				<property name="url" value="jdbc:jtds:sqlserver://localhost:1433/onegene_rice_test" />
+				<property name="username" value="sa" />
+				<property name="password" value="mis" />
 			</dataSource>
 		</environment>
 	</environments>

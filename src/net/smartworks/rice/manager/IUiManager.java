@@ -11,6 +11,8 @@ package net.smartworks.rice.manager;
 import java.util.Date;
 
 import net.smartworks.common.Data;
+import net.smartworks.rice.model.PcbReport;
+import net.smartworks.rice.model.PcbReportCond;
 import net.smartworks.rice.model.SummaryReport;
 import net.smartworks.rice.model.SummaryReportPop;
 import net.smartworks.rice.model.TestReport;
@@ -46,4 +48,6 @@ public interface IUiManager {
 	public Data getLineChartReportData(Date fromDate, Date toDate, String selector) throws Exception;
 	public Data getBarChartReportData(Date fromDate, Date toDate, String selector) throws Exception;
 	
+	//Pcb 리포트를 가져온다
+	public PcbReport getPcbReport(String sensor_bar) throws Exception;
 }

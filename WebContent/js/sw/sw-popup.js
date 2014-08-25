@@ -1977,8 +1977,27 @@ smartPop = {
 		}catch(error){
 			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-popup showDetailChart]', null, error);
 		}				
+	},
+	showPcbReport : function(sensor_bar, top, width){
+		try{
+			var left = (width-800)/2;
+			var clientY = event.clientY - 200;
+			var url = "/RiceInterface/jsp/pop_pcb_report.jsp?sensor_bar=" + sensor_bar;
+			$.get( url, function(data){
+				$(data).modal({
+					opacity: 10,
+					position: [clientY, left],
+					overlayCss: {backgroundColor:"#000"},
+					containerCss:{
+						width:800
+					},
+					overlayClose: false
+				});
+			});
+		}catch(error){
+			smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-popup showPcbReport]', null, error);
+		}				
 	}
-
 };
 }catch(error){
 	smartPop.showInfo(smartPop.ERROR, smartMessage.get('technicalProblemOccured') + '[sw-popup script]', null, error);

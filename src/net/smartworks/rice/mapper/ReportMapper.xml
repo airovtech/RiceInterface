@@ -122,7 +122,7 @@
 	from 
 	(
 		select
-			DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS selectDay
+			DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 ' + case when len(datename(dd, datetime)) = 1 then '0' else '' end + DATENAME(DD, datetime) + '일' AS selectDay
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS selectWeek
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' AS selectMonth 
 			,DATENAME(yyyy, dateTime)+ '년 ' AS selectYear
@@ -161,7 +161,7 @@
 		select
 			testReportId
 	<if test="selector.equalsIgnoreCase('byDay')">
-			,DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS testDate
+			,DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 ' + case when len(datename(dd, datetime)) = 1 then '0' else '' end + DATENAME(DD, datetime) + '일' AS testDate
 	</if>
     <if test="selector.equalsIgnoreCase('byWeek')">
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS testDate
@@ -176,7 +176,7 @@
 		from OG_sensorReport
 		where 1=1
 	<if test="selector.equalsIgnoreCase('byDay')">
-		and DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' = #{selectTestDate} 
+		and DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ case when len(datename(dd, datetime)) = 1 then '0' else '' end + DATENAME(DD, datetime) + '일' = #{selectTestDate} 
 	</if>
     <if test="selector.equalsIgnoreCase('byWeek')">
 		and DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' = #{selectTestDate} 
@@ -207,7 +207,7 @@
 		select
 			testReportId
 	<if test="selector.equalsIgnoreCase('byDay')">
-			,DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS testDate
+			,DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ case when len(datename(dd, datetime)) = 1 then '0' else '' end + DATENAME(DD, datetime) + '일' AS testDate
 	</if>
     <if test="selector.equalsIgnoreCase('byWeek')">
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS testDate
@@ -223,7 +223,7 @@
 		where 1=1
 		and decisionCode != #{fairQualityCode}
 	<if test="selector.equalsIgnoreCase('byDay')">
-		and DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' = #{selectTestDate} 
+		and DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ case when len(datename(dd, datetime)) = 1 then '0' else '' end + DATENAME(DD, datetime) + '일' = #{selectTestDate} 
 	</if>
     <if test="selector.equalsIgnoreCase('byWeek')">
 		and DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' = #{selectTestDate} 
@@ -265,7 +265,7 @@
 	from 
 	(
 		select
-			DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS selectDay
+			DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ case when len(datename(dd, datetime)) = 1 then '0' else '' end + DATENAME(DD, datetime) + '일' AS selectDay
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS selectWeek
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' AS selectMonth 
 			,DATENAME(yyyy, dateTime)+ '년 ' AS selectYear
@@ -315,7 +315,7 @@
 	from 
 	(
 		select
-			DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ DATENAME(DD, datetime) + '일' AS selectDay
+			DATENAME(YYYY, dateTime) +'년 '+ DATENAME(MM, datetime) +'월 '+ case when len(datename(dd, datetime)) = 1 then '0' else '' end + DATENAME(DD, datetime) + '일' AS selectDay
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(ww, dateTime) + '주' AS selectWeek
 			,DATENAME(yyyy, dateTime)+ '년 ' + DATENAME(MM, dateTime) + '월' AS selectMonth 
 			,DATENAME(yyyy, dateTime)+ '년 ' AS selectYear
@@ -363,4 +363,15 @@
 	insert into OG_FtpHistory(id, folderName, fileName, fileSerial, createDate)
 	values (#{id},#{folderName},#{fileName},#{fileSerial},#{createDate})
   </insert>
+  <select id="getPcbReport" parameterType="net.smartworks.rice.model.PcbReportCond" resultType="net.smartworks.rice.model.PcbReport">
+    select * 
+    from CHECK_ADS 
+    where 1=1
+    <if test="sensor_bar != null">
+       AND sensor_bar = #{sensor_bar}
+    </if>
+    <if test="status != null">
+       AND status = #{status}
+    </if>
+  </select>
 </mapper>
