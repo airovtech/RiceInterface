@@ -1962,7 +1962,7 @@ smartPop = {
 	showDetailChart : function(fromDate, toDate, selectorType, testDate, top, width){
 		try{
 			var left = (width-840)/2;
-			var url = "/RiceInterface/jsp/pop_detail_chart.jsp?fromDate=" + fromDate + "&toDate="+ toDate + "&selectorType=" + selectorType + "&testDate=" + testDate;
+			var url = "/TLE/jsp/pop_detail_chart.jsp?fromDate=" + fromDate + "&toDate="+ toDate + "&selectorType=" + selectorType + "&testDate=" + testDate;
 			$.get( url, function(data){
 				$(data).modal({
 					opacity: 10,
@@ -1982,7 +1982,8 @@ smartPop = {
 		try{
 			var left = (width-800)/2;
 			var clientY = event.clientY - 200;
-			var url = "/RiceInterface/jsp/pop_pcb_report.jsp?sensor_bar=" + sensor_bar;
+			var url = "/TLE/jsp/pop_pcb_report.jsp?sensor_bar=" + sensor_bar;
+			console.log("url : " + url);
 			$.get( url, function(data){
 				$(data).modal({
 					opacity: 10,

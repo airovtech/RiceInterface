@@ -9,9 +9,9 @@
 package net.smartworks.test;
 
 import net.smartworks.factory.ManagerFactory;
-import net.smartworks.rice.manager.IUiManager;
-import net.smartworks.rice.model.TestReport;
-import net.smartworks.rice.model.TestReportCond;
+import net.smartworks.tle.manager.IUiManager;
+import net.smartworks.tle.model.TestReport;
+import net.smartworks.tle.model.TestReportCond;
 
 
 public class Tester2 {

@@ -16,6 +16,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</environments>
 	<mappers>
 		<mapper resource="net/smartworks/test/mapper/FileVoMapper.xml" />
-		<mapper resource="net/smartworks/rice/mapper/ReportMapper.xml" />
+		<mapper resource="net/smartworks/tle/mapper/ReportMapper.xml" />
 	</mappers>
 </configuration>

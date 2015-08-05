@@ -1,21 +1,21 @@
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@page import="org.codehaus.jackson.map.ObjectWriter"%>
 <%@page import="net.smartworks.common.Data"%>
-<%@page import="net.smartworks.rice.model.SummaryReportCond"%>
+<%@page import="net.smartworks.tle.model.SummaryReportCond"%>
 <%@page import="java.util.Date"%>
-<%@page import="net.smartworks.rice.model.SensorReport"%>
+<%@page import="net.smartworks.tle.model.SensorReport"%>
 <%@page import="net.smartworks.util.SmartUtil"%>
 <%@page import="net.smartworks.common.Order"%>
 <%@page import="net.smartworks.model.SortingField"%>
-<%@page import="net.smartworks.rice.model.TestReport"%>
-<%@page import="net.smartworks.rice.model.TestReportCond"%>
-<%@page import="net.smartworks.rice.manager.IUiManager"%>
+<%@page import="net.smartworks.tle.model.TestReport"%>
+<%@page import="net.smartworks.tle.model.TestReportCond"%>
+<%@page import="net.smartworks.tle.manager.IUiManager"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
 <%@page import="net.smartworks.model.RequestParams"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%
 
-	RequestParams requestParams = (RequestParams)session.getAttribute("requestParams");
+	RequestParams requestParams = (RequestParams)session.getAttribute("requestParams"); 
 	Date fromDate = SmartUtil.convertDateStringToDate(requestParams.getSearchDateFrom());
 	Date toDate = SmartUtil.convertDateStringToDate(requestParams.getSearchDateTo());
 	String selectorType = SmartUtil.isBlankObject(requestParams.getSelectorType())? SummaryReportCond.SELECTOR_DAILY : requestParams.getSelectorType();

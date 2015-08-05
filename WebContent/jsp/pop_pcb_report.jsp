@@ -1,16 +1,16 @@
-<%@page import="net.smartworks.rice.model.PcbReport"%>
-<%@page import="net.smartworks.rice.model.SummaryReportPopCond"%>
+<%@page import="net.smartworks.tle.model.PcbReport"%>
+<%@page import="net.smartworks.tle.model.SummaryReportPopCond"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@page import="org.codehaus.jackson.map.ObjectWriter"%>
 <%@page import="net.smartworks.common.Data"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
-<%@page import="net.smartworks.rice.manager.IUiManager"%>
+<%@page import="net.smartworks.tle.manager.IUiManager"%>
 <%@page import="net.smartworks.util.SmartUtil"%>
 <%@page import="java.util.Date"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%
 	
-	String sensor_bar = (String)request.getParameter("sensor_bar");
+	String sensor_bar = (String)request.getParameter("sensor_bar"); 
 	IUiManager mgr = ManagerFactory.getInstance().getUiManager();
 	PcbReport rpt = mgr.getPcbReport(sensor_bar);
 	

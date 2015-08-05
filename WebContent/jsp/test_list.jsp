@@ -3,9 +3,9 @@
 <%@page import="net.smartworks.util.SmartUtil"%>
 <%@page import="net.smartworks.common.Order"%>
 <%@page import="net.smartworks.model.SortingField"%>
-<%@page import="net.smartworks.rice.model.TestReport"%>
-<%@page import="net.smartworks.rice.model.TestReportCond"%>
-<%@page import="net.smartworks.rice.manager.IUiManager"%>
+<%@page import="net.smartworks.tle.model.TestReport"%>
+<%@page import="net.smartworks.tle.model.TestReportCond"%>
+<%@page import="net.smartworks.tle.manager.IUiManager"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
 <%@page import="net.smartworks.model.RequestParams"%>
 <%@ page contentType="text/html; charset=utf-8"%>
@@ -75,16 +75,16 @@
 				</a>
 				<span class="js_progress_span"></span>
 			</th>
-	 		<th class="r_line">
+	 		<%-- <th class="r_line">
 	 			<a href="" class="js_select_field_sorting" fieldId="<%=TestReport.FIELD_ID_SENSOR_SN%>">시리얼 번호
 			 		<span class="<%
-					if(sortedField.getFieldId().equals(TestReport.FIELD_ID_SENSOR_SN)){
+					if(sortedField.getFieldId().equals(TestReport.FIELD_ID_PROJECT)){
 						if(sortedField.isAscending()){ %>icon_in_up<%}else{ %>icon_in_down<%}}%>"></span>
 				</a>
 				<span class="js_progress_span"></span>
-			</th>
+			</th> --%>
 	 		<th class="r_line">
-	 			<a href="" class="js_select_field_sorting" fieldId="<%=TestReport.FIELD_ID_DATETIME%>">날짜 및 시간
+	 			<a href="" class="js_select_field_sorting" fieldId="<%=TestReport.FIELD_ID_DATETIME%>">날짜 및 시간 
 			 		<span class="<%
 					if(sortedField.getFieldId().equals(TestReport.FIELD_ID_DATETIME)){
 						if(sortedField.isAscending()){ %>icon_in_up<%}else{ %>icon_in_down<%}}%>"></span>
@@ -126,7 +126,6 @@
 				currentCount--;
 				%>
 				<td class="tc"><%=SmartUtil.toNotNull(report.getLotNo()) %></td>
-				<td class="tc"><%=SmartUtil.toNotNull(report.getFirstSensorId()) %></td>
 				<td class="tc"><%=SmartUtil.toNotNull(SmartUtil.printDateTime(report.getDateTime()))%></td>
 				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getTotalTestCount()) %></td>
 				<td class="tr"><%=NumberFormat.getNumberInstance(Locale.KOREA).format(report.getFairQualityCount()) %></td>
@@ -148,14 +147,14 @@
 				</a>
 				<span class="js_progress_span"></span>
 			</th>
-	 		<th class="r_line">
+	 		<%-- <th class="r_line">
 	 			<a href="" class="js_select_field_sorting" fieldId="<%=TestReport.FIELD_ID_SENSOR_SN%>">시리얼 번호
 			 		<span class="<%
-					if(sortedField.getFieldId().equals(TestReport.FIELD_ID_SENSOR_SN)){
+					if(sortedField.getFieldId().equals(TestReport.FIELD_ID_PROJECT)){
 						if(sortedField.isAscending()){ %>icon_in_up<%}else{ %>icon_in_down<%}}%>"></span>
 				</a>
 				<span class="js_progress_span"></span>
-			</th>
+			</th> --%>
 	 		<th class="r_line">
 	 			<a href="" class="js_select_field_sorting" fieldId="<%=TestReport.FIELD_ID_DATETIME%>">날짜 및 시간
 			 		<span class="<%

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="RiceInterface">
+    <wb-module deploy-name="TLE">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="RiceInterface"/>
-        <property name="java-output-path" value="/RiceInterface/build/classes"/>
+        <property name="java-output-path" value="/TLE/build/classes"/>
+        <property name="context-root" value="TLE"/>
     </wb-module>
 </project-modules>

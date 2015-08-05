@@ -1,6 +1,6 @@
-<%@page import="net.smartworks.rice.model.TestReport"%>
+<%@page import="net.smartworks.tle.model.TestReport"%>
 <%@page import="net.smartworks.model.SortingField"%>
-<%@page import="net.smartworks.rice.model.SummaryReportCond"%>
+<%@page import="net.smartworks.tle.model.SummaryReportCond"%>
 <%@page import="net.smartworks.util.SmartUtil"%>
 <%@page import="net.smartworks.model.RequestParams"%>
 <%@page import="net.smartworks.model.filter.SearchFilter"%>
@@ -99,13 +99,13 @@ try{
 		smartPop.progressCont(progressSpan);
 		console.log(JSON.stringify(paramsJson));
 		$.ajax({
-			url : "/RiceInterface/jsp/set_list_params.jsp?data=" + JSON.stringify(paramsJson),
+			url : "/TLE/jsp/set_list_params.jsp?data=" + JSON.stringify(paramsJson),
 			contentType : 'application/json',
 			type : 'POST',
 			success : function(data, status, jqXHR) {
 				$('#test_list_page').html(data);
 				if($('.js_select_list_type a[listType="testList"]').parent().hasClass('unselected')){
-					$.ajax({url : '/RiceInterface/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
+					$.ajax({url : '/TLE/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
 							$('.js_test_detail_page').html(data);
 							smartPop.closeProgress();
 						}

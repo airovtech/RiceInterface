@@ -7,7 +7,7 @@
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <beans:bean id="eventDataJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-		<beans:property name="jobClass" value="net.smartworks.rice.scheduler.job.GetDataStarterJob" />
+		<beans:property name="jobClass" value="net.smartworks.tle.scheduler.job.GetDataStarterJob" />
 	</beans:bean>	
 	
  	<beans:bean id="eventTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
@@ -15,7 +15,8 @@
 			<beans:ref bean="eventDataJob" />
 		</beans:property>
 		<beans:property name="cronExpression">
-			<beans:value>0 0/5 * * * ?</beans:value>
+			<beans:value>5 0/20 22 * * ?</beans:value>
+			<!-- <beans:value>0 0/1 * * * ?</beans:value> -->
 		</beans:property>
 	</beans:bean>
 	<beans:bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" destroy-method="destroy">

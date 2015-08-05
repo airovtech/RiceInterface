@@ -8,7 +8,7 @@
 
 package net.smartworks.test;
 
-import net.smartworks.rice.scheduler.trigger.RiceCronTrigger;
+import net.smartworks.tle.scheduler.trigger.RiceCronTrigger;
 
 public class SchedulerTester {
 

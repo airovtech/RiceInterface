@@ -1,7 +1,7 @@
 package net.smartworks.model;
 
 import net.smartworks.model.SortingField;
-import net.smartworks.rice.model.SummaryReportCond;
+import net.smartworks.tle.model.SummaryReportCond;
 
 public class RequestParams {
 
