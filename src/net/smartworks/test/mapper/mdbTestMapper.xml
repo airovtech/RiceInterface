@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.smartworks.test.mapper.mdbTestMapper">
+<!-- 	private String date;
+	private String dateTime;
+	private String customerName;
+	private String productName;
+	private String modelName;
+	private String tester;
+	private String qrCode;
+	private String dataMatrix;
+	private String lotNo;
+	private String humidity;
+	private String decisionCode;
+	private int id; -->
+<resultMap id="SensorReport1ResultMap" type="net.smartworks.tle.model.SensorReport1">
+  <result property="date" column="날짜"/>
+  <result property="dateTime" column="시간"/>
+  <result property="customerName" column="고객명"/>
+  <result property="productName" column="제품명"/>
+  <result property="modelName" column="모델명"/>
+  <result property="tester" column="측정자"/>
+  <result property="qrCode" column="QRcode"/>
+  <result property="dataMatrix" column="dataMatrix"/>
+  <result property="lotNo" column="LOTNO"/>
+  <result property="humidity" column="측정습도"/>
+  <result property="decisionCode" column="판정"/>
+  <result property="id" column="ID"/>
+</resultMap>
+
+
+<!-- parameterType="int"  -->
+  <select id="getSensorReport" resultMap="SensorReport1ResultMap">
+    SELECT 날짜,시간,고객명,제품명,모델명,측정자,QRCODE,DATAMATRIX,LOTNO,측정습도,판정,ID FROM DBASE WHERE ID > 63000 ORDER BY ID ASC  
+  </select>
+  
+    <select id="getSensorReport" resultType="Object">
+    <!-- SELECT DATAMATRIX FROM DBASE WHERE ID > 63000 ORDER BY ID ASC -->
+    SELECT 날짜,QRCODE,DATAMATRIX,LOTNO FROM DBASE
+  </select>
+
+</mapper>
