@@ -5,17 +5,17 @@
 <%@page import="org.codehaus.jackson.map.ObjectWriter"%>
 <%@page import="net.smartworks.common.Data"%>
 <%@page import="java.util.Date"%>
-<%@page import="net.smartworks.tle.model.SummaryReport"%>
-<%@page import="net.smartworks.tle.model.SummaryReportCond"%>
+<%@page import="net.smartworks.rice.model.SummaryReport"%>
+<%@page import="net.smartworks.rice.model.SummaryReportCond"%>
 <%@page import="net.smartworks.util.SmartUtil"%>
 <%@page import="net.smartworks.common.Order"%>
 <%@page import="net.smartworks.model.SortingField"%>
-<%@page import="net.smartworks.tle.model.TestReport"%>
-<%@page import="net.smartworks.tle.model.TestReportCond"%>
-<%@page import="net.smartworks.tle.manager.IUiManager"%>
+<%@page import="net.smartworks.rice.model.TestReport"%>
+<%@page import="net.smartworks.rice.model.TestReportCond"%>
+<%@page import="net.smartworks.rice.manager.IUiManager"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
 <%@page import="net.smartworks.model.RequestParams"%>
-<%@ page contentType="text/html; charset=utf-8"%> 
+<%@ page contentType="text/html; charset=utf-8"%>
 <%
 
 	String cleanup = request.getParameter("cleanup");

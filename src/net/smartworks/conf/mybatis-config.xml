@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<environments default="development">
+	<environments default="test_development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
@@ -20,9 +20,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 				<property name="url" value="jdbc:jtds:sqlserver://70.26.12.216:1433/SMD" />
 				<property name="username" value="ads" />
 				<property name="password" value="ads" />
-			</dataSource> 
+			</dataSource>
 		</environment>
-		<!-- <environment id="test_development">
+		<environment id="test_development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="net.sourceforge.jtds.jdbc.Driver" />
@@ -39,10 +39,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 				<property name="username" value="sa" />
 				<property name="password" value="mis" />
 			</dataSource>
-		</environment> -->
+		</environment>
 	</environments>
 	<mappers>
 		<mapper resource="net/smartworks/test/mapper/FileVoMapper.xml" />
-		<mapper resource="net/smartworks/tle/mapper/ReportMapper.xml" />
+		<mapper resource="net/smartworks/rice/mapper/ReportMapper.xml" />
 	</mappers>
 </configuration>

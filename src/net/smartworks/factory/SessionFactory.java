@@ -32,6 +32,7 @@ public class SessionFactory {
 		String resource = "net/smartworks/conf/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		
+		
 		SqlSessionFactory sqlSessionFactory = null;
 		if (environment != null) {
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, environment);

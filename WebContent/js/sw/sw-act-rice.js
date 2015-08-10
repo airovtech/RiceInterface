@@ -117,14 +117,13 @@ $(function() {
 		return false;
 	});
 	
-	$('.js_select_test_report').live("click", function(e){ 
+	$('.js_select_test_report').live("click", function(e){
 		try{
 			smartPop.progressCenter();
 			var input = $(targetElement(e));
 			if(!input.hasClass('js_select_test_report')) input = input.parents('.js_select_test_report');
 			var reportId = input.attr('reportId');
-			
-			$.ajax({url : "/TLE/jsp/test_detail.jsp?reportId=" + reportId, success : function(data, status, jqXHR) {
+			$.ajax({url : "/RiceInterface/jsp/test_detail.jsp?reportId=" + reportId, success : function(data, status, jqXHR) {
 					try{
 						$('.js_test_detail_page').html(data);
 						smartPop.closeProgress();
@@ -144,7 +143,7 @@ $(function() {
 			smartPop.progressCenter();
 			var input = $(targetElement(e));
 			var listType = input.attr('listType');
-			var url = (listType === 'testList') ? "/TLE/jsp/test_list.jsp" : "/TLE/jsp/summary_list.jsp"; 
+			var url = (listType === 'testList') ? "/RiceInterface/jsp/test_list.jsp" : "/RiceInterface/jsp/summary_list.jsp";
 			$.ajax({url : url, data : { cleanup : 'true'}, success : function(data, status, jqXHR) {
 					try{
 						cleanupListParams(listType);
@@ -154,7 +153,7 @@ $(function() {
 							$('.js_test_detail_page').html('');
 							smartPop.closeProgress();
 						}else{
-							$.ajax({url : '/TLE/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
+							$.ajax({url : '/RiceInterface/jsp/summary_chart.jsp', success : function(data, status, jqXHR) {
 									$('.js_test_detail_page').html(data);
 									smartPop.closeProgress();
 								}

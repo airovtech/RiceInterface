@@ -8,10 +8,10 @@
 
 package net.smartworks.factory;
 
-import net.smartworks.tle.manager.IRptManager;
-import net.smartworks.tle.manager.IUiManager;
-import net.smartworks.tle.manager.impl.RptManagerImpl;
-import net.smartworks.tle.manager.impl.UiManagerImpl;
+import net.smartworks.rice.manager.IRptManager;
+import net.smartworks.rice.manager.IUiManager;
+import net.smartworks.rice.manager.impl.RptManagerImpl;
+import net.smartworks.rice.manager.impl.UiManagerImpl;
 
 public class ManagerFactory {
 

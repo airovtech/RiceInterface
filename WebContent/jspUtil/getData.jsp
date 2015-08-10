@@ -1,7 +1,7 @@
-<%@page import="net.smartworks.tle.model.FtpHistory"%>
+<%@page import="net.smartworks.rice.model.FtpHistory"%>
 <%@page import="net.smartworks.util.IdUtil"%>
-<%@page import="net.smartworks.tle.model.SensorReport"%>
-<%@page import="net.smartworks.tle.model.TestReport"%>
+<%@page import="net.smartworks.rice.model.SensorReport"%>
+<%@page import="net.smartworks.rice.model.TestReport"%>
 <%@page import="net.smartworks.util.FileUtil"%>
 <%@page import="org.springframework.util.StringUtils"%>
 <%@page import="java.io.IOException"%>
@@ -13,13 +13,13 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.smartworks.factory.ManagerFactory"%>
 <%@page import="java.util.List"%>
-<%@page import="net.smartworks.tle.model.FtpHistoryCond"%>
+<%@page import="net.smartworks.rice.model.FtpHistoryCond"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="org.apache.commons.logging.LogFactory"%>
 <%@page import="org.apache.commons.net.ftp.FTPClient"%>
 <%@page import="org.apache.commons.logging.Log"%>
-<%@page import="net.smartworks.tle.scheduler.job.FtpFileTransfer"%>
+<%@page import="net.smartworks.rice.scheduler.job.FtpFileTransfer"%>
 <%@page import="net.smartworks.util.PropertiesLoader"%>
 <%@page import="java.util.Properties"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
@@ -47,8 +47,8 @@
 	if (toDayStr == null) {
 		throw new Exception("No Argument : toDayStr!!!!!!");
 	}
-	String folderName = "TLE_" + toDayStr;
-	String targetDir = "/tle/" + folderName;
+	String folderName = "ADS_" + toDayStr;
+	String targetDir = "/ads/" + folderName;
 	
 	log.info("	From Dir : " + targetDir);
 	
@@ -109,7 +109,7 @@
 				if (j == 0) {
 					//검사 데이터
 					String[] columnDatas = StringUtils.tokenizeToStringArray(rowData, ",");
-					report.setProject("TLE");
+					report.setProject("ADS");
 					report.setId("rpt_"+IdUtil.getInstance().generate());
 					
 					Date date = sdf2.parse(columnDatas[0]);						
@@ -131,17 +131,16 @@
 
 					sr.setSensorNo(columnDatas[0]);
 					sr.setDateTime(report.getDateTime());
-					/* sr.setIndoorTemperature(columnDatas[2]);
-					sr.setGlassTemperature(columnDatas[3]); */
-					sr.setIndoorHumidity(columnDatas[2]);
-					sr.setDecisionCode(columnDatas[3]);
-					sr.setQRcode(columnDatas[5]);
+					sr.setIndoorTemperature(columnDatas[2]);
+					sr.setGlassTemperature(columnDatas[3]);
+					sr.setIndoorHumidity(columnDatas[4]);
+					sr.setDecisionCode(columnDatas[6]);
 					
 					if (j == 1) {
-						sr.setSerialNo(columnDatas[4]);
-						report.setFirstSensorId(columnDatas[4]);
+						sr.setSerialNo(columnDatas[7]);
+						report.setFirstSensorId(columnDatas[7]);
 					} else {
-						sr.setSerialNo(columnDatas[4]);
+						sr.setSerialNo(columnDatas[7]);
 					}
 					sr.setLotNoSerialNo(sr.getLotNo() + sr.getSerialNo());
 					sensorDataList.add(sr);
